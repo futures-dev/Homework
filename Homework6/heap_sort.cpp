@@ -1,14 +1,23 @@
 #include <stdexcept>
 #include "heap_sort.h"
 
+/*
+ * Swaps arr[a] and arr[b]
+ */
 void swap(int *arr, int a, int b) {
     int t = arr[a];
     arr[a] = arr[b];
     arr[b] = t;
 }
 
-heap::heap(const int *source, int n) {
-    capacity = n;
+/*
+ * Min Heap constructor.
+ * Sets capacity to n,
+ * current size to 0,
+ * initializes storage as an int[n],
+ * inserts source values to the heap.
+ */
+heap::heap(const int *source, int n) : capacity(n) {
     current_size = 0;
     storage = new int[n];
     for (int i = 0; i < n; i++) {
@@ -16,6 +25,10 @@ heap::heap(const int *source, int n) {
     }
 }
 
+/*
+ * Inserts a value in the heap.
+ * Throws std::length_error if the heap is full.
+ */
 void heap::insert(const int value) {
     if (current_size == capacity)
         throw std::length_error("Insertion into full heap.");
@@ -23,10 +36,17 @@ void heap::insert(const int value) {
     heapify_up(current_size++);
 }
 
+/*
+ * Returns the minimum element in the heap.
+ */
 int heap::get_min() {
     return storage[0];
 }
 
+/*
+ * Returns the minimum element and removes it from the heap.
+ * Throws std::length_error if the heap is empty.
+ */
 int heap::extract_min() {
     if (current_size == 0)
         throw std::length_error("Extraction from empty heap.");
@@ -36,9 +56,14 @@ int heap::extract_min() {
     return t;
 }
 
+/*
+ * Pushes a heap element with specified index up the heap
+ * until it is in the correct place.
+ */
 void heap::heapify_up(int index) {
     int i = index;
-    int p = (i - 1) / 2;
+    int p = (i - 1) / 2; // parent index
+    // while parent is bigger than child
     while (i > 0 && storage[i] < storage[p]) {
         swap(storage, i, p);
         i = p;
@@ -46,16 +71,21 @@ void heap::heapify_up(int index) {
     }
 }
 
+/*
+ * Pushes a heap element with the specified undex down the heap
+ * until it is in the correct place.
+ */
 void heap::heapify_down(int index) {
-    int cl;
-    int cr;
-    int cm;
+    int cl; // left child index
+    int cr; // right child index
+    int cm; // least child index
     while (true) {
         cl = index * 2 + 1;
         cr = cl + 1;
         cm = index;
         if (cl < current_size && storage[cl] < storage[cm])
             cm = cl;
+        // no else: if both are less than parent, choose right
         if (cr < current_size && storage[cr] < storage[cm])
             cm = cr;
         if (index == cm)
@@ -65,10 +95,19 @@ void heap::heapify_down(int index) {
     }
 }
 
+/*
+ * Destroys the heap.
+ * Deletes the storage array.
+ */
 heap::~heap() {
     delete[] storage;
 }
 
+/*
+ * Sorts an array using heap sort.
+ * Creates a heap and
+ * consequently calls extract_min method.
+ */
 void heapsort::heap_sort(int *arr, int n) {
     heap *h = new heap(arr, n);
     for (int i = 0; i < n; i++)

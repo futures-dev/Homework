@@ -8,8 +8,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Homework8/edge_searcher.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Homework8/edge_searcher.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Homework8/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/substring_searcher.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/substring_searcher.h" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>
     <orderEntry type="inheritedJdk" />

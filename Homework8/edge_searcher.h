@@ -10,6 +10,7 @@
  * Create edge_searcher.cpp file for implementation.
  */
 class edge_substring_searcher : public substring_searcher {
+public:
     /**
      * Check the inherited method documentation.
      *

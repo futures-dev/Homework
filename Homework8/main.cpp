@@ -9,8 +9,8 @@
 using namespace std;
 int main() {
     edge_substring_searcher *edge_searcher = new edge_substring_searcher();
-    string sub = "ba";
-    string s = "abbabaabbaababba";
+    string sub = "gg";
+    string s = "ggggggg";
     vector<int> a = *edge_searcher->find_substrings(s, sub);
     block_substring_searcher *block_searcher = new block_substring_searcher();
     vector<int> b = *block_searcher->find_substrings(s, sub);

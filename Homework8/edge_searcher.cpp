@@ -1,11 +1,13 @@
+//
+// Коломиец Андрей БПИ143
+// CLion 1.1.1 MinGW 3.21
+//
+
 #include <iostream>
 #include "edge_searcher.h"
 
 using namespace std;
 
-//
-// Коломиец Андрей БПИ143
-// CLion 1.1.1 MinGW 3.21
 std::vector<int> *edge_substring_searcher::find_substrings(string &source, string &substring) {
     // Массив граней
     vector<int> *edges = new vector<int>();

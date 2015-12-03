@@ -1,12 +1,13 @@
+//
+// Коломиец Андрей БПИ143
+// CLion 1.1.1 MinGW 3.21
+//
+
 #include "block_searcher.h"
 #include <algorithm>
 
 using namespace std;
 
-//
-// Коломиец Андрей БПИ143
-// CLion 1.1.1 MinGW 3.21
-//
 std::vector<int> *block_substring_searcher::find_substrings(
         string &source, string &substring) {
     // Массив блоков
@@ -30,7 +31,7 @@ std::vector<int> *block_substring_searcher::find_substrings(
         // Ищем максимальный подходящий блок
         int temp = ((i >= left) && (left > 0)) ? (*blocks)[i - left] : 0;
         blocks->push_back(max(0, min(right - i, temp)));
-        while ((i + (*blocks)[i] < sLength) && (s[(*blocks)[i]] == s[i + (*blocks)[i]])) {
+        while ((i + (*blocks)[i] <= sLength) && (s[(*blocks)[i]] == s[i + (*blocks)[i]])) {
             (*blocks)[i]++;
         }
         // Если блок подходит, обновляем left и right
@@ -39,6 +40,7 @@ std::vector<int> *block_substring_searcher::find_substrings(
             right = i + (*blocks)[i];
         }
     }
+
     // Конвертация в массив подстрок
     // Удаляем элементы до \1
     blocks->erase(blocks->begin(), blocks->begin() + substringLength + 1);

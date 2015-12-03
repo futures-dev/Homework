@@ -10,6 +10,7 @@
  * Create block_searcher.cpp file for implementation.
  */
 class block_substring_searcher : public substring_searcher {
+public:
     /**
      * Check the inherited method documentation.
      *

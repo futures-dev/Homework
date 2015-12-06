@@ -3,11 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/block_searcher.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/block_searcher.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/edge_searcher.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/edge_searcher.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Homework8/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackSolver.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackSolver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/KDZ/main.cpp" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>
     <orderEntry type="inheritedJdk" />

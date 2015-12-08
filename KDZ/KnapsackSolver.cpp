@@ -2,11 +2,41 @@
 // Created by Computer on 06.12.2015.
 //
 
+#include <iostream>
 #include "KnapsackSolver.h"
 
+
 KnapsackSolver::Solution KnapsackSolver::solveIterative(KnapsackSolver::Problem problem) {
-    return KnapsackSolver::Solution();
+    int n = problem.itemsNumber;
+    vector<int> *available = new vector<int>();
+    vector<int> *next = new vector<int>();
+    vector<int> *knapsack = new vector<int>();
+    int *solution = new int[n];
+    int solutionWeight = 0;
+    int knapsackWeight = 0;
+    available->reserve(n);
+    knapsack->reserve(n);
+    next->reserve(n);
+    for (int i = 0; i < n; i++) {
+        available->push_back(i);
+    }
+    while (available->size() > 0 || next->size() > 0) {
+        int popped = available->back();
+        available->pop_back();
+        knapsack->push_back(popped);
+        if (knapsackWeight + problem.itemsWeights[popped] <= problem.maxWeight) {
+
+        }
+        else {
+            next->push_back(popped);
+            knapsack->pop_back();
+        }
+        available
+    }
+
+    return Solution();
 }
+
 
 KnapsackSolver::Solution KnapsackSolver::solveRecursive(KnapsackSolver::Problem problem) {
     return KnapsackSolver::Solution();
@@ -23,28 +53,36 @@ KnapsackSolver::Solution KnapsackSolver::solveGreedy(KnapsackSolver::Problem pro
 #include<algorithm> // for one-line lambda-based std::max
 
 KnapsackSolver::KnapsackSolver(string inputPath = "input_knap.txt", string outputPath = "output_knap.txt") {
-    _inputPath = inputPath;
-    _outputPath = outputPath;
-    ifstream inputStream;
-    inputStream.open(_inputPath);
-    inputStream >> _numberOfTests;
-    _problems = new vector<Problem>();
-    for (int testNumber = 0; testNumber < _numberOfTests; testNumber++) {
-        int maxWeight;
-        inputStream >> maxWeight;
-        int itemsNumber;
-        inputStream >> itemsNumber;
-        int *itemsWeights = new int[itemsNumber];
-        for (int i = 0; i < itemsNumber; i++) {
-            inputStream >> itemsWeights[i];
-        }
-        int *itemsCosts = new int[itemsNumber];
-        for (int i = 0; i < itemsNumber; i++) {
-            inputStream >> itemsCosts[i];
-        }
-        _problems->push_back({maxWeight, itemsNumber, itemsWeights, itemsCosts});
+    if (inputPath == "test") {
+        solveIterative({
+                               10, 4, new int[4]{2, 4, 1, 5}, new int[4]{3, 1, 2, 2}
+                       });
     }
-    _solutions = new vector<Solution>();
+    else {
+        _inputPath = inputPath;
+        _outputPath = outputPath;
+        ifstream inputStream;
+        inputStream.open(_inputPath);
+        inputStream >> _numberOfTests;
+        _problems = new vector<Problem>();
+        for (int testNumber = 0; testNumber < _numberOfTests; testNumber++) {
+            int maxWeight;
+            inputStream >> maxWeight;
+            int itemsNumber;
+            inputStream >> itemsNumber;
+            int *itemsWeights = new int[itemsNumber];
+            for (int i = 0; i < itemsNumber; i++) {
+                inputStream >> itemsWeights[i];
+            }
+            int *itemsCosts = new int[itemsNumber];
+            for (int i = 0; i < itemsNumber; i++) {
+                inputStream >> itemsCosts[i];
+            }
+            _problems->push_back({maxWeight, itemsNumber, itemsWeights, itemsCosts});
+        }
+        _solutions = new vector<Solution>();
+    }
+
 }
 
 KnapsackSolver::Solution KnapsackSolver::solve(KnapsackSolver::Problem problem, KnapsackSolver::Method method) {

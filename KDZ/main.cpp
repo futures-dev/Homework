@@ -3,6 +3,7 @@
 // CLion 1.1.1 MinGW 3.21
 //
 
+#include "KnapsackSolver.h"
 int main() {
-    return 0;
+    KnapsackSolver solver("test", "");
 }

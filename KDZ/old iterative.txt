@@ -1,0 +1,85 @@
+
+KnapsackSolver::Solution KnapsackSolver::solveIterative(KnapsackSolver::Problem problem) {
+    int n = problem.itemsNumber;
+    int solutionLength = 0;
+    bool* visited = new bool[n];
+    for (int j = 0;j<n;j++){
+        visited[j] = false;
+    }
+    int currentItem = -1;
+    vector<int>* knapsack = new vector<int>();
+    knapsack->reserve(n);
+    int currentWeight = 0;
+    int currentCost = 0;
+    int* solution = new int[n];
+    int solutionItemsNumber = 0;
+    int solutionCost = 0;
+    while (solutionLength>=0){
+        /*
+         * debug
+         *
+        cout << endl << "Line 24. Solution array:" << endl;
+        for (int j = 0;j<solutionItemsNumber;j++)
+            cout << solution[j] << " ";
+            */
+        cout << endl << "Line 27. Knapsack array:" << endl;
+        for (int j = 0;j<knapsack->size();j++)
+            cout << (*knapsack)[j] << " ";
+        /*
+        cout << endl << "Line 30. Visited array:" << endl;
+        for (int j = 0;j<n;j++)
+            cout << visited[j] << " ";
+            */
+
+        if (++currentItem<n && !visited[currentItem]){
+                visited[currentItem] = true;
+                if (currentWeight+problem.itemsWeights[currentItem]<=problem.maxWeight){
+                    knapsack->push_back(currentItem);
+                    currentWeight+=problem.itemsWeights[currentItem];
+                    currentCost+=problem.itemsCosts[currentItem];
+                    solutionLength++;
+                    if (currentCost>solutionCost){
+                        solutionItemsNumber = knapsack->size();
+                        for (int j = 0;j<solutionItemsNumber;j++)
+                            solution[j]= (*knapsack)[j];
+                        solutionCost = currentCost;
+                    }
+                }
+        }
+        else{
+            /*
+             * debug
+             *
+            cout << endl << "Line 53. currentItem and solutionLength :" << endl;
+            cout << currentItem << " " << solutionLength << endl;
+*/
+            bool found = false;
+            for (int j = currentItem;j<n;j++){
+                if (!visited[j]){
+                    currentItem=j;
+                    found = true;
+
+                    break;
+                }
+                else {
+                    visited[j] = false;
+                }
+            }
+            if (found) {
+                currentItem--;
+            }
+            else{
+                solutionLength-=1;
+                currentWeight -= problem.itemsWeights[knapsack->back()];
+                knapsack->pop_back();
+                currentItem-=2;
+            }
+        }
+    }
+
+    int solutionWeight = 0;
+    for (int j = 0;j<solutionItemsNumber;j++){
+        solutionWeight+=problem.itemsWeights[solution[j]];
+    }
+    return {solutionWeight,solutionCost,solutionItemsNumber,solution,solution,solution,KnapsackSolver::ITERATIVE,200};
+}

@@ -15,6 +15,13 @@ class KnapsackSolver {
  */
 public:
     /*
+     * Метод решения задачи о рюкзаке
+     */
+    enum Method {
+        ITERATIVE, RECURSIVE, DYNAMIC, GREEDY, ALL
+    };
+
+    /*
      * Структура, описывающая конкретную задачу о рюкзаке
      */
     struct Problem {
@@ -56,6 +63,11 @@ public:
         int cost;
 
         /*
+         * Количество предметов
+         */
+        int itemsNumber;
+
+        /*
          * Номера предметов в рюкзаке
          */
         int *items;
@@ -81,12 +93,6 @@ public:
         int time;
     };
 
-    /*
-     * Метод решения задачи о рюкзаке
-     */
-    enum Method {
-        ITERATIVE, RECURSIVE, DYNAMIC, GREEDY, ALL
-    };
 
 /*
  * Параметры среды и переданные задачи о рюкзаке
@@ -95,8 +101,8 @@ private:
     string _inputPath;
     string _outputPath;
     int _numberOfTests;
-    vector<Problem> *_problems;
-    vector<Solution> *_solutions;
+    vector<Problem> *_problems = new vector<Problem>();
+    vector<Solution> *_solutions = new vector<Solution>();
 
 /*
  * Конструктор и деструктор
@@ -111,14 +117,14 @@ public:
 /*
  * Путь к входному файлу
  */
-    string &getInputPath() const {
+    string getInputPath() const {
         return _inputPath;
     }
 
     /*
      * Путь к выходному файлу
      */
-    string &getOutputPath() const {
+    string getOutputPath() const {
         return _outputPath;
     }
 
@@ -185,5 +191,3 @@ public:
 
 };
 
-
-#endif //KDZ_BAGPACKSOLVER_H

@@ -5,5 +5,7 @@
 
 #include "KnapsackSolver.h"
 int main() {
-    KnapsackSolver solver("test", "");
+	string a = "test";
+	string b = "";
+	KnapsackSolver solver(a, b);
 }

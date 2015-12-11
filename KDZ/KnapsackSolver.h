@@ -5,7 +5,6 @@
 #include<string>
 #include<fstream>
 #include<vector>
-#include <bits/stl_vector.h>
 
 using namespace std;
 
@@ -22,10 +21,49 @@ public:
     };
 
     /*
+     * Структура, описывающая предмет
+     */
+    struct Item {
+        Item() { };
+
+        /*
+         * Конструктор
+         */
+        Item(int number, int weight, int cost);
+
+        /*
+         * Начальный номер предмета
+         */
+        int number;
+
+        /*
+         * Вес предмета
+         */
+        int weight;
+
+        /*
+         * Стоимость предмета
+         */
+        int cost;
+    };
+
+    /*
      * Структура, описывающая конкретную задачу о рюкзаке
      */
     struct Problem {
+        Problem() { };
+
         /*
+         * Конструктор
+         */
+        Problem(int maxWeight, int itemsNumber, vector<Item> *items);
+
+        /*
+         * Деструктор. Очищает память вектора предметов
+         */
+        virtual ~Problem();
+
+/*
          * Максимальный допустимый вес рюкзака
          */
         int maxWeight;
@@ -36,14 +74,9 @@ public:
         int itemsNumber;
 
         /*
-         * Веса предметов
+         * Доступные предметы
          */
-        int *itemsWeights;
-
-        /*
-         * Стоимость предметов
-         */
-        int *itemsCosts;
+        vector<Item> *items;
 
 
     };
@@ -53,6 +86,18 @@ public:
      */
     struct Solution {
         /*
+         * Конструктор
+         */
+        Solution(int weight, int cost, int itemsNumber, vector<Item> *items, const Method method, int64_t time);
+
+        Solution() { };
+
+        /*
+         * Деструктор. Очищает память вектора предметов
+         */
+        virtual ~Solution();
+
+/*
          * Вес рюкзака
          */
         int weight;
@@ -68,19 +113,9 @@ public:
         int itemsNumber;
 
         /*
-         * Номера предметов в рюкзаке
+         * Доступные предметы
          */
-        int *items;
-
-        /*
-         * Веса предметов. Нумерация по индексам массива items
-         */
-        int *weights;
-
-        /*
-         * Стоимость предметов. Нумерация по индексам массива items
-         */
-        int *costs;
+        vector<Item> *items;
 
         /*
          * Использованный метод
@@ -90,7 +125,7 @@ public:
         /*
          * Время расчета, нс
          */
-        int time;
+        int64_t time;
     };
 
 
@@ -100,7 +135,7 @@ public:
 private:
     string _inputPath;
     string _outputPath;
-    int _numberOfTests;
+    int _numberOfTests = 0;
     vector<Problem> *_problems = new vector<Problem>();
     vector<Solution> *_solutions = new vector<Solution>();
 

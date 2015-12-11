@@ -87,43 +87,6 @@ KnapsackSolver::Solution KnapsackSolver::solveGreedy(Problem problem) {
 
 KnapsackSolver::KnapsackSolver(string inputPath, string outputPath) {
     if (inputPath == "test") {
-        int n = 22;
-        vector<Item> *items = new vector<Item>();
-        items->reserve(n);
-
-        items->push_back(Item(0, 9, 150));
-        items->push_back(Item(1, 13, 35));
-        items->push_back(Item(2, 153, 200));
-        items->push_back(Item(3, 50, 160));
-        items->push_back(Item(4, 15, 60));
-        items->push_back(Item(5, 68, 45));
-        items->push_back(Item(6, 27, 60));
-        items->push_back(Item(7, 39, 40));
-        items->push_back(Item(8, 23, 30));
-        items->push_back(Item(9, 52, 10));
-        items->push_back(Item(10, 11, 70));
-        items->push_back(Item(11, 32, 30));
-        items->push_back(Item(12, 24, 15));
-        items->push_back(Item(13, 48, 10));
-        items->push_back(Item(14, 73, 40));
-        items->push_back(Item(15, 42, 70));
-        items->push_back(Item(16, 43, 75));
-        items->push_back(Item(17, 22, 80));
-        items->push_back(Item(18, 7, 20));
-        items->push_back(Item(19, 18, 12));
-        items->push_back(Item(20, 4, 50));
-        items->push_back(Item(21, 30, 10));
-        /*
-       items->push_back(Item(0, 12, 4));
-       items->push_back(Item(1, 2, 2));
-       items->push_back(Item(2, 1, 2));
-       items->push_back(Item(3, 1, 1));
-       items->push_back(Item(4, 4, 10));*/
-        Problem problem(400, n, items);
-        Solution solution = solveIterative(problem);
-        cout << solution.time << endl;
-        for (int i = 0; i < solution.itemsNumber; i++)
-            cout << (*solution.items)[i].number << " ";
     }
     else {
         _inputPath = inputPath;
@@ -188,8 +151,8 @@ void KnapsackSolver::solve(Method method) {
 }
 
 KnapsackSolver::~KnapsackSolver() {
-    delete[] _problems;
-    delete[] _solutions;
+    delete _problems;
+    delete _solutions;
 }
 
 KnapsackSolver::Item::Item(int number, int weight, int cost) : number(number), weight(weight), cost(cost) { }
@@ -201,11 +164,3 @@ KnapsackSolver::Problem::Problem(int maxWeight, int itemsNumber, vector<Item> *i
 KnapsackSolver::Solution::Solution(int weight, int cost, int itemsNumber, vector<Item> *items, Method method,
                                    int64_t time)
         : weight(weight), cost(cost), itemsNumber(itemsNumber), items(items), method(method), time(time) { }
-
-KnapsackSolver::Solution::~Solution() {
-    delete[] items;
-}
-
-KnapsackSolver::Problem::~Problem() {
-    delete[] items;
-}

@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackSolver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackSolver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackTester.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/KDZ/KnapsackTester.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/KDZ/main.cpp" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>

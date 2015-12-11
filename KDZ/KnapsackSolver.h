@@ -24,7 +24,9 @@ public:
      * Структура, описывающая предмет
      */
     struct Item {
-        Item() { };
+        Item() {
+            /* Default initialization is senseless */
+        };
 
         /*
          * Конструктор
@@ -51,7 +53,9 @@ public:
      * Структура, описывающая конкретную задачу о рюкзаке
      */
     struct Problem {
-        Problem() { };
+        Problem() {
+            /* Default initialization is senseless */
+        };
 
         /*
          * Конструктор
@@ -59,9 +63,9 @@ public:
         Problem(int maxWeight, int itemsNumber, vector<Item> *items);
 
         /*
-         * Деструктор. Очищает память вектора предметов
+         * Деструктор отсутствует. Массив не создается конструктором Problem.
+         * Освобождение памяти на ответственности создателя массива.
          */
-        virtual ~Problem();
 
 /*
          * Максимальный допустимый вес рюкзака
@@ -90,12 +94,14 @@ public:
          */
         Solution(int weight, int cost, int itemsNumber, vector<Item> *items, const Method method, int64_t time);
 
-        Solution() { };
+        Solution() {
+            /* Default initialization is senseless */
+        };
 
         /*
-         * Деструктор. Очищает память вектора предметов
+         * Деструктор отсутствует. Массив не создается конструктором Problem.
+         * Освобождение памяти на ответственности создателя массива
          */
-        virtual ~Solution();
 
 /*
          * Вес рюкзака

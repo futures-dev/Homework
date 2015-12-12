@@ -7,7 +7,6 @@
 void KnapsackTester::testSolveStatic() {
     // Test #1
     // Simple array
-    cout << "Test #1" << endl;
     vector<Item> *items1 = new vector<Item>();
     items1->push_back(Item(0, 12, 4));
     items1->push_back(Item(1, 2, 2));
@@ -18,19 +17,10 @@ void KnapsackTester::testSolveStatic() {
     vector<Item> *answer1 = new vector<Item>();
     answer1->push_back(Item(2, 1, 2));
     answer1->push_back(Item(4, 4, 10));
-    Solution solution1 = Solution(5, 12, 2, answer1, Method::ITERATIVE, 1);
-    Solution check1 = KnapsackSolver::solve(problem1, Method::ITERATIVE);
-    if (check1.weight != solution1.weight)
-        cout << "weight: " << check1.weight << " .Instead of: " << solution1.weight << endl;
-    if (check1.cost != solution1.cost)
-        cout << "cost: " << check1.cost << " .Instead of: " << solution1.cost << endl;
-    cout << "Time: " << check1.time << "ns." << endl;
-    delete items1;
-    delete answer1;
+    Solution solution1 = Solution(5, 12, 2, answer1, Method::DYNAMIC, 1);
 
     // Test #2
     // Complicated array
-    cout << "Test #2" << endl;
     vector<Item> *items2 = new vector<Item>();
     items2->push_back(Item(0, 9, 150));
     items2->push_back(Item(1, 13, 35));
@@ -54,7 +44,7 @@ void KnapsackTester::testSolveStatic() {
     items2->push_back(Item(19, 18, 12));
     items2->push_back(Item(20, 4, 50));
     items2->push_back(Item(21, 30, 10));
-    Problem problem2(400, 22, items2);
+    Problem problem2(400, 8, items2);
     vector<Item> *answer2 = new vector<Item>();
     answer2->push_back(Item(0, 9, 150));
     answer2->push_back(Item(1, 13, 35));
@@ -68,13 +58,34 @@ void KnapsackTester::testSolveStatic() {
     answer2->push_back(Item(17, 22, 80));
     answer2->push_back(Item(18, 7, 20));
     answer2->push_back(Item(20, 4, 50));
-    Solution solution2 = Solution(396, 1030, 12, answer2, Method::ITERATIVE, 1);
-    Solution check2 = KnapsackSolver::solve(problem2, Method::ITERATIVE);
+
+    // Solution solution2 = Solution(396, 1030, 12, answer2, Method::RECURSIVE, 1);
+
+
+    vector<Problem> *problems = new vector<Problem>();
+    problems->push_back(problem1);
+    problems->push_back(problem2);
+    KnapsackSolver solver(*problems);
+
+    cout << "Test #1" << endl;
+    Solution check1 = solver.solve(0, Method::DYNAMIC);
+    if (check1.weight != solution1.weight)
+        cout << "weight: " << check1.weight << ". Instead of: " << solution1.weight << endl;
+    if (check1.cost != solution1.cost)
+        cout << "cost: " << check1.cost << ". Instead of: " << solution1.cost << endl;
+    cout << "Time: " << check1.time << "ns." << endl;
+    delete items1;
+    delete answer1;
+    Solution solution2 = solver.solve(1, Method::ITERATIVE);
+    cout << "Test #2" << endl;
+    Solution check2 = solver.solve(1, Method::RECURSIVE);
     if (check2.weight != solution2.weight)
-        cout << "weight: " << check2.weight << " .Instead of: " << solution2.weight << endl;
+        cout << "weight: " << check2.weight << ". Instead of: " << solution2.weight << endl;
     if (check2.cost != solution2.cost)
-        cout << "cost: " << check2.cost << " .Instead of: " << solution2.cost << endl;
+        cout << "cost: " << check2.cost << ". Instead of: " << solution2.cost << endl;
     cout << "Time: " << check2.time << "ns." << endl;
     delete items2;
     delete answer2;
+
+    delete problems;
 }

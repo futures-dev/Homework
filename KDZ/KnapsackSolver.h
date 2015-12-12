@@ -5,6 +5,7 @@
 #include<string>
 #include<fstream>
 #include<vector>
+#include <time.h>
 
 using namespace std;
 
@@ -98,10 +99,7 @@ public:
             /* Default initialization is senseless */
         };
 
-        /*
-         * Деструктор отсутствует. Массив не создается конструктором Problem.
-         * Освобождение памяти на ответственности создателя массива
-         */
+        virtual ~Solution() { delete items; }
 
 /*
          * Вес рюкзака
@@ -139,35 +137,21 @@ public:
  * Параметры среды и переданные задачи о рюкзаке
  */
 private:
-    string _inputPath;
-    string _outputPath;
     int _numberOfTests = 0;
-    vector<Problem> *_problems = new vector<Problem>();
-    vector<Solution> *_solutions = new vector<Solution>();
-
+    vector<Problem> _problems;
+    vector<Solution> _solutions;
+    int _currentProblem = 0;
+    uint64_t CLOCKS_PER_NANOSECOND = uint64_t(CLOCKS_PER_SEC) / 1000000000;
 /*
  * Конструктор и деструктор
  */
 public:
 
-    KnapsackSolver(string inputPath, string outputPath);
+    KnapsackSolver(vector<Problem> problems);
 
     virtual ~KnapsackSolver();
 
 public:
-/*
- * Путь к входному файлу
- */
-    string getInputPath() const {
-        return _inputPath;
-    }
-
-    /*
-     * Путь к выходному файлу
-     */
-    string getOutputPath() const {
-        return _outputPath;
-    }
 
     /*
      * Количество конкретных задачи для решения
@@ -179,14 +163,14 @@ public:
     /*
      * Конкретные задачи о рюкзаке для решения
      */
-    vector<Problem> *getProblems() const {
+    vector<Problem> getProblems() const {
         return _problems;
     }
 
     /*
      * Результат решения задач
      */
-    vector<Solution> *getSolutions() const {
+    vector<Solution> getSolutions() const {
         return _solutions;
     }
 
@@ -197,22 +181,38 @@ private:
     /*
      * Решает задачу итерационным методом перебора с возвратом
      */
-    static Solution solveIterative(Problem problem);
+    Solution solveIterative();
 
     /*
      * Решает задачу рекурсивным методом перебора с возвратом
      */
-    static Solution solveRecursive(Problem problem);
+    Solution solveRecursive();
+
+    /*
+     * Внешние переменные для рекурсивного алгоритма, чтобы не возвращать/передавать в качестве аргументов
+     */
+    vector<Item> *_solveRecursive_knapsack;
+    vector<int> *_solveRecursive_bestKnapsack;
+    int _solveRecursive_knapsackWeight, _solveRecursive_knapsackCost;
+    int _solveRecursive_bestCost, _solveRecursive_bestSize;
+
+
+    void _solveRecursive_grain(int currentItem);
 
     /*
      * Решает задачу методом динамического программирования
      */
-    static Solution solveDynamic(Problem problem);
+    Solution solveDynamic();
 
+    vector<Item> *_solveDynamic_items;
+    vector<Item> *_solveDynamic_knapsack;
+    int **_solveDynamic_matrix;
+
+    void _solveDynamic_grain(int n, int m);
     /*
      * Решает задачу методом "жадного" алгоритма
      */
-    static Solution solveGreedy(Problem problem);
+    Solution solveGreedy();
 
 /*
  * Методы для пользователя класса
@@ -222,13 +222,15 @@ public:
      * Решает конкретную задачу о рюкзаке указанным методом
      * Возвращает экземпляр класса Solution
      */
-    static Solution solve(Problem problem, Method method);
+    Solution solve(int problemNumber, Method method);
 
     /*
      * Производит решение доступных для экземпляра класса KnapsackSolver задач о рюкзаке
      * Инициализирует поле solutions
      */
     void solve(Method method);
+
+    static vector<Problem> *problemsFromFile(string inputPath, string outputPath);
 
 };
 

@@ -4,8 +4,13 @@
 
 #include <iostream>
 #include "KnapsackSolver.h"
+#ifdef _WIN32
+#include <intrin.h>
+#else
 #include <x86intrin.h>
+#endif
 #include <stdexcept>
+#include<algorithm> // for one-line lambda-based std::max
 
 KnapsackSolver::Solution KnapsackSolver::solveIterative() {
     if (_currentProblem >= _problems.size()) {
@@ -65,7 +70,7 @@ KnapsackSolver::Solution KnapsackSolver::solveIterative() {
         bestWeight += (*knapsack)[i].weight;
     }
     Solution solution = Solution(bestWeight, bestCost, bestSize, knapsack, ITERATIVE,
-                                 (__rdtsc() - t) / CLOCKS_PER_NANOSECOND);
+                                 __rdtsc() - t);
 
     return solution;
 }
@@ -125,7 +130,7 @@ KnapsackSolver::Solution KnapsackSolver::solveRecursive() {
     }
     Solution solution = Solution(bestWeight, _solveRecursive_bestCost, _solveRecursive_bestSize,
                                  new vector<Item>(*_solveRecursive_knapsack), RECURSIVE,
-                                 (__rdtsc() - t) / CLOCKS_PER_NANOSECOND);
+                                 __rdtsc() - t);
     delete _solveRecursive_bestKnapsack;
     delete _solveRecursive_knapsack;
     return solution;
@@ -139,9 +144,9 @@ void KnapsackSolver::_solveDynamic_grain(int n, int m) {
         _solveDynamic_grain(n - 1, m);
     }
     else {
-        if (n > 0) {
-            _solveDynamic_grain(n - 1, m - (*_solveDynamic_items)[n].weight);
-        }
+		if (n > 0 && (m - (*_solveDynamic_items)[n].weight)>=0) {
+			_solveDynamic_grain(n - 1, m - (*_solveDynamic_items)[n].weight);
+		}
         _solveDynamic_knapsack->push_back((*_solveDynamic_items)[n]);
     }
 }
@@ -159,16 +164,15 @@ KnapsackSolver::Solution KnapsackSolver::solveDynamic() {
     _solveDynamic_matrix = new int *[n];
     for (int i = 0; i < n; i++) {
         _solveDynamic_matrix[i] = new int[m];
-        _solveDynamic_matrix[i][0] = (*problem.items)[i].weight > 1 ? 0 : (*problem.items)[i].cost;
     }
     for (int i = 0; i < m; i++) {
-        _solveDynamic_matrix[0][i] = (*problem.items)[i].weight > i + 1 ? 0 : (*problem.items)[i].cost;
+        _solveDynamic_matrix[0][i] = (*problem.items)[0].weight > i + 1 ? 0 : (*problem.items)[0].cost;
     }
     for (int i = 1; i < n; i++) {
-        for (int j = 1; j < m; j++) {
-            _solveDynamic_matrix[i][j] = (*problem.items)[i].weight > j + 1 ?
-                                         max(_solveDynamic_matrix[i - 1][j], (*problem.items)[i].cost) :
-                                         _solveDynamic_matrix[i - 1][j];
+        for (int j = 0; j < m; j++) {
+			_solveDynamic_matrix[i][j] = (*problem.items)[i].weight > j + 1 ?
+										_solveDynamic_matrix[i - 1][j] :
+										max(_solveDynamic_matrix[i - 1][j], (*problem.items)[i].cost);
             int a;
         }
     }
@@ -195,7 +199,7 @@ KnapsackSolver::Solution KnapsackSolver::solveDynamic() {
     }
 
     Solution solution = Solution(bestWeight, bestCost, bestSize, _solveDynamic_knapsack, DYNAMIC,
-                                 ((__rdtsc() - t) / CLOCKS_PER_NANOSECOND) / CLOCKS_PER_NANOSECOND);
+                                 __rdtsc() - t);
     delete[] _solveDynamic_matrix;
     return solution;
 }
@@ -205,7 +209,6 @@ KnapsackSolver::Solution KnapsackSolver::solveGreedy() {
 }
 
 
-#include<algorithm> // for one-line lambda-based std::max
 
 KnapsackSolver::KnapsackSolver(vector<Problem> problems) {
     if (problems.empty()) {

@@ -5,7 +5,6 @@
 #include<string>
 #include<fstream>
 #include<vector>
-#include <time.h>
 
 using namespace std;
 
@@ -98,9 +97,7 @@ public:
         Solution() {
             /* Default initialization is senseless */
         };
-
-        virtual ~Solution() { delete items; }
-
+		
 /*
          * Вес рюкзака
          */
@@ -141,7 +138,6 @@ private:
     vector<Problem> _problems;
     vector<Solution> _solutions;
     int _currentProblem = 0;
-    uint64_t CLOCKS_PER_NANOSECOND = uint64_t(CLOCKS_PER_SEC) / 1000000000;
 /*
  * Конструктор и деструктор
  */

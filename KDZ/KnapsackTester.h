@@ -16,7 +16,18 @@ using namespace std;
 
 class KnapsackTester {
 public:
-    void testSolveStatic();
+
+	KnapsackTester();
+	virtual ~KnapsackTester();
+
+private:
+
+	vector<Problem> _check_problems;
+	vector<int> _check_costs;
+public:
+    void problemsFromFile();
+	void solve();
+	void resolveAll();
 };
 
 

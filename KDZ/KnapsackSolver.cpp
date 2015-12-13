@@ -4,17 +4,20 @@
 
 #include <iostream>
 #include "KnapsackSolver.h"
-#ifdef _WIN32
+#ifdef _MSC_VER
 #include <intrin.h>
 #else
 #include <x86intrin.h>
 #endif
 #include <stdexcept>
-#include<algorithm> // for one-line lambda-based std::max
+#include<algorithm>
 
-KnapsackSolver::Solution KnapsackSolver::solveIterative() {
+void KnapsackSolver::solveIterative() {
     if (_currentProblem >= _problems.size()) {
-        throw length_error("No problem to solve.\n");
+        /*
+		throw length_error("No problem to solve.\n");
+		*/
+		_currentProblem = 0;
     }
     // Setting time
     uint64_t t = __rdtsc();
@@ -69,10 +72,8 @@ KnapsackSolver::Solution KnapsackSolver::solveIterative() {
         (*knapsack)[i] = (*problem.items)[bestKnapsack[i]];
         bestWeight += (*knapsack)[i].weight;
     }
-    Solution solution = Solution(bestWeight, bestCost, bestSize, knapsack, ITERATIVE,
-                                 __rdtsc() - t);
-
-    return solution;
+    _solutions.push_back(Solution(bestWeight, bestCost, bestSize, knapsack, ITERATIVE,
+                                 __rdtsc() - t));
 }
 
 
@@ -107,9 +108,12 @@ void KnapsackSolver::_solveRecursive_grain(int currentItem) {
     _solveRecursive_grain(currentItem);
 }
 
-KnapsackSolver::Solution KnapsackSolver::solveRecursive() {
+void KnapsackSolver::solveRecursive() {
     if (_currentProblem >= _problems.size()) {
-        throw length_error("No problem to solve.\n");
+		/*
+		throw length_error("No problem to solve.\n");
+		*/
+		_currentProblem = 0;
     }
     uint64_t t = __rdtsc();
 
@@ -128,12 +132,11 @@ KnapsackSolver::Solution KnapsackSolver::solveRecursive() {
         (*_solveRecursive_knapsack)[i] = (*_problems[_currentProblem].items)[(*_solveRecursive_bestKnapsack)[i]];
         bestWeight += (*_solveRecursive_knapsack)[i].weight;
     }
-    Solution solution = Solution(bestWeight, _solveRecursive_bestCost, _solveRecursive_bestSize,
+	_solutions.push_back(Solution(bestWeight, _solveRecursive_bestCost, _solveRecursive_bestSize,
                                  new vector<Item>(*_solveRecursive_knapsack), RECURSIVE,
-                                 __rdtsc() - t);
+                                 __rdtsc() - t));
     delete _solveRecursive_bestKnapsack;
     delete _solveRecursive_knapsack;
-    return solution;
 }
 
 void KnapsackSolver::_solveDynamic_grain(int n, int m) {
@@ -144,16 +147,19 @@ void KnapsackSolver::_solveDynamic_grain(int n, int m) {
         _solveDynamic_grain(n - 1, m);
     }
     else {
-		if (n > 0 && (m - (*_solveDynamic_items)[n].weight)>=0) {
-			_solveDynamic_grain(n - 1, m - (*_solveDynamic_items)[n].weight);
+		if ((m - (*_solveDynamic_items)[n].weight)>=0) {
+			_solveDynamic_grain(max(0,n - 1), m - (*_solveDynamic_items)[n].weight);
 		}
         _solveDynamic_knapsack->push_back((*_solveDynamic_items)[n]);
     }
 }
 
-KnapsackSolver::Solution KnapsackSolver::solveDynamic() {
+void KnapsackSolver::solveDynamic() {
     if (_currentProblem >= _problems.size()) {
-        throw length_error("No problem to solve.\n");
+		/*
+		throw length_error("No problem to solve.\n");
+		*/
+		_currentProblem = 0;
     }
     // Setting time
     uint64_t t = __rdtsc();
@@ -170,20 +176,11 @@ KnapsackSolver::Solution KnapsackSolver::solveDynamic() {
     }
     for (int i = 1; i < n; i++) {
         for (int j = 0; j < m; j++) {
-			_solveDynamic_matrix[i][j] = (*problem.items)[i].weight > j + 1 ?
-										_solveDynamic_matrix[i - 1][j] :
-										max(_solveDynamic_matrix[i - 1][j], (*problem.items)[i].cost);
-            int a;
+			int w = (*problem.items)[i].weight;
+			_solveDynamic_matrix[i][j] = w > j + 1 ?
+				_solveDynamic_matrix[i - 1][j] :
+				max(_solveDynamic_matrix[i - 1][j], (j - w < 0 ? 0 : _solveDynamic_matrix[i - 1][j - w]) + (*problem.items)[i].cost);
         }
-    }
-
-    /*
-     * debuf
-     */
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++)
-            cout << _solveDynamic_matrix[i][j] << " ";
-        cout << endl;
     }
 
     _solveDynamic_items = problem.items;
@@ -198,35 +195,74 @@ KnapsackSolver::Solution KnapsackSolver::solveDynamic() {
         bestCost += (*_solveDynamic_knapsack)[i].cost;
     }
 
-    Solution solution = Solution(bestWeight, bestCost, bestSize, _solveDynamic_knapsack, DYNAMIC,
-                                 __rdtsc() - t);
+	_solutions.push_back(Solution(bestWeight, bestCost, bestSize, _solveDynamic_knapsack, DYNAMIC,
+                                 __rdtsc() - t));
     delete[] _solveDynamic_matrix;
-    return solution;
 }
 
-KnapsackSolver::Solution KnapsackSolver::solveGreedy() {
-    return Solution();
+void KnapsackSolver::solveGreedy() {
+	if (_currentProblem >= _problems.size()) {
+		/*
+		throw length_error("No problem to solve.\n");
+		*/
+		_currentProblem = 0;
+	}
+	// Setting time
+	uint64_t t = __rdtsc();
+
+	Problem problem = _problems[_currentProblem];
+	vector<Item> sorted(*problem.items);
+
+	sort(sorted.begin(),sorted.end(),[](Item q1, Item q2)
+	{
+		return double(q1.weight) / q1.cost < double(q2.weight) / q2.cost;
+	});
+	vector<Item> *knapsack = new vector<Item>();
+	int w = problem.maxWeight;
+	int i = 0;
+	int bestCost = 0;
+	while (w>0 && i<problem.itemsNumber)
+	{
+		if (w>=sorted[i].weight)
+		{
+			knapsack->push_back(sorted[i]);
+
+			w -=sorted[i].weight;
+			bestCost += sorted[i].cost;
+		}
+		i++;
+	}
+	uint64_t ti = __rdtsc();
+	_solutions.push_back(Solution(problem.maxWeight - w, bestCost, knapsack->size(), knapsack, GREEDY, ti - t));
+}
+
+void KnapsackSolver::destroySolutions()
+{
+	for (int i = 0; i < _solutions.size();i++)
+	{
+		delete _solutions[i].items;
+	}
+	_solutions.clear();
 }
 
 
-
-KnapsackSolver::KnapsackSolver(vector<Problem> problems) {
+KnapsackSolver::KnapsackSolver(vector<Problem> problems) : _numberOfTests(problems.size()), _problems(problems), _currentProblem(0) {
     if (problems.empty()) {
+		/*
         throw length_error("Passed empty problems set.");
+		*/
     }
-    _problems = problems;
-    _numberOfTests = problems.size();
-    _currentProblem = 0;
 }
 
-vector<KnapsackSolver::Problem> *KnapsackSolver::problemsFromFile(string inputPath, string outputPath) {
-    ifstream inputStream;
-    inputStream.open(inputPath);
+vector<KnapsackSolver::Problem> *KnapsackSolver::problemsFromFile(string inputPath) {
+    ifstream inputStream(inputPath);
     int numberOfTests;
     inputStream >> numberOfTests;
     if (numberOfTests < 1) {
         inputStream.close();
+		/*
         throw length_error("Passed empty problems set.");
+		*/
     }
     vector<Problem> *problems = new vector<Problem>();
     problems->reserve(numberOfTests);
@@ -254,38 +290,84 @@ vector<KnapsackSolver::Problem> *KnapsackSolver::problemsFromFile(string inputPa
     return problems;
 }
 
-KnapsackSolver::Solution KnapsackSolver::solve(int problemNumber, Method method) {
-    _currentProblem = problemNumber;
-    switch (method) {
-        case ITERATIVE:
-            return solveIterative();
-        case RECURSIVE:
-            return solveRecursive();
-        case DYNAMIC:
-            return solveDynamic();
-        case GREEDY:
-            return solveGreedy();
-        case ALL:
-        default:
-            return std::max(
-                    {solveIterative(), solveRecursive(), solveDynamic(), solveGreedy()},
-                    [](Solution ks1, Solution ks2) {
-                        return ks1.cost == ks2.cost ? (ks1.time > ks2.time) : (ks1.cost < ks2.cost);
-                    });
-    }
-
+void KnapsackSolver::solutionsToStream(ostream** streams,int streamNumber)
+{
+	for (int solutionNumber = 0; solutionNumber < _solutions.size();solutionNumber++)
+	{
+		Solution solution = _solutions[solutionNumber];
+		for (int s = 0; s < streamNumber;s++)
+		{
+			(*streams[s]) << (solutionNumber + 1) << endl;
+			(*streams[s]) << solution.method << endl;
+			(*streams[s]) << solution.time << " cycles average" << endl;
+			(*streams[s]) << solution.weight << endl;
+			(*streams[s]) << solution.cost << endl;
+			for (int itemNumber = 0; itemNumber < solution.itemsNumber-1;itemNumber++)
+			{
+				(*streams[s]) << (*solution.items)[itemNumber].number << " ";
+			}
+			(*streams[s]) << (*solution.items)[solution.itemsNumber-1].number << endl;
+			for (int itemNumber = 0; itemNumber < solution.itemsNumber - 1; itemNumber++)
+			{
+				(*streams[s]) << (*solution.items)[itemNumber].weight << " ";
+			}
+			(*streams[s]) << (*solution.items)[solution.itemsNumber-1].weight << endl;
+			for (int itemNumber = 0; itemNumber < solution.itemsNumber - 1; itemNumber++)
+			{
+				(*streams[s]) << (*solution.items)[itemNumber].cost << " ";
+			}
+			(*streams[s]) << (*solution.items)[solution.itemsNumber-1].cost << endl;
+		}
+	}
 }
 
-void KnapsackSolver::solve(Method method) {
-    _solutions.clear();
+void KnapsackSolver::solve(int problemNumber, Method method, int times) {
+    _currentProblem = problemNumber;
+    int solutionNumber = _solutions.size();
+    for (int i = 0;i<times;i++) {
+        switch (method) {
+            case ITERATIVE:
+                solveIterative();
+                break;
+            case RECURSIVE:
+                solveRecursive();
+                break;
+            case DYNAMIC:
+                solveDynamic();
+                break;
+            case GREEDY:
+                solveGreedy();
+                break;
+            case ALL:
+                solveIterative();
+                solveRecursive();
+                solveDynamic();
+                solveGreedy();
+            default:
+                break;
+        }
+        if (i>0){
+            _solutions[solutionNumber].time = (_solutions[solutionNumber].time*i + _solutions.back().time)/double(i) - _solutions[solutionNumber].time;
+			_solutions.pop_back();
+        }
+    }
+}
+
+void KnapsackSolver::resolveAll(int times) {
+	destroySolutions();
     for (int testNumber = 0; testNumber < _numberOfTests; testNumber++) {
         for (int currentMethod = 0; currentMethod < ALL; currentMethod++) {
-            _solutions.push_back(solve(testNumber, Method(currentMethod)));
+            solve(testNumber, Method(currentMethod),times);
         }
     }
 }
 
 KnapsackSolver::~KnapsackSolver() {
+	destroySolutions();
+	for (int i = 0; i < _problems.size();i++)
+	{
+		delete _problems[i].items;
+	}
 }
 
 KnapsackSolver::Item::Item(int number, int weight, int cost) : number(number), weight(weight), cost(cost) { }
@@ -297,3 +379,36 @@ KnapsackSolver::Problem::Problem(int maxWeight, int itemsNumber, vector<Item> *i
 KnapsackSolver::Solution::Solution(int weight, int cost, int itemsNumber, vector<Item> *items, Method method,
                                    int64_t time)
         : weight(weight), cost(cost), itemsNumber(itemsNumber), items(items), method(method), time(time) { }
+
+bool operator==(const KnapsackSolver::Item& lhs, const KnapsackSolver::Item& rhs) {
+    return lhs.number == rhs.number
+           && lhs.weight == rhs.weight
+           && lhs.cost == rhs.cost;
+}
+
+bool operator!=(const KnapsackSolver::Item& lhs, const KnapsackSolver::Item& rhs) {
+    return !(lhs == rhs);
+}
+
+int KnapsackSolver::getNumberOfTests() const {
+    return _numberOfTests;
+}
+
+vector<KnapsackSolver::Problem> KnapsackSolver::getProblems() const {
+    return _problems;
+}
+
+vector<KnapsackSolver::Solution> KnapsackSolver::getSolutions() const {
+    return _solutions;
+}
+
+string KnapsackSolver::methodToString(Method method) {
+    switch (method){
+        case ITERATIVE: return "Iterative";
+        case RECURSIVE: return "Recursive";
+        case DYNAMIC: return "Dynamic";
+        case GREEDY: return "Greedy";
+        case ALL: return "All";
+        default: return "N/A";
+    }
+}

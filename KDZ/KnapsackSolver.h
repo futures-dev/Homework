@@ -10,7 +10,7 @@ using namespace std;
 
 class KnapsackSolver {
 /*
- * Структуры и перечисления для решения задачи о рюкзаке
+ * Structs and enums for knapsack problem 
  */
 public:
     /*
@@ -24,6 +24,10 @@ public:
      * Структура, описывающая предмет
      */
     struct Item {
+        friend bool operator==(const Item& lhs, const Item& rhs);
+
+        friend bool operator!=(const Item& lhs, const Item& rhs);
+
         Item() {
             /* Default initialization is senseless */
         };
@@ -126,7 +130,7 @@ public:
         /*
          * Время расчета, нс
          */
-        int64_t time;
+        uint64_t time;
     };
 
 
@@ -149,26 +153,11 @@ public:
 
 public:
 
-    /*
-     * Количество конкретных задачи для решения
-     */
-    int getNumberOfTests() const {
-        return _numberOfTests;
-    }
+    int getNumberOfTests() const;
 
-    /*
-     * Конкретные задачи о рюкзаке для решения
-     */
-    vector<Problem> getProblems() const {
-        return _problems;
-    }
+    vector<Problem> getProblems() const;
 
-    /*
-     * Результат решения задач
-     */
-    vector<Solution> getSolutions() const {
-        return _solutions;
-    }
+    vector<Solution> getSolutions() const;
 
 /*
  * Реализации методов решения задачи о рюкзаке
@@ -177,12 +166,12 @@ private:
     /*
      * Решает задачу итерационным методом перебора с возвратом
      */
-    Solution solveIterative();
+    void solveIterative();
 
     /*
      * Решает задачу рекурсивным методом перебора с возвратом
      */
-    Solution solveRecursive();
+    void solveRecursive();
 
     /*
      * Внешние переменные для рекурсивного алгоритма, чтобы не возвращать/передавать в качестве аргументов
@@ -198,7 +187,7 @@ private:
     /*
      * Решает задачу методом динамического программирования
      */
-    Solution solveDynamic();
+    void solveDynamic();
 
     vector<Item> *_solveDynamic_items;
     vector<Item> *_solveDynamic_knapsack;
@@ -208,7 +197,11 @@ private:
     /*
      * Решает задачу методом "жадного" алгоритма
      */
-    Solution solveGreedy();
+    void solveGreedy();
+
+
+	void destroySolutions();
+
 
 /*
  * Методы для пользователя класса
@@ -216,17 +209,21 @@ private:
 public:
     /*
      * Решает конкретную задачу о рюкзаке указанным методом
-     * Возвращает экземпляр класса Solution
+     * Добавляет экземпляр класса Solution в _solutions
      */
-    Solution solve(int problemNumber, Method method);
+    void solve(int problemNumber, Method method, int times);
 
-    /*
+	/*
      * Производит решение доступных для экземпляра класса KnapsackSolver задач о рюкзаке
      * Инициализирует поле solutions
      */
-    void solve(Method method);
+    void resolveAll(int times);
 
-    static vector<Problem> *problemsFromFile(string inputPath, string outputPath);
+    static vector<Problem> *problemsFromFile(string inputPath);
+
+	void solutionsToStream(ostream** streams,int streamNumber);
+    
+    static string methodToString(Method method);
 
 };
 

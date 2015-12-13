@@ -4,17 +4,25 @@
 //
 
 
+#include <stdlib.h>
 #include "KnapsackTester.h"
 
 int main(int argc, char* argv[]) {
+	/*
+	 * KDZ.exe [inputPath] [outputPath] [times]
+	 * For next argument, previous are needed.
+	 */
 	string inputPath = "input_knap.txt";
 	string outputPath = "output_knap.txt";
-	int times = 2;
+	int times = 20;
 	switch (argc)
 	{
-		case 4:outputPath = string(argv[2]);
-		case 3:inputPath = string(argv[1]);
-		//case 2:times = atoi(argv[1]);
+		case 4:
+			times = atoi(argv[3]);
+		case 3:
+			outputPath = string(argv[2]);
+		case 2:
+			inputPath = string(argv[1]);
 		default:break;
 	}
 	cout << "0/1 Knapsack problem solver." << endl;
@@ -23,6 +31,7 @@ int main(int argc, char* argv[]) {
 	cout << "Algorithm name" << endl;
 	cout << "Knapsack weight" << endl;
 	cout << "Knapsack cost" << endl;
+	cout << "Items number" << endl;
 	cout << "Items indices" << endl;
 	cout << "Items weights" << endl;
 	cout << "Items costs" << endl;
@@ -46,7 +55,8 @@ int main(int argc, char* argv[]) {
 	ostream* streams[2];
 	streams[0] = &cout;
 	streams[1] = &outFile;
-	solver.solutionsToStream(streams, 20);
+	solver.solutionsToStream(streams, 2);
 	cout << "-----------------------" << endl;
+	cout << "Press Enter to exit..." << endl;
 	cin.get();
 }

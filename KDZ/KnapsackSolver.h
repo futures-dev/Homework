@@ -10,7 +10,7 @@ using namespace std;
 
 class KnapsackSolver {
 /*
- * Structs and enums for knapsack problem 
+ * Структуры и перечисления, необходимые для решения задачи о рюкзаке
  */
 public:
     /*
@@ -96,7 +96,8 @@ public:
         /*
          * Конструктор
          */
-        Solution(int weight, int cost, int itemsNumber, vector<Item> *items, const Method method, int64_t time);
+        Solution(int weight, int cost, int itemsNumber, vector<Item> *items, const Method method, int problem,
+                 int64_t time);
 
         Solution() {
             /* Default initialization is senseless */
@@ -128,6 +129,11 @@ public:
         Method method;
 
         /*
+         * Номер задачи
+         */
+        int problem;
+
+        /*
          * Время расчета, нс
          */
         uint64_t time;
@@ -142,21 +148,40 @@ private:
     vector<Problem> _problems;
     vector<Solution> _solutions;
     int _currentProblem = 0;
+
 /*
  * Конструктор и деструктор
  */
 public:
 
+    /*
+     * Настраивает экземпляр класса KnapsackSolver на конкретные задачи
+     */
     KnapsackSolver(vector<Problem> problems);
 
+    /*
+     * Очищает память, выделенную под задачи и решения
+     */
     virtual ~KnapsackSolver();
 
+    /*
+     * Публичные свойства
+     */
 public:
 
+    /*
+     * Возвращает количество
+     */
     int getNumberOfTests() const;
 
+    /*
+     * Возвращает вектор задач, доступных экземпляру класса KnapsackSolver
+     */
     vector<Problem> getProblems() const;
 
+    /*
+     * Возвращает вектор решений, произведенных экземпляром класса KnapsackSolver
+     */
     vector<Solution> getSolutions() const;
 
 /*
@@ -181,7 +206,9 @@ private:
     int _solveRecursive_knapsackWeight, _solveRecursive_knapsackCost;
     int _solveRecursive_bestCost, _solveRecursive_bestSize;
 
-
+    /*
+     * Гранула рекурсии для рекурсивного алгоритма перебора с возвратом
+     */
     void _solveRecursive_grain(int currentItem);
 
     /*
@@ -189,17 +216,26 @@ private:
      */
     void solveDynamic();
 
+    /*
+     * Переменные для рекурсии динамического алгоритма, чтобы не возвращать/передавать в качестве аргументов
+     */
     vector<Item> *_solveDynamic_items;
     vector<Item> *_solveDynamic_knapsack;
     int **_solveDynamic_matrix;
 
+    /*
+     * Гранула рекурсии динамического алгоритма
+     */
     void _solveDynamic_grain(int n, int m);
+
     /*
      * Решает задачу методом "жадного" алгоритма
      */
     void solveGreedy();
 
-
+    /*
+     * Освобождает память, выделенную под решения задач
+     */
 	void destroySolutions();
 
 
@@ -219,10 +255,19 @@ public:
      */
     void resolveAll(int times);
 
+    /*
+     * Генерирует вектор конкретных задач из входного файла
+     */
     static vector<Problem> *problemsFromFile(string inputPath);
 
+    /*
+     * Выводит результат решения задач в потоки
+     */
 	void solutionsToStream(ostream** streams,int streamNumber);
-    
+
+    /*
+     * Возвращает строковое представление перечисления Method
+     */
     static string methodToString(Method method);
 
 };

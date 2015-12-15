@@ -237,7 +237,7 @@ void KnapsackSolver::solveGreedy() {
 		i++;
 	}
     _solutions.push_back(Solution(problem.maxWeight - w, bestCost, knapsack->size(), knapsack, GREEDY, _currentProblem,
-                                  _rdtsc() - t));
+                                  __rdtsc() - t));
 }
 
 void KnapsackSolver::destroySolutions()

@@ -2,23 +2,70 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
+      <config projectName="HomeworkKDZ" targetName="KDZ" />
+      <config projectName="KDZ" targetName="Homework" />
       <config projectName="KDZ" targetName="KDZ" />
+      <config projectName="Homework12" targetName="KDZ" />
+      <config projectName="Homework" targetName="Homework" />
     </generated>
   </component>
-  <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true" BUILD_OUTPUT_DIR="out">
+  <component name="CMakeSettings" AUTO_RELOAD="true" GENERATION_PASS_SYSTEM_ENVIRONMENT="true" BUILD_OUTPUT_DIR="out">
     <ADDITIONAL_GENERATION_ENVIRONMENT>
       <envs />
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d7f2a5f-20c7-40b3-98a9-e216b32685c6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Debug/KDZ.exe" afterPath="$PROJECT_DIR$/out/Debug/KDZ.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/KDZ/KnapsackSolver.cpp" afterPath="$PROJECT_DIR$/KDZ/KnapsackSolver.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/KDZ/KnapsackSolver.h" afterPath="$PROJECT_DIR$/KDZ/KnapsackSolver.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/KDZ/main.cpp" afterPath="$PROJECT_DIR$/KDZ/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Debug/input_knap.txt" afterPath="$PROJECT_DIR$/out/Debug/input_knap.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Debug/output_knap.txt" afterPath="$PROJECT_DIR$/out/Debug/output_knap.txt" />
+    <list default="true" id="3d7f2a5f-20c7-40b3-98a9-e216b32685c6" name="Default" comment="Homework12">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Homework1/geometry.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Homework1/geometry.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Homework1/main.cpp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/Homework.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework12/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework3/RadixSort.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework3/RadixSort.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework3/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework4/merge_sort.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework4/merge_sort.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework5/quick_sort.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework5/quick_sort.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework6/heap_sort.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework6/heap_sort.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework6/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework7/linked_list.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework7/linked_list.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework7/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/block_searcher.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/block_searcher.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/edge_searcher.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/edge_searcher.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Homework8/substring_searcher.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/KnapsackSolver.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/KnapsackSolver.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/KnapsackTester.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/KnapsackTester.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/input_knap_test.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/main.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/Пояснительная записка Интро.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/KDZ/Пояснительная записка.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/Homework3.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/Homework4.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/Homework5.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/Homeworky3.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/Homeworky6.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/KDZ.exe" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/input_knap.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/input_knap_test.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/output_knap.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/Debug/output_knap_test.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
     </list>
     <ignored path="Homework.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,87 +87,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="KnapsackSolver.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
+      <file leaf-file-name="CMakeTestCCompiler.cmake" pinned="false" current-in-tab="false">
+        <entry file="file://C:/CMake/share/cmake-3.4/Modules/CMakeTestCCompiler.cmake">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="31" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="31" />
-              <folding>
-                <element signature="e#45#64#0" expanded="true" />
-                <element signature="e#109#128#0" expanded="true" />
-                <element signature="e#165#185#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="output_knap.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/out/Debug/output_knap.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.678311">
-              <caret line="37" column="2" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="output_knap_other.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/out/Debug/output_knap_other.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KnapsackTester.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KnapsackSolver.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="110" selection-start-line="98" selection-start-column="110" selection-end-line="98" selection-end-column="110" />
-              <folding>
-                <element signature="e#45#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KnapsackTester.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input_knap_test.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/input_knap_test.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="8" selection-end-column="68" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input_knap.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/out/Debug/input_knap.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -130,6 +101,16 @@
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="geometry.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Homework1/geometry.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -137,13 +118,33 @@
         </entry>
       </file>
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KDZ/main.cpp">
+        <entry file="file://$PROJECT_DIR$/Homework1/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.88889">
-              <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
               <folding>
-                <element signature="e#60#79#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="geometry.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Homework1/geometry.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.044883303">
+              <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -160,10 +161,15 @@
         <option value="$PROJECT_DIR$/KDZ/input_knap_test.txt" />
         <option value="$PROJECT_DIR$/KDZ/KnapsackSolver.h" />
         <option value="$PROJECT_DIR$/out/Debug/output_knap_other.txt" />
-        <option value="$PROJECT_DIR$/KDZ/KnapsackSolver.cpp" />
         <option value="$PROJECT_DIR$/KDZ/main.cpp" />
         <option value="$PROJECT_DIR$/out/Debug/output_knap.txt" />
         <option value="$PROJECT_DIR$/out/Debug/input_knap.txt" />
+        <option value="$PROJECT_DIR$/KDZ/KnapsackSolver.cpp" />
+        <option value="$PROJECT_DIR$/Homework12/main.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Homework1/main.cpp" />
+        <option value="$PROJECT_DIR$/Homework1/geometry.cpp" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -173,10 +179,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="1176" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1847" />
+    <option name="height" value="1102" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -231,25 +237,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Homework" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Homework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="KDZ" />
+              <option name="myItemId" value="Homework1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -258,11 +246,11 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Backpack_CPP" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Application.KDZ">
+  <component name="RunManager" selected="Application.Homework">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="KDZ" TARGET_NAME="KDZ" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
@@ -288,17 +276,12 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="KDZ" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="input_knap.txt output_knap.txt 1" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="KDZ" TARGET_NAME="KDZ" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="KDZ" RUN_TARGET_NAME="KDZ">
+    <configuration default="false" name="Homework" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Homework" TARGET_NAME="Homework" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Homework" RUN_TARGET_NAME="Homework">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="KDZ" TARGET_NAME="KDZ" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="KDZ" RUN_TARGET_NAME="KDZ">
-      <envs />
-      <method />
-    </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.KDZ" />
-      <item index="1" class="java.lang.String" itemvalue="Application.Build All" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Application.Homework" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -312,23 +295,30 @@
       <option name="number" value="Default" />
       <updated>1450015811127</updated>
     </task>
+    <task id="LOCAL-00001" summary="Homework12">
+      <created>1450213776928</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1450213776928</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="1176" extended-state="6" />
+    <frame x="-11" y="-11" width="1847" height="1102" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24986301" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32804233" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39962476" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39894179" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -349,6 +339,15 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Homework12" />
+    <option name="LAST_COMMIT_MESSAGE" value="Homework12" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -358,7 +357,7 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -368,45 +367,7 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#45#64#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
-            <element signature="e#165#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="224" column="4" selection-start-line="224" selection-start-column="4" selection-end-line="224" selection-end-column="4" />
-          <folding>
-            <element signature="e#45#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/input_knap_test.txt">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -422,55 +383,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <element signature="e#60#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="7" selection-start-line="389" selection-start-column="7" selection-end-line="389" selection-end-column="7" />
-          <folding>
-            <element signature="e#45#64#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
-            <element signature="e#165#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#45#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/input_knap_test.txt">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -486,88 +399,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/main.cpp">
+    <entry file="file://C:/CMake/share/cmake-3.4/Modules/CMakeTestCCompiler.cmake">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="1" selection-start-line="52" selection-start-column="1" selection-end-line="52" selection-end-column="1" />
-          <folding>
-            <element signature="e#60#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="201" column="19" selection-start-line="201" selection-start-column="19" selection-end-line="201" selection-end-column="19" />
-          <folding>
-            <element signature="e#45#64#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
-            <element signature="e#165#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#45#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="202" column="27" selection-start-line="202" selection-start-column="27" selection-end-line="202" selection-end-column="27" />
-          <folding>
-            <element signature="e#45#64#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
-            <element signature="e#165#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#45#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -575,28 +410,22 @@
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.cpp">
+    <entry file="file://$PROJECT_DIR$/Homework1/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
-          <folding />
+          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/input_knap_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="8" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackTester.h">
+    <entry file="file://$PROJECT_DIR$/Homework1/geometry.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -604,58 +433,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.h">
+    <entry file="file://$PROJECT_DIR$/Homework1/geometry.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="110" selection-start-line="98" selection-start-column="110" selection-end-line="98" selection-end-column="110" />
-          <folding>
-            <element signature="e#45#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.88889">
-          <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
-          <folding>
-            <element signature="e#60#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Debug/output_knap_other.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/Debug/input_knap.txt">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/KDZ/KnapsackSolver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="31" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="31" />
-          <folding>
-            <element signature="e#45#64#0" expanded="true" />
-            <element signature="e#109#128#0" expanded="true" />
-            <element signature="e#165#185#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Debug/output_knap.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.678311">
-          <caret line="37" column="2" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.044883303">
+          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
           <folding />
         </state>
       </provider>

@@ -25,23 +25,22 @@ void Point::setY(const int new_y) {
     _y = new_y;
 }
 
-PointArray::PointArray() {
-    PointArray(nullptr, 0);
-}
+PointArray::PointArray() :
+        PointArray(nullptr, 0) {
+};
 
 PointArray::PointArray(const Point *points, const int size) {
-    _storage = new Point[size];
+    _storage = new Point[_size = size];
     for (int i = 0; i < size; i++) {
         _storage[i] = points[i];
     }
 }
 
-PointArray::PointArray(const PointArray &pv) {
-    PointArray(pv._storage, pv._size);
+PointArray::PointArray(const PointArray &pv) : PointArray(pv._storage, pv._size) {
 }
 
 PointArray::~PointArray() {
-    delete _storage;
+    delete[] _storage;
 }
 
 void PointArray::push_back(const Point &p) {
@@ -59,7 +58,10 @@ void PointArray::insert(const int position, const Point &p) {
 }
 
 void PointArray::remove(const int position) {
-
+    for (int i = position; i < _size; i++) {
+        _storage[i] = _storage[i + 1];
+    }
+    resize(--_size);
 }
 
 const int PointArray::getSize() const {
@@ -67,7 +69,7 @@ const int PointArray::getSize() const {
 }
 
 void PointArray::clear() {
-
+    resize(_size = 0);
 }
 
 Point *PointArray::get(const int position) {
@@ -79,5 +81,15 @@ const Point *PointArray::get(const int position) const {
 }
 
 void PointArray::resize(int n) {
-
+    Point *new_storage = new Point[n];
+    if (n > _size) {
+        n = _size;
+    }
+    _size = n;
+    // todo: use memcpy
+    for (int i = 0; i < n; i++) {
+        new_storage[i] = _storage[i];
+    }
+    delete[] _storage;
+    _storage = new_storage;
 }

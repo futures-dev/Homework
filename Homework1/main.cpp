@@ -31,6 +31,8 @@ void testPointModifiers() {
     assert(point.getY() == 7);
 }
 
+// ============== test for PointArray ======================
+
 PointArray testPointArrayDefaultConstructor() {
     // Test of default ctor
     PointArray pointArray;
@@ -43,6 +45,7 @@ PointArray testPointArrayConstructor() {
     points[0] = testPointConstructor();
     points[1] = testPointDefaultConstructor();
     PointArray pointArray(points, 2);
+    delete[] points;
     assert(pointArray.getSize() == 2);
     assert(pointArray.get(0)->getY() == 7);
     assert(pointArray.get(1)->getX() == 0);
@@ -56,11 +59,11 @@ void testPointArrayPushBack() {
     assert(pointArray.getSize() == 2);
     assert(pointArray.get(0)->getY() == 0);
     assert(pointArray.get(1)->getX() == 5);
-    pointArray = testPointArrayConstructor();
-    pointArray.push_back(testPointDefaultConstructor());
-    pointArray.push_back(testPointConstructor());
-    assert(pointArray.get(pointArray.getSize() - 2)->getY() == 0);
-    assert(pointArray.get(pointArray.getSize() - 1)->getX() == 5);
+    PointArray pointArray2 = testPointArrayConstructor();
+    pointArray2.push_back(testPointDefaultConstructor());
+    pointArray2.push_back(testPointConstructor());
+    assert(pointArray2.get(pointArray2.getSize() - 2)->getY() == 0);
+    assert(pointArray2.get(pointArray2.getSize() - 1)->getX() == 5);
 }
 
 PointArray testPointArrayInsert() {
@@ -73,7 +76,7 @@ PointArray testPointArrayInsert() {
 }
 
 void testPointArrayRemoveClear() {
-    PointArray pointArray = testPointArrayConstructor();
+    PointArray pointArray = testPointArrayInsert();
     pointArray.remove(1);
 
     assert(pointArray.getSize() == 2);

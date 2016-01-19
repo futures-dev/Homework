@@ -1,7 +1,10 @@
 //
-// Created by Andrei on 18.01.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 19.01.2016
 //
 
+// #include <string.h> ; for memcpy
 #include "geometry.h"
 
 Point::Point(int x, int y) {
@@ -27,16 +30,18 @@ void Point::setY(const int new_y) {
 
 PointArray::PointArray() :
         PointArray(nullptr, 0) {
+    // Default constructor initializes 0-size array and sets size 0
 };
 
 PointArray::PointArray(const Point *points, const int size) {
-    _storage = new Point[_size = size];
+    _storage = new Point[_size = size]; // array init
     for (int i = 0; i < size; i++) {
-        _storage[i] = points[i];
+        _storage[i] = points[i]; // values insertion
     }
 }
 
 PointArray::PointArray(const PointArray &pv) : PointArray(pv._storage, pv._size) {
+    // Copy constructor directs array of points and size to PointArray(const Point*, const int)
 }
 
 PointArray::~PointArray() {
@@ -44,24 +49,26 @@ PointArray::~PointArray() {
 }
 
 void PointArray::push_back(const Point &p) {
-    resize(_size + 1);
-    _storage[_size++] = p;
+    resize(_size + 1); // creating space in the back
+    _storage[_size] = p; // value insertion
+    _size++; // size inc
 }
 
 void PointArray::insert(const int position, const Point &p) {
-    resize(_size + 1);
+    resize(_size + 1); // creeating space for new element
     for (int i = _size; i > position; i--) {
-        _storage[i] = _storage[i - 1];
+        _storage[i] = _storage[i - 1]; // shift
     }
-    _storage[position] = p;
-    _size++;
+    _storage[position] = p; // value insertion
+    _size++; // size inc
 }
 
 void PointArray::remove(const int position) {
+    _size--; // size dec, last element is not iterated
     for (int i = position; i < _size; i++) {
-        _storage[i] = _storage[i + 1];
+        _storage[i] = _storage[i + 1]; // shift, removed value is cleared
     }
-    resize(--_size);
+    resize(_size); // resize
 }
 
 const int PointArray::getSize() const {
@@ -69,27 +76,29 @@ const int PointArray::getSize() const {
 }
 
 void PointArray::clear() {
-    resize(_size = 0);
+    resize(_size = 0); // set size 0 and resize
 }
 
 Point *PointArray::get(const int position) {
-    return (&_storage)[position];
+    return &(_storage[position]);
 }
 
 const Point *PointArray::get(const int position) const {
-    return (&_storage)[position];
+    return &(_storage)[position];
 }
 
 void PointArray::resize(int n) {
     Point *new_storage = new Point[n];
-    if (n > _size) {
-        n = _size;
+    // shall copy exactly size vaues
+    if (n < _size) {
+        _size = n;
     }
-    _size = n;
-    // todo: use memcpy
-    for (int i = 0; i < n; i++) {
-        new_storage[i] = _storage[i];
+    for (int i = 0; i < _size; i++) {
+        new_storage[i] = _storage[i]; // values copy
     }
-    delete[] _storage;
-    _storage = new_storage;
+    // could use memcpy
+    // memcpy(_storage,new_storage,n*sizeof(Point));
+    _size = n; // size update for n>size
+    delete[] _storage; // garbage cleaning
+    _storage = new_storage; // storage update
 }

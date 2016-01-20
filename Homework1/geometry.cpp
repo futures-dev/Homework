@@ -5,6 +5,7 @@
 //
 
 // #include <string.h> ; for memcpy
+#include <stdexcept>
 #include "geometry.h"
 
 Point::Point(int x, int y) {
@@ -34,6 +35,9 @@ PointArray::PointArray() :
 };
 
 PointArray::PointArray(const Point *points, const int size) {
+    if (size < 0) {
+        throw std::range_error("Array size is negative");
+    }
     _storage = new Point[_size = size]; // array init
     for (int i = 0; i < size; i++) {
         _storage[i] = points[i]; // values insertion
@@ -54,6 +58,9 @@ void PointArray::push_back(const Point &p) {
 }
 
 void PointArray::insert(const int position, const Point &p) {
+    if (position > _size || position < 0) {
+        throw std::range_error("Insert position out of range");
+    }
     resize(_size + 1); // creeating space for new element
     for (int i = _size - 1; i > position; i--) {
         _storage[i] = _storage[i - 1]; // shift
@@ -62,6 +69,9 @@ void PointArray::insert(const int position, const Point &p) {
 }
 
 void PointArray::remove(const int position) {
+    if (position >= _size || position < 0) {
+        throw std::range_error("Remove position out of range");
+    }
     for (int i = position; i < _size - 1; i++) {
         _storage[i] = _storage[i + 1]; // shift, removed value is cleared
     }
@@ -77,14 +87,23 @@ void PointArray::clear() {
 }
 
 Point *PointArray::get(const int position) {
+    if (position >= _size || position < 0) {
+        throw std::range_error("Get position out of range");
+    }
     return &(_storage[position]);
 }
 
 const Point *PointArray::get(const int position) const {
+    if (position >= _size || position < 0) {
+        throw std::range_error("Get position out of range");
+    }
     return &(_storage)[position];
 }
 
 void PointArray::resize(int n) {
+    if (n < 0) {
+        throw std::range_error("New size is negative");
+    }
     // resize sets _size to n
     Point *new_storage = new Point[n];
     // shall copy exactly size vaues

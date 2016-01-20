@@ -50,25 +50,22 @@ PointArray::~PointArray() {
 
 void PointArray::push_back(const Point &p) {
     resize(_size + 1); // creating space in the back
-    _storage[_size] = p; // value insertion
-    _size++; // size inc
+    _storage[_size - 1] = p; // value insertion
 }
 
 void PointArray::insert(const int position, const Point &p) {
     resize(_size + 1); // creeating space for new element
-    for (int i = _size; i > position; i--) {
+    for (int i = _size - 1; i > position; i--) {
         _storage[i] = _storage[i - 1]; // shift
     }
     _storage[position] = p; // value insertion
-    _size++; // size inc
 }
 
 void PointArray::remove(const int position) {
-    _size--; // size dec, last element is not iterated
-    for (int i = position; i < _size; i++) {
+    for (int i = position; i < _size - 1; i++) {
         _storage[i] = _storage[i + 1]; // shift, removed value is cleared
     }
-    resize(_size); // resize
+    resize(_size - 1); // resize
 }
 
 const int PointArray::getSize() const {
@@ -76,7 +73,7 @@ const int PointArray::getSize() const {
 }
 
 void PointArray::clear() {
-    resize(_size = 0); // set size 0 and resize
+    resize(0); // set size 0 and resize
 }
 
 Point *PointArray::get(const int position) {
@@ -88,6 +85,7 @@ const Point *PointArray::get(const int position) const {
 }
 
 void PointArray::resize(int n) {
+    // resize sets _size to n
     Point *new_storage = new Point[n];
     // shall copy exactly size vaues
     if (n < _size) {

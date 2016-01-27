@@ -36,7 +36,6 @@ public:
      *  Method is not intended to change an object's state.
      */
     virtual Arity getArity() const = 0;
-
 protected:
     /** Destructor must not be public due to It is not intended to delete an object through this interface!!
      *
@@ -60,24 +59,19 @@ public:
     // We explicitly use virtual keyword to point out the virtual nature of the methods
 
     virtual int operation(int a, int b, int c) override;
-
     virtual Arity getArity() const override;
 }; // class PlusOp
 
-/** An operation object that implements DIVIDE binary operation
- *
- */
-class DivOp : public IOperation {
-//public:
-//    virtual ~DivOp() {}
+
+// classMinusOp
+class MinusOp : public IOperation {
+
 public:
-    // IOperation interface overriding
-    // We explicitly use virtual keyword to point out the virtual nature of the methods
 
     virtual int operation(int a, int b, int c) override;
-
     virtual Arity getArity() const override;
-}; // class DivOp
+};
+
 
 class StackMachine {
 public:
@@ -99,7 +93,6 @@ public:
      *  If the given symbol is not mapped to any operation, a nullptr is returned.
      */
     IOperation *getOperation(char symb);
-
 public:
 
     /** Calculates given expression using the shared stack and returns the value on its top.
@@ -114,7 +107,6 @@ public:
      *  an exception is thrown.
      */
     int calculate(const std::string &expr, bool clearStack = true);
-
 public:
 
     // sets/gets

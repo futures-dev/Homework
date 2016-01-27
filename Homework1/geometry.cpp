@@ -6,6 +6,7 @@
 
 // #include <string.h> ; for memcpy
 #include <stdexcept>
+// for range_error
 #include "geometry.h"
 
 Point::Point(int x, int y) {

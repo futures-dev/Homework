@@ -1,11 +1,14 @@
 //
-// Created by sergey on 24.01.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 27.01.2016
 //
 
 #ifndef STACKMACHINE_STACKMACHINE_H
 #define STACKMACHINE_STACKMACHINE_H
 
 #include <map>
+#include <bits/stringfwd.h>
 
 #include "IntStack.h"
 
@@ -36,6 +39,7 @@ public:
      *  Method is not intended to change an object's state.
      */
     virtual Arity getArity() const = 0;
+
 protected:
     /** Destructor must not be public due to It is not intended to delete an object through this interface!!
      *
@@ -59,6 +63,7 @@ public:
     // We explicitly use virtual keyword to point out the virtual nature of the methods
 
     virtual int operation(int a, int b, int c) override;
+
     virtual Arity getArity() const override;
 }; // class PlusOp
 
@@ -69,8 +74,32 @@ class MinusOp : public IOperation {
 public:
 
     virtual int operation(int a, int b, int c) override;
+
     virtual Arity getArity() const override;
 };
+
+// class MultiplyOp
+class MultiplyOp : public IOperation {
+
+public:
+
+    virtual int operation(int a, int b, int c) override;
+
+    virtual Arity getArity() const override;
+
+};
+
+/*
+// class DivideOp
+class DivideOp : public IOperation{
+
+public:
+
+    virtual int operation(int a, int b, int c) override;
+    virtual Arity getArity() const override;
+
+};
+ */
 
 
 class StackMachine {
@@ -93,6 +122,7 @@ public:
      *  If the given symbol is not mapped to any operation, a nullptr is returned.
      */
     IOperation *getOperation(char symb);
+
 public:
 
     /** Calculates given expression using the shared stack and returns the value on its top.
@@ -107,6 +137,7 @@ public:
      *  an exception is thrown.
      */
     int calculate(const std::string &expr, bool clearStack = true);
+
 public:
 
     // sets/gets

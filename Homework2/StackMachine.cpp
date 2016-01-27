@@ -1,14 +1,18 @@
 //
-// Created by sergey on 24.01.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 27.01.2016
 //
 
-#include "StackMachineOld.h"
+#include "StackMachine.h"
 
 #include <vector>
 #include <sstream>
 #include <iostream>
 #include <stdlib.h>
+#include <stdexcept>
 
+using namespace std;
 //==============================================================================
 // Free functions -- helpers
 //==============================================================================
@@ -51,6 +55,38 @@ IOperation::Arity PlusOp::getArity() const {
     return arDue;
 }
 
+//==============================================================================
+// class MultiplyOp
+//==============================================================================
+
+int MultiplyOp::operation(int a, int b, int c) {
+    return a * b;
+}
+
+IOperation::Arity MultiplyOp::getArity() const {
+    return arDue;
+}
+
+/*
+
+
+//==============================================================================
+// class DivideOp
+//==============================================================================
+
+int DivideOp::operation(int a, int b, int c) {
+    if (b == 0) {
+        return a >= 0 ? SIZE_MAX : -SIZE_MAX;
+    }
+    else {
+        return a / b;
+    }
+}
+
+IOperation::Arity DivideOp::getArity() const {
+    return arDue;
+}
+ */
 
 //==============================================================================
 // class StackMachine
@@ -58,9 +94,10 @@ IOperation::Arity PlusOp::getArity() const {
 
 
 void StackMachine::registerOperation(char symb, IOperation *oper) {
+    // prevent multiple registration
     SymbolToOperMapConstIter it = _opers.find(symb);
     if (it != _opers.end())
-        throw std::logic_error("An operation with the same symbol is already registered");
+        throw std::logic_error("Operation " + string(&symb, 1) + " is already registered");
 
     _opers[symb] = oper;
 }
@@ -74,50 +111,56 @@ IOperation *StackMachine::getOperation(char symb) {
 }
 
 int StackMachine::calculate(const std::string &expr, bool clearStack) {
-    if (clearStack)
-        _s.clear();
 
-    std::vector<std::string> tokens;
+    if (clearStack) {
+        _s.clear();
+    }
+    vector<string> tokens;
+
+    /*
+     stringstream stream(expr);
+    std::string item;
+    while (getline(stream, item, ' ')) {
+        if (!item.empty()) {
+            tokens.push_back(item);
+        }
+    }
+     */
+
     splitStr(expr, ' ', tokens);
 
-    // iterates all tokens
+    // for each token in tokens
     for (std::vector<std::string>::const_iterator it = tokens.begin(); it != tokens.end(); ++it) {
-        const std::string &curToken = *it;
-        int num;
-        bool isNum = intToStr(curToken, num);
-
-        // if current token is number, push it onto the stack
-        if (isNum) {
-            _s.push(num);
-            continue;
+        const string token = *it;
+        int val; // token as int
+        if (intToStr(token, val)) {
+            _s.push(val);
         }
-
-        // the other possible option is to interpret symbol as operator
-        if (curToken.size() != 1)
-            throw std::logic_error("Unknown token: " + curToken);
-
-        // well, its size is 1 symbol. try to found an appropriate operation
-        IOperation *op = getOperation(curToken[0]);
-        if (!op)
-            throw std::logic_error("No operation defined: " + curToken);
-
-        // if the operation is defined, the result is determined by its arity
-        IOperation::Arity ar = op->getArity();
-        int op1 = 0, op2 = 0, op3 = 0;
-        if (ar == IOperation::arUno || ar == IOperation::arDue || ar == IOperation::arTre) {
-            op1 = _s.pop();
-            if (ar == IOperation::arDue || ar == IOperation::arTre) {
-                op2 = _s.pop();
-                if (ar == IOperation::arTre)
-                    op3 = _s.pop();
+        else {
+            if (token.length() != 1) {
+                // operations limited to char
+                throw logic_error("Promoted token " + token + " is neither a number, nor an operation");
+            }
+            IOperation *operation = getOperation(token[0]);
+            if (!operation) {
+                throw logic_error("Invalid operation: " + token);
+            }
+            switch (operation->getArity()) {
+                case IOperation::arUno:
+                    _s.push(operation->operation(_s.pop()));
+                    break;
+                case IOperation::arDue:
+                    _s.push(operation->operation(_s.pop(), _s.pop()));
+                    break;
+                case IOperation::arTre:
+                    _s.push(operation->operation(_s.pop(), _s.pop(), _s.pop()));
+                    break;
+                default:
+                    throw logic_error("Unsupported arity");
             }
         }
-
-        int res = op->operation(op1, op2, op3);
-        _s.push(res);
-
-        return res;
     }
 
-
+    return _s.top();
 }
+

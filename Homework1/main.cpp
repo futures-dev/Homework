@@ -97,7 +97,7 @@ void testPointArrayInsertEmpty() {
 
 }
 
-int main(int argc, char **argv) {
+int main1(int argc, char **argv) {
     // Point tests
     testPointDefaultConstructor();
     testPointConstructor();

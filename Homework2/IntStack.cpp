@@ -1,29 +1,44 @@
 //
-// Created by Computer on 25.01.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 27.01.2016
 //
 
+#include <stdexcept>
 #include "IntStack.h"
 
 IntStack::IntStack(size_t sz) {
-    _stack = new int[sz];
+    _stack = new int[_ssize = sz]; // Allocate stack
+    _head = -1; // Set current head
 }
 
 IntStack::~IntStack() {
-    delete _stack;
+    delete _stack; // Free memory
 }
 
 void IntStack::push(int el) {
-    _stack[_ssize++] = el;
+    // size_t is unsigned
+    if (++_head >= _ssize) {
+        throw std::logic_error("Stack overflow");
+    }
+    _stack[_head] = el;
 }
 
 int IntStack::pop() {
-    return _stack[--_ssize];
+    if (_head >= _ssize) {
+        throw std::logic_error("Stack is empty");
+    }
+    return _stack[_head--];
 }
 
 int IntStack::top() {
-    return _stack[_ssize - 1];
+    if (_head >= _ssize) {
+        throw std::logic_error("Stack is empty");
+    }
+    return _stack[_head];
 }
 
 void IntStack::clear() {
-    _ssize = 0;
+    // init not needed
+    _head = -1;
 }

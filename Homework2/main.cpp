@@ -5,7 +5,7 @@
 
 
 #include "IntStack.h"
-#include "StackMachine.h"
+#include "StackMachineOld.h"
 
 
 using namespace std;

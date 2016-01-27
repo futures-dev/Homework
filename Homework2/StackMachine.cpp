@@ -2,17 +2,40 @@
 // Created by sergey on 24.01.2016.
 //
 
-#include "StackMachine.h"
+#include "StackMachineOld.h"
+
 #include <vector>
 #include <sstream>
-
-using namespace std;
+#include <iostream>
+#include <stdlib.h>
 
 //==============================================================================
 // Free functions -- helpers
 //==============================================================================
 
-// TBD:
+/** Splits given \param s string using given \param delim symbol as delimiter
+ *  Puts results tockens into the given \param elems vector
+ */
+std::vector<std::string> &splitStr(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+bool intToStr(const std::string &s, int &i) {
+    if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+        return false;
+
+    char *p = nullptr;
+    i = strtol(s.c_str(), &p, 10);
+
+    return (*p == '\0');
+}
+
 
 //==============================================================================
 // class PlusOp
@@ -28,90 +51,73 @@ IOperation::Arity PlusOp::getArity() const {
     return arDue;
 }
 
+
 //==============================================================================
 // class StackMachine
 //==============================================================================
 
 
-// TBD
 void StackMachine::registerOperation(char symb, IOperation *oper) {
     SymbolToOperMapConstIter it = _opers.find(symb);
-    if (it != _opers.end()) {
-        throw std::logic_error("An operation is already registered...");
-    }
+    if (it != _opers.end())
+        throw std::logic_error("An operation with the same symbol is already registered");
+
     _opers[symb] = oper;
 }
 
 IOperation *StackMachine::getOperation(char symb) {
-    return _opers[symb];
-}
+    SymbolToOperMapConstIter it = _opers.find(symb);
+    if (it == _opers.end())
+        return nullptr;
 
-bool parseInt(string s, int *out) {
-    int temp = 0;
-    int dec = 1;
-    for (int i = s.length() - 1; i >= 0; i++) {
-        int outnew = temp + dec * (s.at(i) - '0');
-        if (outnew % dec != temp) {
-            return false;
-        }
-        dec *= 10;
-    }
-    *out = temp;
-    return true;
+    return it->second;
 }
 
 int StackMachine::calculate(const std::string &expr, bool clearStack) {
-    if (clearStack) {
+    if (clearStack)
         _s.clear();
-    }
-    vector<string> tokens;
-    stringstream stream(expr);
-    std::string item;
-    while (getline(stream, item, ' ')) {
-        if (!item.empty()) {
-            tokens.push_back(item);
-        }
-    }
 
-    while (!tokens.empty()) {
-        int val;
-        if (parseInt(tokens.back(), &val)) {
-            _s.push(val);
+    std::vector<std::string> tokens;
+    splitStr(expr, ' ', tokens);
+
+    // iterates all tokens
+    for (std::vector<std::string>::const_iterator it = tokens.begin(); it != tokens.end(); ++it) {
+        const std::string &curToken = *it;
+        int num;
+        bool isNum = intToStr(curToken, num);
+
+        // if current token is number, push it onto the stack
+        if (isNum) {
+            _s.push(num);
+            continue;
         }
-        else {
-            if (tokens.back().length() != 1) {
-                throw logic_error("Promoted token is neither a number, nor an operation");
+
+        // the other possible option is to interpret symbol as operator
+        if (curToken.size() != 1)
+            throw std::logic_error("Unknown token: " + curToken);
+
+        // well, its size is 1 symbol. try to found an appropriate operation
+        IOperation *op = getOperation(curToken[0]);
+        if (!op)
+            throw std::logic_error("No operation defined: " + curToken);
+
+        // if the operation is defined, the result is determined by its arity
+        IOperation::Arity ar = op->getArity();
+        int op1 = 0, op2 = 0, op3 = 0;
+        if (ar == IOperation::arUno || ar == IOperation::arDue || ar == IOperation::arTre) {
+            op1 = _s.pop();
+            if (ar == IOperation::arDue || ar == IOperation::arTre) {
+                op2 = _s.pop();
+                if (ar == IOperation::arTre)
+                    op3 = _s.pop();
             }
-            IOperation *operation = _opers[tokens.back().at(0)];
-            switch (operation->getArity()) {
-                case IOperation::arUno:
-                    _s.push(operation->operation(_s.pop()));
-                    break;
-                case IOperation::arDue:
-                    _s.push(operation->operation(_s.pop(), operation->operation(_s.pop(), _s.pop())));
-                    break;
-                case IOperation::arTre:
-                    _s.push(operation->operation(_s.pop(), operation->operation(_s.pop(), _s.pop()),
-                                                 operation->operation(_s.pop(), _s.pop(), _s.pop())));
-                    break;
-                default:
-                    throw logic_error("Unsupported arity");
-            }
         }
+
+        int res = op->operation(op1, op2, op3);
+        _s.push(res);
+
+        return res;
     }
 
-    return _s.pop();
-}
 
-int DivOp::operation(int a, int b, int c) {
-    if (b == 0) {
-        return a >= 0 ? SIZE_MAX : -SIZE_MAX;
-    }
-    else {
-        return a / b;
-    }
-}
-
-IOperation::Arity DivOp::getArity() const {
-    return arDue;
 }

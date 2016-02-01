@@ -12,7 +12,9 @@ public:
     safearray() : _storage(nullptr), _capacity(0) { } // default constructor
     safearray(int); // single param constructor
     ~safearray(void); // destructor
-    T &operator[](int);
+    T &operator[](int index) {
+
+    }
 };
 
 #endif

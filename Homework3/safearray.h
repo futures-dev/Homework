@@ -1,3 +1,9 @@
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 cpp 5.2.1
+// 02.02.2016
+//
+
 #ifndef SAFEARRAY_H
 #define SAFEARRAY_H
 

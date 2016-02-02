@@ -1,21 +1,21 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 
 using namespace std;
 
 #include "course.h"
+#include "safearray.h"
 
-void initCourses(course[]);
+void initCourses(safearray<course> &);
 
-void displayMenu(course[]);
+void displayMenu(safearray<course> &);
 
 const int NUM_COURSES = 10;
 const int QUIT = 99;
 
 int main(int argc, char *argv[]) {
 
-    course courses[NUM_COURSES];
+    safearray<course> courses(NUM_COURSES);
     initCourses(courses);
 
     int choice = 0;
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 }
 
-void displayMenu(course courses[]) {
+void displayMenu(safearray<course> &courses) {
 
     for (int i = 1; i <= NUM_COURSES; i++) {
         cout << i << ". " << courses[i - 1].name << "\n";
@@ -42,7 +42,7 @@ void displayMenu(course courses[]) {
     cout << "99. Quit\n";
 }
 
-void initCourses(course courses[]) {
+void initCourses(safearray<course> &courses) {
     ifstream inf("courses.txt");
     if (!inf) {
         cerr << "Could not open courses.txt" << endl;

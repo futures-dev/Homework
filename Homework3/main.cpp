@@ -19,16 +19,24 @@ int main(int argc, char *argv[]) {
     initCourses(courses);
 
     int choice = 0;
-    while (choice != QUIT) {
+    while (true) {
 
         displayMenu(courses);
         cout << "Enter number of course to see more information on\n";
         cin >> choice;
         cin.clear();    // Defence from non int
         cin.sync();
+        // a little change, because no need to try courses[QUIT]
+        if (choice == QUIT) {
+            break;
+        }
         cout << "\n";
-        if (choice >= 1 && choice <= NUM_COURSES) {
+        // the great use of exception
+        try {
             cout << courses[choice - 1] << "\n\n";
+        }
+        catch (out_of_range &e) {
+            cout << e.what() << endl;
         }
     }
     return EXIT_SUCCESS;

@@ -8,7 +8,13 @@
 #ifndef HOMEWORK_ENHANCEDSAFEARRAY_H
 #define HOMEWORK_ENHANCEDSAFEARRAY_H
 
-
+/*
+ * SafeArray supporting extra features:
+ *  copy constructor;
+ *  size getter;
+ *  assignment operator overload;
+ *  equality operator overload.
+ */
 template<class T>
 class EnhancedSafeArray : public SafeArray<T> {
 public:

@@ -1,6 +1,13 @@
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 27.01.2016
+//
+
 #include <iostream>
 #include <assert.h>
 #include <stdexcept>
+#include <stdio.h>
 //#include <conio.h>
 
 
@@ -59,12 +66,30 @@ void testStackMachine() {
 
 }
 
+void testStackMachine2() {
+
+    StackMachine sm;
+    PlusOp plusop;
+    sm.registerOperation('+', &plusop);
+
+    MultiplyOp multiplyOp;
+    sm.registerOperation('*', &multiplyOp);
+
+    int res = sm.calculate("15 10 +");
+    int r1 = sm.getStack().top();
+    assert(res == 25);
+    assert(r1 == 25);
+    // 25 still on stack
+    res = sm.calculate("5 * 3 4 + *", false);
+    assert(res == 875);
+}
+
 int main() {
     cout << "Hello, World!" << endl;
 
     testStack();
     testStackMachine();
-
+    testStackMachine2();
     getchar();
     return 0;
 }

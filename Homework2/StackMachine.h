@@ -1,11 +1,14 @@
 //
-// Created by sergey on 24.01.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 27.01.2016
 //
 
 #ifndef STACKMACHINE_STACKMACHINE_H
 #define STACKMACHINE_STACKMACHINE_H
 
 #include <map>
+#include <bits/stringfwd.h>
 
 #include "IntStack.h"
 
@@ -64,20 +67,40 @@ public:
     virtual Arity getArity() const override;
 }; // class PlusOp
 
-/** An operation object that implements DIVIDE binary operation
- *
- */
-class DivOp : public IOperation {
-//public:
-//    virtual ~DivOp() {}
+
+// classMinusOp
+class MinusOp : public IOperation {
+
 public:
-    // IOperation interface overriding
-    // We explicitly use virtual keyword to point out the virtual nature of the methods
 
     virtual int operation(int a, int b, int c) override;
 
     virtual Arity getArity() const override;
-}; // class DivOp
+};
+
+// class MultiplyOp
+class MultiplyOp : public IOperation {
+
+public:
+
+    virtual int operation(int a, int b, int c) override;
+
+    virtual Arity getArity() const override;
+
+};
+
+/*
+// class DivideOp
+class DivideOp : public IOperation{
+
+public:
+
+    virtual int operation(int a, int b, int c) override;
+    virtual Arity getArity() const override;
+
+};
+ */
+
 
 class StackMachine {
 public:

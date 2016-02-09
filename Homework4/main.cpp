@@ -1,5 +1,4 @@
 #include   <iostream>
-#include   <string>
 #include   <cstdlib>
 #include   <stdexcept>
 #include   "enhancedsafearray.h"
@@ -57,12 +56,13 @@ void testCopyConstructor(EnhancedSafeArray<int> arr) {
 void testAssignment(void) {
     try {
         EnhancedSafeArray <string> s1(10);
+        EnhancedSafeArray<string> s3(20);
         EnhancedSafeArray <string> s2(100);
         for (int i = 0; i < 100; i++) {
             s2[i] = "test";
         }
 
-        s1 = s2;
+        s1 = s3 = s2;
         for (int i = 0; i < 100; i++) {
             if (s1[i] != "test") {
                 throw runtime_error("test_assignment");

@@ -46,7 +46,7 @@ public:
     /*
      * Assignment operator overload. Delete and deep copy of storage.
      */
-    T &operator=(EnhancedSafeArray const &other) {
+    EnhancedSafeArray &operator=(EnhancedSafeArray const &other) {
         // storage may be NULL
         if (this->storage) {
             delete[] this->storage;
@@ -54,6 +54,7 @@ public:
         this->count = other.count;
         this->storage = new T[this->count];
         std::copy(other.storage, &other.storage[other.count], this->storage);
+        return *this;
     }
 
     /*

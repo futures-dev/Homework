@@ -8,9 +8,7 @@
 #define HOMEWORK_NICESTACK_HPP
 
 template<class T>
-NiceStack<T>::NiceStack(size_t capacity) : iHead(0), m_capacity(capacity), storage() {
-    cout << iHead << m_capacity;
-}
+NiceStack<T>::NiceStack(size_t capacity) : iHead(0), m_capacity(capacity), storage(capacity) { }
 
 template<class T>
 size_t NiceStack<T>::size() const {
@@ -43,7 +41,7 @@ T NiceStack<T>::pop(void) throw(out_of_range) {
     }
     T v = storage.back().first;
     storage.pop_back();
-    ihead--;
+    iHead--;
     return v;
 }
 

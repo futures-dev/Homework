@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     try {
         DNARepairer dnarepairer;
 
-        dnarepairer.readFile("test.in");
+        dnarepairer.readFile("test3.in");
 
         cout << "Broken DNAs" << endl;
         dnarepairer.printDNAStorage();

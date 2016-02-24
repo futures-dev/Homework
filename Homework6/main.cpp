@@ -1,4 +1,8 @@
-//#include "stdafx.h"
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 24.02.2016
+//
 
 #include <fstream>
 #include <iostream>
@@ -12,7 +16,7 @@ int main(int argc, char *argv[]) {
     try {
         DNARepairer dnarepairer;
 
-        dnarepairer.readFile("test3.in");
+        dnarepairer.readFile("test2.in");
 
         cout << "Broken DNAs" << endl;
         dnarepairer.printDNAStorage();

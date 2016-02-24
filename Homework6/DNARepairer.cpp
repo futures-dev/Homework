@@ -1,4 +1,8 @@
-//#include "stdafx.h"
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 24.02.2016
+//
 
 #include <fstream>
 #include <sstream>
@@ -6,96 +10,44 @@
 #include <stdlib.h>
 #include "DNARepairer.h"
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-//  Очень важно!!
-//  Этот файл является лишь примером-подсказкой, который
-//  показывает как обращаться со списком имея доступ лишь
-//  к pPreHead.
-//  Вы должны опираясь на его реализовать свое правильное решение.
-//  Например в методе readFile не проверяется формат и не
-//  возбуждаются исключения, а repairDNA делает вообще
-//  неизвестно что!!!
-//  Кроме того этот пример будет работать только если у вас
-//  правильно реализован LinkedList.h
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-typedef LinkedList<DNAElement> DNA;
-// Класс DNA представляет список узлов, которые содержат DNAElement объекты
-// Узел не то же самое, что значение!
-
+// typedef DNA is awful as every name here contains DNA
 
 void DNARepairer::readFile(string filename) {
     {
+        // open file stream
         ifstream file(filename, ios_base::in);
 
         if (!file) {
             throw std::invalid_argument("File could not be opened");
         }
-        string line;
-        getline(file, line);
+
+        string line; // input buffer
+        getline(file, line); // line contains the number of lines
         int linesNumber = atoi(line.c_str());
         int i = 0;
-        Node<LinkedList<DNAElement>> *it = DNAStorage.getPreHead();
+        Node<LinkedList<DNAElement>> *current = DNAStorage.getPreHead();
         while (getline(file, line)) {
             if (++i > linesNumber) {
-                break;
+                break; // read enough
             }
-            Node<LinkedList<DNAElement>> *node = new Node<LinkedList<DNAElement>>;
-            istringstream words(line);
+            Node<LinkedList<DNAElement>> *node = new Node<LinkedList<DNAElement>>; // new DNA chain
+            istringstream words(line); // token stream
+            string word; // word buffer
 
-            string word;
-
+            // input
             while (words >> word) {
                 DNAElement element;
                 element.readString(word);
                 node->value.addElementToEnd(element);
             }
-            it->next = node;
-            it = it->next;
+
+            current->next = node; // add new node to the list
+            current = current->next;
         }
         if (i < linesNumber) {
             throw invalid_argument("Not enough strings in input");
         }
     }
-    /*
-        ifstream fin(filename);
-
-        if (!fin) {
-            cout << "File couldn't be opened :" << filename << endl;
-            return;
-        }
-
-        string line;
-        getline(fin, line); // для пропуск первой строчки с числом строк
-
-        Node<LinkedList<DNAElement>> *it = DNAStorage.getPreHead();
-        while (getline(fin, line)) {
-            Node<LinkedList<DNAElement>> *pNewNode = new Node<LinkedList<DNAElement>>;
-            // Создаем узел ДНК на куче
-
-            istringstream istr(line);
-            //Создаем строковый поток для разбора
-
-            string strTmp;
-
-            while (istr >> strTmp) // разбиваем поток на слова
-            {
-                DNAElement tmpDNAElement;
-
-                tmpDNAElement.readString(strTmp); // каждое слово читаем в DNAElement
-
-                pNewNode->value.addElementToEnd(tmpDNAElement);
-                // добавляем полученный DNAElement в ДНК
-            }
-            it->next = pNewNode;
-            it = it->next;
-            //сохраняем ДНК в хранилище
-        }
-    */
 }
 
 LinkedList<LinkedList<DNAElement>> &DNARepairer::getDNAStorage(void) {
@@ -103,19 +55,24 @@ LinkedList<LinkedList<DNAElement>> &DNARepairer::getDNAStorage(void) {
 }
 
 void DNARepairer::repairDNA(void) {
-    int idNumber = 0;
-    char ids['z' - 'a' + 1];
+    int idNumber = 0; // how many IDs found while repairing
+    LinkedList<LinkedList<DNAElement>> DNAStorageNew; // repaired DNAStorage
+    char ids['z' - 'a' + 1]; // indices of IDs chains in DNAStorageNew
     for (int i = 0; i <= 'z' - 'a'; i++) {
-        ids[i] = -1;
+        ids[i] = -1; // not found
     }
-    LinkedList<LinkedList<DNAElement>> DNAStorageNew;
+
+    // In each chain,
+    // one-by-one process elements.
+    // If next element is from same base and number is consequent,
+    // move them together.
     Node<LinkedList<DNAElement>> *dnaNode = DNAStorage.getPreHead();
     while (dnaNode->next) {
         dnaNode = dnaNode->next;
         Node<DNAElement> *before = dnaNode->value.getPreHead();
         Node<DNAElement> *last = before;
-        char currentId;
-        int currentNumber;
+        char currentId; // current sequence Id
+        int currentNumber; // current sequence last number
         while (last->next) {
             before = last;
             last = before->next;
@@ -123,43 +80,52 @@ void DNARepairer::repairDNA(void) {
             currentNumber = last->value.number;
             while (last->next && last->next->value.id[0] == currentId &&
                    last->next->value.number == (++currentNumber)) {
+                // when everything but the number matches, we actually increment currentNumber extra time
+                // but that's ok because the loop will certainly break and there are no recurring numbers in base
                 last = last->next;
             }
-            currentId -= 'a';
-            int index = ids[currentId];
+            currentId -= 'a'; // shift to array indexing
+            int index = ids[currentId]; // get base-corresponding list index
             if (index < 0) {
+                // create new list for base
                 ids[currentId] = index = idNumber;
                 idNumber++;
-                // addElementToEnd зачем-то принимает ссылку вместо объекта
-                DNAStorageNew.addElementToEnd(*new DNA());
+                // why not use pointers?
+                DNAStorageNew.addElementToEnd(*new LinkedList<DNAElement>());
             }
+            // find place where to put new elements
             Node<DNAElement> *current = DNAStorageNew[index].getPreHead();
+            // last number less than current (no recurring numbers)
             while (current->next && (current->next->value.number < currentNumber)) {
                 current = current->next;
             }
+            // insertion
             DNAStorageNew[index].moveNodesAfter(current, before, last);
-            last = before; // last.value should be nullptr, last is prehead
+            last = before; // assert(last.value is nullptr, last is prehead)
         }
     }
-    Node<DNA> *prev = DNAStorage.getPreHead();
-    Node<DNA> *last = DNAStorage.getPreHead();
+
+    // DNAStorage <- DNAStorageNew
+    Node<LinkedList<DNAElement>> *prev = DNAStorage.getPreHead();
+    Node<LinkedList<DNAElement>> *last = DNAStorage.getPreHead();
     while (last->next) {
         prev = last;
         last = last->next;
     }
-    Node<DNA> *lastNew = DNAStorageNew.getPreHead();
+    Node<LinkedList<DNAElement>> *lastNew = DNAStorageNew.getPreHead();
     while (lastNew->next) {
         lastNew = lastNew->next;
     }
     DNAStorage.moveNodesAfter(DNAStorage.getPreHead(), DNAStorageNew.getPreHead(), lastNew);
     DNAStorageNew.moveNodesAfter(DNAStorageNew.getPreHead(), prev, last);
-    //delete DNAStorageNew;
 }
 
 void DNARepairer::printDNAStorage(void) {
+    // foreach DNA chain
     Node<LinkedList<DNAElement>> *dnaNode = DNAStorage.getPreHead();
     while (dnaNode->next) {
         dnaNode = dnaNode->next;
+        // foreach DNA element
         Node<DNAElement> *elementNode = dnaNode->value.getPreHead();
         while (elementNode->next) {
             elementNode = elementNode->next;
@@ -167,4 +133,5 @@ void DNARepairer::printDNAStorage(void) {
         }
         cout << endl;
     }
+    cout << endl;
 }

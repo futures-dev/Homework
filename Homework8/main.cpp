@@ -7,7 +7,6 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    event event1;
     if (argc != 2) {
         cerr << "Usage: " << argv[0] << " data-file\n";
         return EXIT_FAILURE;

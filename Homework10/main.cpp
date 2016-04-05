@@ -96,12 +96,9 @@ int main(int argc, char *argv[]) {
 
         std::cout << "\nHere are all the cars that visited the lot today:\n";
 
-        // TODO: Output the license plates of all the
-        // cars that visited the lot, in alphabetical order		
-
-
-
-
+        std::sort(cars.begin(), cars.end(), (int) [](const Car &c1, const Car &c2) -> {
+            return c1.getPlate().compare(c2.getPlate());
+        });
 
 
         return EXIT_SUCCESS;
@@ -125,12 +122,13 @@ int main(int argc, char *argv[]) {
  */
 void handle_arrival(Cars &cars, Parking &parking_lot,
                     const std::string &plate) {
-    // TODO: Handle car arrivals
-
-
-
-
-
+    for (int i = 0; i < NUMBER_OF_AISLES; i++) {
+        if (parking_lot[i].size() < PARKING_SPOTS_PER_AISLE) {
+            cars.emplace_back(&plate, i);
+            parking_lot[i].push(plate);
+            break;
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -143,15 +141,21 @@ void handle_arrival(Cars &cars, Parking &parking_lot,
  *  while it was parked in the lot.
  */
 void handle_departure(Cars &cars, Parking &parking_lot, const std::string &plate) {
-    // TODO: Handle car departures
-
-
-
-
-
-
-
-
+    Car &dep = find_car(cars, plate);
+    ParkAisle &aisle = parking_lot[dep.getAisle()];
+    ParkAisle temp;
+    std::string top = aisle.top();
+    while (top != plate) {
+        Car &moving = find_car(cars, top);
+        moving.setTimesMoved(moving.getTimesMoved() + 1);
+        temp.push(aisle.top());
+        aisle.pop();
+    }
+    printf("%s moved %d times\n", plate.c_str(), dep.getTimesMoved());
+    while (!temp.empty()) {
+        aisle.push(temp.top());
+        temp.pop();
+    }
 }
 
 
@@ -167,13 +171,9 @@ void handle_departure(Cars &cars, Parking &parking_lot, const std::string &plate
  *  * http://www.cplusplus.com/reference/algorithm/find/
  */
 Car &find_car(Cars &cars, const std::string &plate) {
-    // TODO: Return a reference to 
-    // the Car object whose license plate equals 
-    // the parameter 'plate'
-
-
-
-
-
-
+    auto found = std::find(cars.begin(), cars.end(), plate); // implicit conversion Car(plate)
+    if (found == cars.end()) {
+        throw std::range_error("No Car with given plate available");
+    }
+    return *found;
 }

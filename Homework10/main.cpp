@@ -10,9 +10,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 #include <stack>
-#include <stdexcept>
 #include <vector>
 #include <algorithm>
 
@@ -96,7 +94,7 @@ int main(int argc, char *argv[]) {
 
         std::cout << "\nHere are all the cars that visited the lot today:\n";
 
-        std::sort(cars.begin(), cars.end(), (int) [](const Car &c1, const Car &c2) -> {
+        std::sort(cars.begin(), cars.end(), [](const Car &c1, const Car &c2) {
             return c1.getPlate().compare(c2.getPlate());
         });
 
@@ -124,7 +122,7 @@ void handle_arrival(Cars &cars, Parking &parking_lot,
                     const std::string &plate) {
     for (int i = 0; i < NUMBER_OF_AISLES; i++) {
         if (parking_lot[i].size() < PARKING_SPOTS_PER_AISLE) {
-            cars.emplace_back(&plate, i);
+            cars.push_back(Car(plate, i));
             parking_lot[i].push(plate);
             break;
         }
@@ -175,5 +173,5 @@ Car &find_car(Cars &cars, const std::string &plate) {
     if (found == cars.end()) {
         throw std::range_error("No Car with given plate available");
     }
-    return *found;
+    return found.operator*();
 }

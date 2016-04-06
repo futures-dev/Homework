@@ -7,6 +7,11 @@
 ///
 ///////////////////////////////////////////////////////////////////////////////
 
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 06.04.2016
+//
 
 #include <iostream>
 #include <fstream>
@@ -95,15 +100,17 @@ int main(int argc, char *argv[]) {
         std::cout << "\nHere are all the cars that visited the lot today:\n";
 
 
+        // sort Cars on Plates in alphabetical order
         std::sort(cars.begin(), cars.end(), [](const Car &c1, const Car &c2) {
-            return c1.getPlate().compare(c2.getPlate());
+            return c1.getPlate() < c2.getPlate();
         });
 
+        // output sorted cars
         for (auto &car : cars) {
             printf("%s moved %d times\n", car.getPlate().c_str(), car.getTimesMoved());
         }
 
-        std::cin.get();
+        //std::cin.get();
         return EXIT_SUCCESS;
     }
     catch (std::exception &e) {
@@ -126,6 +133,7 @@ int main(int argc, char *argv[]) {
 void handle_arrival(Cars &cars, Parking &parking_lot,
                     const std::string &plate) {
     for (int i = 0; i < NUMBER_OF_AISLES; i++) {
+        // park car on first non-full aisle
         if (parking_lot[i].size() < PARKING_SPOTS_PER_AISLE) {
             cars.push_back(Car(plate, i));
             parking_lot[i].push(plate);
@@ -144,20 +152,22 @@ void handle_arrival(Cars &cars, Parking &parking_lot,
  *  while it was parked in the lot.
  */
 void handle_departure(Cars &cars, Parking &parking_lot, const std::string &plate) {
-    Car &dep = find_car(cars, plate);
-    ParkAisle &aisle = parking_lot[dep.getAisle()];
-    ParkAisle temp;
+    Car &dep = find_car(cars, plate); // departing car reference
+    ParkAisle &aisle = parking_lot[dep.getAisle()]; // aisle where the car is
+    ParkAisle temp; // temp stack to move cars
     std::string top = aisle.top();
+    // while departing car can't leave
     while (top != plate) {
-        Car &moving = find_car(cars, top);
-        moving.setTimesMoved(moving.getTimesMoved() + 1);
-        temp.push(top);
+        Car &moving = find_car(cars, top); // get reference by plate number
+        moving.setTimesMoved(moving.getTimesMoved() + 1); // inc counter
+        temp.push(top); // move on temp stack
         aisle.pop();
         top = aisle.top();
     }
-    aisle.pop();
+    aisle.pop(); // the car left
     printf("%s moved %d times\n", plate.c_str(), dep.getTimesMoved());
     while (!temp.empty()) {
+        // move back from temp stack
         aisle.push(temp.top());
         temp.pop();
     }
@@ -180,5 +190,5 @@ Car &find_car(Cars &cars, const std::string &plate) {
     if (found == cars.end()) {
         throw std::range_error("No Car with given plate available");
     }
-    return found.operator*();
+    return *found;
 }

@@ -13,6 +13,7 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 
 #include "car.h"
 
@@ -94,10 +95,14 @@ int main(int argc, char *argv[]) {
 
         std::cout << "\nHere are all the cars that visited the lot today:\n";
 
+
         std::sort(cars.begin(), cars.end(), [](const Car &c1, const Car &c2) {
             return c1.getPlate().compare(c2.getPlate());
         });
 
+        for (auto &car : cars) {
+            printf("%s moved %d times", car.getPlate().c_str(), car.getTimesMoved());
+        }
 
         return EXIT_SUCCESS;
     }
@@ -146,9 +151,11 @@ void handle_departure(Cars &cars, Parking &parking_lot, const std::string &plate
     while (top != plate) {
         Car &moving = find_car(cars, top);
         moving.setTimesMoved(moving.getTimesMoved() + 1);
-        temp.push(aisle.top());
+        temp.push(top);
         aisle.pop();
+        top = aisle.top();
     }
+    aisle.pop();
     printf("%s moved %d times\n", plate.c_str(), dep.getTimesMoved());
     while (!temp.empty()) {
         aisle.push(temp.top());

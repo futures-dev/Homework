@@ -13,7 +13,6 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
-#include <stdexcept>
 
 #include "car.h"
 
@@ -101,9 +100,10 @@ int main(int argc, char *argv[]) {
         });
 
         for (auto &car : cars) {
-            printf("%s moved %d times", car.getPlate().c_str(), car.getTimesMoved());
+            printf("%s moved %d times\n", car.getPlate().c_str(), car.getTimesMoved());
         }
 
+        std::cin.get();
         return EXIT_SUCCESS;
     }
     catch (std::exception &e) {

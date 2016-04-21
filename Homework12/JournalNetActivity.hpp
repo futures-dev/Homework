@@ -59,11 +59,11 @@ void JournalNetActivity<numLevels>::dumpJournal(ostream &out) {
 template<int numLevels>
 void JournalNetActivity<numLevels>::outputSuspiciousActivities(
         string hostSuspicious, const TimeStamp &timeFrom, const TimeStamp &timeTo) const {
-	auto first = m_Journal.findFirst(timeFrom); // find using skip levels
+    auto first = m_Journal.findFirst(timeFrom); // find using skip levels
     while (first->m_key <= timeTo) {
-		// iterate consequently
+        // iterate consequently
         if (first->m_value.m_host == hostSuspicious) {
-            cout << first->m_value << endl;
+            cout << first->m_key << "\t" << first->m_value << endl;
         }
         first = first->m_next;
     }

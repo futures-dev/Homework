@@ -96,29 +96,30 @@ template<class Value, class Key, int numLevels>
 void SkipList<Value, Key, numLevels>::remove(TypeNode *node) {
     int currentH = numLevels - 1;
     auto current = this->m_pPreHead;
+    TypeNode *next;
     while (true) {
+        if (currentH == -1) {
+            // usual orderlist search
+            next = current;
+            while ((next = next->m_next) != this->m_pPreHead && next->m_key < node->m_key) {
+                current = next;
+            }
+            if (next != this->m_pPreHead && next->m_key == node->m_key) {
+                current->m_next = next->m_next;
+                delete next; // delete
+            }
+            break;
+        }
         if (current->m_levelHighest < currentH) {
             currentH = current->m_levelHighest;
         }
-        auto next = current->m_nextjump[currentH];
+        next = current->m_nextjump[currentH];
         while (next != NULL && next->m_key < node->m_key) {
             current = next;
             next = current->m_nextjump[currentH];
         }
         if (next == NULL || next->m_key != node->m_key) {
-            if (currentH == 0) {
-                // usual orderlist search
-                next = current;
-                while ((next = next->m_next) != this->m_pPreHead && next->m_key < node->m_key) {
-                    current = next;
-                }
-                if (current != this->m_pPreHead && current->m_key == node->m_key) {
-                    current->m_next = next->m_next;
-                    delete next; // delete
-                }
-                break;
-            }
-            current = current->m_nextjump[--currentH];
+            --currentH;
             continue;
         }
         // next->m_key==key

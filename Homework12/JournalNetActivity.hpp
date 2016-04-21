@@ -1,3 +1,9 @@
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.2.1
+// 21.04.2016
+//
+
 #include "JournalNetActivity.h"
 
 #include <fstream>
@@ -53,8 +59,9 @@ void JournalNetActivity<numLevels>::dumpJournal(ostream &out) {
 template<int numLevels>
 void JournalNetActivity<numLevels>::outputSuspiciousActivities(
         string hostSuspicious, const TimeStamp &timeFrom, const TimeStamp &timeTo) const {
-    auto first = m_Journal.findFirst(timeFrom);
+	auto first = m_Journal.findFirst(timeFrom); // find using skip levels
     while (first->m_key <= timeTo) {
+		// iterate consequently
         if (first->m_value.m_host == hostSuspicious) {
             cout << first->m_value << endl;
         }

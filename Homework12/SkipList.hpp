@@ -1,3 +1,9 @@
+//
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.2.1
+// 21.04.2016
+//
+
 #include <cstdlib>
 
 //=============================================================================
@@ -53,33 +59,34 @@ SkipList<Value, Key, numLevels>::SkipList(double probability) {
 
 template<class Value, class Key, int numLevels>
 void SkipList<Value, Key, numLevels>::insert(Value value, Key key) {
+    // generate levelHighest
     int maxH = -1;
-    int prob_margin = m_probability * RAND_MAX;
-    while (rand() > prob_margin && (maxH < numLevels - 1)) {
+    int prob_margin = this->m_probability * RAND_MAX; // prob of next level to appear
+    while (rand() < prob_margin && (maxH < numLevels - 1)) {
         maxH++;
     }
-    auto node = new TypeNode(key, value);
-    node->m_levelHighest = maxH;
+    auto node = new TypeNode(key, value); // create embraced node
+    node->m_levelHighest = maxH; // set levelHighest
+
     auto current = this->m_pPreHead;
     TypeNode *next;
-    int currentH = maxH;
+    int currentH = maxH; // currently processed level
     while (true) {
         if (currentH == -1) {
+            // non-skip level, m_next
             next = current;
             while ((next = next->m_next) != this->m_pPreHead && next->m_key < key) {
                 current = next;
             }
             node->m_next = next;
             current->m_next = node;
+            // insertion complete
             break;
         }
-        /*
-        if (current->m_levelHighest<currentH){
-            currentH = current->m_levelHighest;
-        }
-         */
+        // skip-level
         next = current->m_nextjump[currentH];
         while (next != NULL && next->m_key < key) {
+            // less than key, jump forward
             current = next;
             next = current->m_nextjump[currentH];
         }
@@ -88,37 +95,44 @@ void SkipList<Value, Key, numLevels>::insert(Value value, Key key) {
             node->m_nextjump[currentH] = next;
             current->m_nextjump[currentH] = node;
         }
-        --currentH;
+        --currentH; // level down, current stays the same
     }
 }
 
 template<class Value, class Key, int numLevels>
 void SkipList<Value, Key, numLevels>::remove(TypeNode *node) {
-    int currentH = numLevels - 1;
+    int currentH = numLevels - 1; // start from the beginning in order to get to the node the quickest way
     auto current = this->m_pPreHead;
     TypeNode *next;
     while (true) {
         if (currentH == -1) {
-            // usual orderlist search
+            // usual ordered list search
+            // skip less than key
             next = current;
             while ((next = next->m_next) != this->m_pPreHead && next->m_key < node->m_key) {
+                // pass less than key
                 current = next;
             }
-            if (next != this->m_pPreHead && next->m_key == node->m_key) {
+            // skip equal keys until next==node
+            next = current;
+            while ((next = next->m_next) != this->m_pPreHead && next->m_key == node->m_key && next != node) {
+                current = next;
+            }
+            if (next == node) {
                 current->m_next = next->m_next;
-                delete next; // delete
+                delete next; // delete performed only here
             }
             break;
         }
-        if (current->m_levelHighest < currentH) {
-            currentH = current->m_levelHighest;
-        }
+        // skip-level
         next = current->m_nextjump[currentH];
         while (next != NULL && next->m_key < node->m_key) {
+            // less than key, jump forward
             current = next;
             next = current->m_nextjump[currentH];
         }
         if (next == NULL || next->m_key != node->m_key) {
+            // no links to fix
             --currentH;
             continue;
         }
@@ -130,7 +144,7 @@ void SkipList<Value, Key, numLevels>::remove(TypeNode *node) {
 
 template<class Value, class Key, int numLevels>
 auto SkipList<Value, Key, numLevels>::findLastLessThan(Key key) const -> TypeNode * {
-    int currentH = numLevels - 1;
+    int currentH = numLevels - 1; // start from the beginning in order to get to the node the quickest way
     auto current = this->m_pPreHead;
     TypeNode *next;
     while (true) {
@@ -142,11 +156,10 @@ auto SkipList<Value, Key, numLevels>::findLastLessThan(Key key) const -> TypeNod
             }
             return current == this->m_pPreHead ? NULL : current; //returns NULL if all elements >= key
         }
-        if (current->m_levelHighest < currentH) {
-            currentH = current->m_levelHighest;
-        }
+        // skip-level
         auto next = current->m_nextjump[currentH];
         while (next != NULL && next->m_key < key) {
+            // less than key, jump forward
             current = next;
             next = next->m_nextjump[currentH];
         }
@@ -156,34 +169,34 @@ auto SkipList<Value, Key, numLevels>::findLastLessThan(Key key) const -> TypeNod
 
 template<class Value, class Key, int numLevels>
 auto SkipList<Value, Key, numLevels>::findFirst(Key key) const -> TypeNode * {
-    int currentH = numLevels - 1;
+    int currentH = numLevels - 1; // start from the beginning in order to get to the node the quickest way
     auto current = this->m_pPreHead;
     while (true) {
-        if (current->m_levelHighest < currentH) {
-            currentH = current->m_levelHighest;
+        if (currentH == -1) {
+            // usual orderlist search
+            next = current;
+            while ((next = next->m_next) != this->m_pPreHead && next->m_key < key) {
+                current = next;
+            }
+            if (current != this->m_pPreHead && current->m_key == key) {
+                // found
+                return current;
+            }
+            // no equal to key
+            return NULL;
         }
+        // skip-level
         auto next = current->m_nextjump[currentH];
         while (next != NULL && next->m_key < key) {
+            // less than key, jump forward
             current = next;
-            next = next->m_next;
+            next = next->m_nextjump[currentH];
         }
-        if (next == NULL || next->m_key != key) {
-            if (currentH == 0) {
-                // usual orderlist search
-                next = current;
-                while ((next = next->m_next) != this->m_pPreHead && next->m_key < key) {
-                    current = next;
-                }
-                if (current != this->m_pPreHead && current->m_key == key) {
-                    return current;
-                }
-                return NULL;
-            }
-            --currentH;
-            continue;
+        if (next != NULL && next->m_key == key) {
+            // found on current level
+            return next;
         }
-        // next->m_key==key
-        return next;
+        --currentH;
     }
 }
 

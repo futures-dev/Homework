@@ -171,6 +171,7 @@ template<class Value, class Key, int numLevels>
 auto SkipList<Value, Key, numLevels>::findFirst(Key key) const -> TypeNode * {
     int currentH = numLevels - 1; // start from the beginning in order to get to the node the quickest way
     auto current = this->m_pPreHead;
+	TypeNode *next;
     while (true) {
         if (currentH == -1) {
             // usual orderlist search

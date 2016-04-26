@@ -10,6 +10,7 @@ howmany bed hospital
 howmany couch floor
 howmany couch hospital
 howmany couch couch
+whatis couch
 howmany small_rubber_washer floor
 
 

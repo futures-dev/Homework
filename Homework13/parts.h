@@ -1,5 +1,11 @@
 // parts.h
 
+//
+// Andrei Kolomiets 143-1
+// CLion 2016.1.1 MinGW 3.2.1
+// 26.04.2016
+//
+
 #ifndef _PARTS_H_
 #define _PARTS_H_
 
@@ -11,35 +17,23 @@ using namespace std;
 
 //**************** Part ****************
 class Part {
+private:
+    friend map<Part *, int> subpartsNumbers;
+
 public:
     string name;
 
-    // TODO: Finish declaration
-    map<Part, int> subpartsNumbers;
-
     Part(string const &n) : name(n) { };
 
-    void describe(void) {
-        cout << "Part " << name << " subparts are:" << endl;
-        for (auto it = subpartsNumbers.begin(); it != subpartsNumbers.end(); it++) {
-            cout << it->second << " " << it->first.name << endl;
-        }
-        cout << endl;
-    }
+    // Prints Part description
+    void describe(void) const;
 
-    int countHowMany(Part const *p) {
-        int howMany = (this == p) ? 1 : 0;
-        for (auto it = subpartsNumbers.begin(); it != subpartsNumbers.end(); it++) {
-            howMany += (it->second) * it->first.countHowMany(p);
-        }
-        return howMany;
-    }
+    // Returns quantity of specified parts in caller
+    int countHowMany(Part const *p) const;
 
-    bool operator<(const Part &other) const {
-        return name < other.name;
-    }
+    // For Part to be used as a map key
+    bool operator<(const Part &other) const;
 };
-
 
 //**************** NameContainer ****************
 class NameContainer {
@@ -51,20 +45,14 @@ public:
 
     NameContainer(void) { };
 
-    void addPart(string const &part, int quantity, string const &subpart) {
-        lookup(part)->subpartsNumbers.insert(pair<Part, int>(subpart, quantity));
-    }
+    // Destroy created in @lookup Parts
+    ~NameContainer();
 
-    Part *lookup(string const &name) {
-        auto found = nameMap.find(name);
-        if (found == nameMap.end()) {
-            Part *part = new Part(name);
-            nameMap.insert(pair<string, Part *>(name, part));
-            return part;
-        }
-        return found->second;
-    }
-    // You can add some methods here
+    // Includes n=quantity subparts into part
+    void addPart(string const &part, int quantity, string const &subpart);
+
+    // Returns a pointer to a Part with specified name
+    Part *lookup(string const &name);
 };
 
 #endif

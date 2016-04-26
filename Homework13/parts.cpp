@@ -7,6 +7,7 @@
 #include <iostream>
 #include "parts.h"
 
+//**************** Part ****************
 int Part::countHowMany(Part const *p) const {
     int howMany = (this == p) ? 1 : 0; // if *this* is being searched, Part contains self
     for (auto it = subpartsNumbers.begin(); it != subpartsNumbers.end(); it++) {
@@ -29,6 +30,7 @@ void Part::describe(void) const {
     }
 }
 
+//**************** NameContainer ****************
 void NameContainer::addPart(string const &part, int quantity, string const &subpart) {
     lookup(part)->subpartsNumbers.insert(pair<Part *, int>(lookup(subpart), quantity));
 }

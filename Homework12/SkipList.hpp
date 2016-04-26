@@ -62,10 +62,10 @@ void SkipList<Value, Key, numLevels>::insert(Value value, Key key) {
     // generate levelHighest
     int maxH = -1;
     int prob_margin = this->m_probability * RAND_MAX; // prob of next level to appear
-    while (rand() < prob_margin && (maxH < numLevels - 1)) {
+    while (rand() > prob_margin && (maxH < numLevels - 1)) {
         maxH++;
     }
-    auto node = new TypeNode(key, value); // create embraced node
+    auto node = new TypeNode(key, value); // create emplaced node
     node->m_levelHighest = maxH; // set levelHighest
 
     auto current = this->m_pPreHead;

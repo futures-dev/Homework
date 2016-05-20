@@ -1,10 +1,8 @@
-// parts.h
+/*Kolos Maria
+BSE141-1
+Project #13 - Hospital*/
 
-//
-// Andrei Kolomiets 143-1
-// CLion 2016.1.1 MinGW 3.2.1
-// 26.04.2016
-//
+// parts.h
 
 #ifndef _PARTS_H_
 #define _PARTS_H_
@@ -17,42 +15,38 @@ using namespace std;
 
 //**************** Part ****************
 class Part {
-private:
-    friend map<Part *, int> subpartsNumbers;
-
 public:
-    string name;
+	string name;
+	map<Part *, int> subparts;//map of subparts
 
-    Part(string const &n) : name(n) { };
+	Part(string const &n) : name(n) { };
 
-    // Prints Part description
-    void describe(void) const;
+	void describe(void);
 
-    // Returns quantity of specified parts in caller
-    int countHowMany(Part const *p) const;
+	void describeAll(void);
 
-    // For Part to be used as a map key
-    bool operator<(const Part &other) const;
+	//method that displays all subparts of a Part
+	int countHowMany(Part const *p);
+
+private:
+	string level = "";//the level in hierarchy in the output
 };
+
 
 //**************** NameContainer ****************
 class NameContainer {
 
 private:
-    map<string, Part *> nameMap;
+	map<string, Part *> nameMap;
 
 public:
 
-    NameContainer(void) { };
+	NameContainer(void) { };
 
-    // Destroy created in @lookup Parts
-    ~NameContainer();
+	void addPart(string const &part, int quantity, string const &subpart);
 
-    // Includes n=quantity subparts into part
-    void addPart(string const &part, int quantity, string const &subpart);
-
-    // Returns a pointer to a Part with specified name
-    Part *lookup(string const &name);
+	Part *lookup(string const &name);
+	// You can add some methods here 
 };
 
 #endif

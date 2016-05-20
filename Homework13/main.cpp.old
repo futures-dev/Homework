@@ -66,5 +66,7 @@ void processQueries(const char *filename) {
 int main(void) {
     loadDefinitions("definitions.txt");
     processQueries("queries.txt");
+    Part *xp = partContainer.lookup("floor");
+    xp->describeAll();
     return EXIT_SUCCESS;
 }

@@ -1,65 +1,80 @@
-//
-// Andrei Kolomiets 143-1
-// CLion 2016.1.1 MinGW 3.2.1
-// 26.04.2016
-//
+/*Kolos Maria
+BSE141-1
+Project #13 - Hospital*/
 
-#include <iostream>
 #include "parts.h"
+#include <iostream>
 
-//**************** Part ****************
-int Part::countHowMany(Part const *p) const {
-    int howMany = (this == p) ? 1 : 0; // if *this* is being searched, Part contains self
-    for (auto it = subpartsNumbers.begin(); it != subpartsNumbers.end(); it++) {
-        howMany += (it->second) * it->first->countHowMany(p);
-    }
-    return howMany;
-}
-
-void Part::describe(void) const {
-    cout << "Part " << name << " subparts are:" << endl;
-    auto it = subpartsNumbers.begin();
-    if (it == subpartsNumbers.end()) {
-        cout << "It has no subparts." << endl;
-    }
-    else {
-        while (it != subpartsNumbers.end()) {
-            cout << it->second << " " << it->first->name << endl;
-            it++;
-        }
-    }
-}
-
-//**************** NameContainer ****************
+/*Add new part*/
 void NameContainer::addPart(string const &part, int quantity, string const &subpart) {
-    lookup(part)->subpartsNumbers.insert(pair<Part *, int>(lookup(subpart), quantity));
+	Part *current;
+	Part *subp = new Part(subpart);
+
+	//searching for a Part
+	current = lookup(part);
+	//and adding the subpart to it
+	current->subparts.insert(std::pair<Part *, int>(subp, quantity));
+
+	//adding the part to the nameMap
+	nameMap.insert(std::pair<string, Part *>(subpart, subp));
 }
 
+//returns a Part from the nameMap by name
 Part *NameContainer::lookup(string const &name) {
-    auto found = nameMap.find(name);
-    if (found == nameMap.end()) {
-        // no part with *name* is stored yet
-        // create new one
-        Part *part = new Part(name);
-        // store it
-        nameMap.insert(pair<string, Part *>(name, part));
-        // and return it
-        return part;
-    }
-    // part with *name* is already stored, return it
-    return found->second;
+	//if there is no such part
+	if (nameMap.find(name) == nameMap.end()) {
+		//creating one
+		Part *part = new Part(name);
+		//and adding to nameMap
+		nameMap.insert(std::pair<string, Part *>(name, part));
+		return part;
+	}
+	else
+		return nameMap.at(name);
 }
 
-NameContainer::~NameContainer() {
-    // delete new parts created in *lookup*
-    for (auto it = nameMap.begin(); it != nameMap.end(); it++) {
-        if (it->second) {
-            delete it->second;
-        }
-    }
+//Part's subparts info
+void Part::describe(void) {
+	std::cout << "Part " << this->name << " subparts are:" << endl;
+	if (this->subparts.size() == 0)
+		std::cout << "\tIt has no subparts." << endl;
+	else {
+		for (auto it = this->subparts.begin(); it != this->subparts.end(); it++) {
+			std::cout << "\t" << it->second << " " << it->first->name << endl;
+		}
+	}
 }
 
-bool Part::operator<(const Part &other) const {
-    // parts are sorted corresponding to names
-    return name < other.name;
+//All Part's subparts info
+void Part::describeAll(void) {
+	std::cout << this->level << "Part " << this->name << " subparts are:" << endl;
+	if (this->subparts.size() == 0)
+		std::cout << this->level << "\tIt has no subparts." << endl;
+	else {
+		for (auto it = this->subparts.begin(); it != this->subparts.end(); it++) {
+			std::cout << "  " << this->level << it->first->level << it->second << " " << it->first->name << endl;
+			//changing the level accoring to the hierarchy
+			it->first->level += "  " + this->level;
+			//just adding some recursion to go deeper
+			it->first->describeAll();
+
+		}
+
+	}
+	this->level = "";//cleaning up the level for the next method calls
+	
+}
+
+//Counts the number of instances of the part pointed to by p
+int Part::countHowMany(Part const *p) {
+	int res = this == p ? 1 : 0;//if this contains p the multiplier is 1
+
+	//iterating all subparts
+	for (auto it = this->subparts.begin(); it != this->subparts.end(); it++) {
+		res += it->second * it->first->countHowMany(p);
+
+	}
+	return res;
+	
+	
 }

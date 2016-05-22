@@ -31,6 +31,8 @@ public:
 
     void insert(const std::string &s);
 
+    bool search(const std::string &s);
+
     virtual ~PrefixTree() { }
 };
 

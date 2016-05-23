@@ -31,7 +31,7 @@ void PrefixTree::insert(const std::string &s) {
     }
 }
 
-int static inline PrefixTree::charToIdx(char c) {
+int inline PrefixTree::charToIdx(char c) {
     return c - offset;
 }
 

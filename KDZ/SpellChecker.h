@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -16,6 +17,9 @@ class SpellChecker {
     const char *wordRegex = "([a-zA-Z][a-zA-Z'\\-]*)";
     const char *POSSIBLE_ACTIONS_STRING = "¬озможные действи€ - (R) заменить | (I) игнорировать | (X) завершить работу";
     const char *POSSIBLE_REPLACEMENTS_STRING = "¬озможные действи€ - (N) сделать замену на слово под номером N, где N - число из списка | (I) игнорировать";
+    const char *IGNORE_ALL_STRING = "»гнорировать все вхождени€ данного слова? ¬озможные действи€ - (A) игнорировать все | (S) не игнорировать все";
+    const char *REPLACE_ALL_STRING = "«аменить все вхождени€ данного слова? ¬озможные действи€ - (A) заменить все | (S) не замен€ть все";
+
 
     unsigned char hash(const std::string &str) const {
         // Rot13

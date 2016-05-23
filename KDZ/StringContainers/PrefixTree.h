@@ -24,7 +24,7 @@ class PrefixTree : public StringContainer {
 
     PrefixTreeNode *root;
 
-    static inline int charToIdx(char c);
+    inline int charToIdx(char c);
 
 public:
     PrefixTree();

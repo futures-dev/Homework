@@ -92,21 +92,45 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
     string buf;
     regex e(wordRegex, regex_constants::basic);
     ofstream fout(output);
+    set<string> ignored;
+    set<pair<string, string>> replacements;
     while (getline(fin, buf)) {
         smatch match;
+        string prev_suffix;
         while (regex_search(buf, match, e)) {
+            prev_suffix = match.suffix();
             //transform(word.str().begin(),word.str().end(),word.str().begin(),::tolower);
             fout << match.prefix();
             string word(match.str());
             buf = match.suffix();
+
+            // check ignore all
+            if (ignored.find(word) != ignored.end()) {
+                fout << word;
+                continue;
+            }
+
+            // check replace all
+            {
+                auto rep = find_if(replacements.begin(), replacements.end(), [word](const pair<string, string> &q) {
+                    return q.first == word;
+                });
+                if (rep != replacements.end()) {
+                    fout << rep->second;
+                    continue;
+                }
+            }
+
+            // check dictionary
             if (!d_search(word)) {
                 cout << "Обнаружено слово " << word << " - оно отсутствует в словаре" << endl;
                 bool bad_action1 = true;
                 while (bad_action1) {
                     cout << POSSIBLE_ACTIONS_STRING << endl;
                     string action_buf;
-                    getline(cin, action_buf);
-                    switch (action_buf.back()) {
+                    //getline(cin, action_buf);
+                    //switch (action_buf.back()) {
+                    switch ('I') {
                         case 'R':
                         case 'r': {
                             cout << "Возможно, имелось в виду:" << endl;
@@ -115,6 +139,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                             suggest_insertion(word, suggestions);
                             suggest_odd(word, suggestions);
                             suggest_replacement(word, suggestions);
+                            string suggested;
                             int i = 0;
                             for (auto it = suggestions.begin(); it != suggestions.end(); it++, i++) {
                                 cout << i << ". " << *it << endl;
@@ -124,10 +149,9 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                                 string action_buf2;
                                 getline(cin, action_buf2);
                                 if (action_buf2 == "I") {
-                                    fout << word;
-                                    break;
+                                    goto case_ignore;
                                 }
-                                stringstream myStream(input);
+                                stringstream myStream(action_buf2);
                                 int number;
                                 if (myStream >> number) {
                                     if (number < i) {
@@ -136,19 +160,63 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                                         while (i++ < number) {
                                             it++;
                                         }
-                                        fout << *it;
+                                        suggested = *it;
+                                        fout << suggested;
                                         break;
                                     }
+                                }
+                            }
+
+                            cout << REPLACE_ALL_STRING << endl;
+                            bool bad_action4 = true;
+                            string action_buf4;
+                            while (bad_action4) {
+                                getline(cin, action_buf4);
+                                switch (action_buf4.back()) {
+                                    case 'A':
+                                    case 'a':
+                                        replacements.emplace(word, suggested);
+                                        bad_action4 = false;
+                                        break;
+                                    case 'S':
+                                    case 's':
+                                        bad_action4 = false;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            bad_action1 = false;
+                            break;
+                        }
+                        case_ignore:
+                        case 'I':
+                        case 'i': {
+                            fout << word;
+                            cout << IGNORE_ALL_STRING << endl;
+                            bool bad_action3 = true;
+                            string action_buf3;
+                            while (bad_action3) {
+                                //getline(cin, action_buf3);
+                                //switch (action_buf3.back()) {
+                                switch ('A') {
+                                    case 'A':
+                                    case 'a':
+                                        ignored.insert(word);
+                                        bad_action3 = false;
+                                        break;
+                                    case 'S':
+                                    case 's':
+                                        bad_action3 = false;
+                                        break;
+                                    default:
+                                        break;
                                 }
                             }
                             bad_action1 = false;
                             break;
                         }
-                        case 'I':
-                        case 'i':
-                            fout << word;
-                            bad_action1 = false;
-                            break;
                         case 'X':
                         case 'x':
                             return;
@@ -157,8 +225,11 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                     }
                 }
             }
+            else {
+                fout << word;
+            }
         }
-        fout << match.suffix();
+        fout << prev_suffix << endl;
     }
 }
 

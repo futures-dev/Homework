@@ -16,16 +16,16 @@ class HashTable : public StringContainer {
     public:
         hash_function() { }
 
-        /*Hash*/
-        unsigned int operator()(const std::string &key) const {
+        unsigned int operator()(const std::string &str) const {
+            // Rot13
             unsigned int hash = 0;
-            int len = key.length();
-            for (int i = 0; i < len; i++)
-                hash = (hash * 1664525) + (unsigned char) (key[i]) + 1013904223;
-
+            int len = str.length();
+            for (int i = 0; i < len; i++) {
+                hash += (unsigned char) (str[i]);
+                hash -= (hash << 13) | (hash >> 19);
+            }
             return hash;
         }
-
     };
 
     class equality {

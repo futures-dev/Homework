@@ -1,16 +1,22 @@
 //
-// Created by Computer on 26.04.2016.
+// Andrei Kolomiets 143-1
+// CLion 1.2 MinGW 3.4.1
+// 22.05.2016
 //
 
 #include "StringContainers/HashTable.h"
-#include "Dictionary.h"
-#include <iostream>
+#include "SpellChecker.h"
 
 int main() {
+    system("chcp 1251");
     using namespace std;
     const string dictPath = "dictionary.txt";
     const string textPath = "1984.txt";
     const string outPath = "output.txt";
-    Dictionary<HashTable> dictionary(dictPath);
-    cout << "comparison took: " << dictionary.compareText(textPath, outPath) << endl;
+    //Dictionary<HashTable> dictionary(dictPath);
+    //cout << "comparison took: " << dictionary.compareText(textPath, outPath) << endl;
+    //dictionary.compareDict(outPath,"secondOutput.txt");
+    SpellChecker spellChecker;
+    spellChecker.load_words(dictPath);
+    spellChecker.spell_check(textPath, "thirdOutput.txt");
 }

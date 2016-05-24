@@ -13,16 +13,8 @@
 
 class SimilairProvider {
 protected:
-    void suggest_insertion(const std::string &a_word, const StringContainer &dict,
-                           std::set<std::string> &suggestions) const;
-
     void suggest_replacement(const std::string &a_word, const StringContainer &dict,
                              std::set<std::string> &suggestions) const;
-
-    void suggest_odd(const std::string &a_word, const StringContainer &dict, std::set<std::string> &suggestions) const;
-
-    void suggest_adjacent(const std::string &a_word, const StringContainer &dict,
-                          std::set<std::string> &suggestions) const;
 public:
     virtual void insert(const std::string &word, const StringContainer &dict) = 0;
 

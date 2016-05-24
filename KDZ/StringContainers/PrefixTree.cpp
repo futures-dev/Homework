@@ -6,7 +6,7 @@
 
 #include "PrefixTree.h"
 
-bool PrefixTree::search(const std::string &s) {
+bool PrefixTree::search(const std::string &s) const {
     int len = s.length();
     PrefixTreeNode *current = root;
     for (int i = 0; i < len; i++) {
@@ -31,7 +31,7 @@ void PrefixTree::insert(const std::string &s) {
     }
 }
 
-int inline PrefixTree::charToIdx(char c) {
+int inline PrefixTree::charToIdx(char c) const {
     return c - offset;
 }
 

@@ -10,6 +10,6 @@ void StdSet::insert(const std::string &word) {
     words.insert(std::string(word));
 }
 
-bool StdSet::search(const std::string &word) {
+bool StdSet::search(const std::string &word) const {
     return !(words.find(word) == words.end());
 }

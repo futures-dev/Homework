@@ -45,7 +45,7 @@ class Dictionary {
     };
 
     void loadWords(const string &input, const set<dictTuple> &textWords) {
-        using namespace std;
+
         ifstream fin(input);
         if (!fin.is_open()) {
             throw invalid_argument("File" + input + " Not Found");
@@ -137,7 +137,7 @@ class Dictionary {
 
 public:
     Dictionary(const string &input) {
-        using namespace std;
+
         ifstream fin(input);
         string buf;
         if (!fin.is_open()) {
@@ -151,7 +151,7 @@ public:
     Dictionary() { }
 
     uint64_t compareText(const string &input, const string &output) {
-        using namespace std;
+
         set<dictTuple> textWords;
         loadWords(input, textWords);
         cout << "Process words..." << endl;
@@ -176,7 +176,7 @@ public:
     }
 
     uint64_t compareDict(const string &input, const string &output) {
-        using namespace std;
+
         set<dictTuple> textWords;
         loadWords(input, textWords);
         cout << "Process words..." << endl;
@@ -216,12 +216,22 @@ public:
     }
 
     template<class SimilairProvider>
-    uint64_t findSimilair(const string &output) {
-        SimilairProvider provider(words);
+    uint64_t findSimilair(const std::string &input, const std::string &output) {
         using namespace std;
+
+        SimilairProvider provider;
         set<dictTuple> textWords;
-        loadWords(&textWords);
+        loadWords(input, textWords);
+
+        cout << "Searching similair words..." << endl;
+        uint64_t time = __rdtsc();
+        for (auto it = textWords.begin(); it != textWords.end(); it++) {
+            provider.insert(it->val, words);
+        }
+        provider.output(output);
     }
+
+
 };
 
 #endif //HOMEWORK_DICTIONARY_H

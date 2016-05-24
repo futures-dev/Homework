@@ -6,7 +6,7 @@
 
 #include "PatriciaTree.h"
 
-bool PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2, int len) {
+bool PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const {
     if (start1 + len > word1.length() || start2 + len > word2.length()) {
         return false;
     }
@@ -36,7 +36,7 @@ void PatriciaTree::insert(const std::string &word) {
     }
 }
 
-bool PatriciaTree::search(const std::string &word) {
+bool PatriciaTree::search(const std::string &word) const {
     auto current = root;
     int idx = 0;
     while (idx < word.length()) {

@@ -13,7 +13,7 @@ class StringContainer {
 public:
     virtual void insert(const std::string &s) = 0;
 
-    virtual bool search(const std::string &s) = 0;
+    virtual bool search(const std::string &s) const = 0;
 
     virtual ~StringContainer() { };
 };

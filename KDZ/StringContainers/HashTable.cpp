@@ -10,6 +10,6 @@ void HashTable::insert(const std::string &word) {
     words.insert(word);
 }
 
-bool HashTable::search(const std::string &word) {
+bool HashTable::search(const std::string &word) const {
     return words.find(word) != words.end();
 }

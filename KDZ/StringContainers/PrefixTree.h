@@ -24,14 +24,14 @@ class PrefixTree : public StringContainer {
 
     PrefixTreeNode *root;
 
-    inline int charToIdx(char c);
+    inline int charToIdx(char c) const;
 
 public:
     PrefixTree();
 
     void insert(const std::string &s);
 
-    bool search(const std::string &s);
+    bool search(const std::string &s) const;
 
     virtual ~PrefixTree() { }
 };

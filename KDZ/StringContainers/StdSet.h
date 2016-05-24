@@ -15,7 +15,7 @@ class StdSet : public StringContainer {
 public:
     void insert(const std::string &word);
 
-    bool search(const std::string &word);
+    bool search(const std::string &word) const;
 
     virtual ~StdSet() { }
 };

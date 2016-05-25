@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 #endif
+
 int main() {
     using namespace std;
     chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
@@ -24,17 +25,26 @@ int main() {
     const string textPath = "1984.txt";
     const string outPath = "output.txt";
     const string simPath = "simOutput.txt";
-
+    const string numberPath = "numberOutput.txt";
+    ofstream fout(numberPath);
     for (int i = 0; i < 4; i++) {
-        cout << dictPath[i] << endl;
-        Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
-        cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
-        Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);
-        cout << "PatriciaTree. Comparison took: " << dictionaryPatriciaTree.compareText(textPath, outPath) << endl;
-        Dictionary<PrefixTree> dictionaryPrefixTree(dictPath[i]);
-        cout << "PrefixTree. Comparison took: " << dictionaryPrefixTree.compareText(textPath, outPath) << endl;
-        Dictionary<StdSet> dictionaryStdSet(dictPath[i]);
-        cout << "StdSet. Comparison took: " << dictionaryStdSet.compareText(textPath, outPath) << endl;
+        int a = 0, b = 0, c = 0, d = 0;
+        for (int j = 0; j < 3; j++) {
+            cout << dictPath[i] << endl;
+            Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
+            a += dictionaryHashTable.compareText(textPath, outPath);
+            //cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
+            Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);
+            b += dictionaryPatriciaTree.compareText(textPath, outPath);
+            //cout << "PatriciaTree. Comparison took: " << dictionaryPatriciaTree.compareText(textPath, outPath) << endl;
+            Dictionary<PrefixTree> dictionaryPrefixTree(dictPath[i]);
+            c += dictionaryPrefixTree.compareText(textPath, outPath);
+            //cout << "PrefixTree. Comparison took: " << dictionaryPrefixTree.compareText(textPath, outPath) << endl;
+            Dictionary<StdSet> dictionaryStdSet(dictPath[i]);
+            d += dictionaryStdSet.compareText(textPath, outPath);
+            //cout << "StdSet. Comparison took: " << dictionaryStdSet.compareText(textPath, outPath) << endl;
+        }
+        fout << a / 3 << endl << b / 3 << endl << c / 3 << endl << d / 3 << endl;
         //dictionary.compareDict(outPath, "secondOutput.txt");
 
         //cout << "1. similair search took: " << dictionary.findSimilair<StdMap>(dictPath, simPath) << endl;

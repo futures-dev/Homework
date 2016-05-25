@@ -228,7 +228,12 @@ public:
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider.insert(it->val, words);
         }
+        for (auto it = textWords.begin(); it != textWords.end(); it++) {
+            provider[it->val];
+        }
+        time = __rdtsc() - time;
         provider.output(output);
+        return time;
     }
 
 

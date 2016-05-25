@@ -15,10 +15,10 @@ using namespace std;
 
 class SpellChecker {
     const char *wordRegex = "([a-zA-Z][a-zA-Z'\\-]*)";
-    const char *POSSIBLE_ACTIONS_STRING = "┬ючьюцэ√х фхщёЄтш  - (R) чрьхэшЄ№ | (I) шуэюЁшЁютрЄ№ | (X) чртхЁ°шЄ№ ЁрсюЄє";
-    const char *POSSIBLE_REPLACEMENTS_STRING = "┬ючьюцэ√х фхщёЄтш  - (N) ёфхырЄ№ чрьхэє эр ёыютю яюф эюьхЁюь N, уфх N - ўшёыю шч ёяшёър | (I) шуэюЁшЁютрЄ№";
-    const char *IGNORE_ALL_STRING = "╚уэюЁшЁютрЄ№ тёх тїюцфхэш  фрээюую ёыютр? ┬ючьюцэ√х фхщёЄтш  - (A) шуэюЁшЁютрЄ№ тёх | (S) эх шуэюЁшЁютрЄ№ тёх";
-    const char *REPLACE_ALL_STRING = "╟рьхэшЄ№ тёх тїюцфхэш  фрээюую ёыютр? ┬ючьюцэ√х фхщёЄтш  - (A) чрьхэшЄ№ тёх | (S) эх чрьхэ Є№ тёх";
+    const char *POSSIBLE_ACTIONS_STRING = "Возможные действия - (R) заменить | (I) игнорировать | (X) завершить работу";
+    const char *POSSIBLE_REPLACEMENTS_STRING = "Возможные действия - (N) сделать замену на слово под номером N, где N - число из списка | (I) игнорировать";
+    const char *IGNORE_ALL_STRING = "Игнорировать все вхождения данного слова? Возможные действия - (A) игнорировать все | (S) не игнорировать все";
+    const char *REPLACE_ALL_STRING = "Заменить все вхождения данного слова? Возможные действия - (A) заменить все | (S) не заменять все";
 
 
     unsigned char hash(const std::string &str) const {

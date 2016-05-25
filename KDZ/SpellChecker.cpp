@@ -123,7 +123,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
 
             // check dictionary
             if (!d_search(word)) {
-                cout << "Îáíàðóæåíî ñëîâî " << word << " - îíî îòñóòñòâóåò â ñëîâàðå" << endl;
+                cout << "Ž¡­ àã¦¥­® á«®¢® " << word << " - ®­® ®âáãâáâ¢ã¥â ¢ á«®¢ à¥" << endl;
                 bool bad_action1 = true;
                 while (bad_action1) {
                     cout << POSSIBLE_ACTIONS_STRING << endl;
@@ -133,7 +133,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                     switch ('I') {
                         case 'R':
                         case 'r': {
-                            cout << "Âîçìîæíî, èìåëîñü â âèäó:" << endl;
+                            cout << "‚®§¬®¦­®, ¨¬¥«®áì ¢ ¢¨¤ã:" << endl;
                             set<string> suggestions;
                             suggest_adjacent(word, suggestions);
                             suggest_insertion(word, suggestions);

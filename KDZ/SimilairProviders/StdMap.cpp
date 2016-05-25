@@ -23,7 +23,14 @@ void StdMap::insert(const string &word, const StringContainer &dict) {
 }
 
 set<string> StdMap::operator[](const string &word) const {
-    return words.find(word)->second;
+    auto it = words.find(word);
+    if (it != words.end()) {
+        return it->second;
+    }
+    else {
+        return set<string>();
+    }
+
 }
 
 void StdMap::output(const string &output) const {

@@ -7,9 +7,9 @@
 #include "StringContainers/HashTable.h"
 #include "Dictionary.hpp"
 #include "SimilairProviders/StdMap.h"
+#include "SimilairProviders/StdMap2.h"
 
 int main() {
-    system("chcp 1251");
     using namespace std;
     const string dictPath = "dictionary.txt";
     const string textPath = "1984.txt";
@@ -20,8 +20,8 @@ int main() {
     cout << "comparison took: " << dictionary.compareText(textPath, outPath) << endl;
     dictionary.compareDict(outPath, "secondOutput.txt");
 
-    //dictionary.findSimilair<StdMap>(dictPath,simPath);
-    auto t = dictionary.findSimilair<StdMap>(dictPath, simPath);
+    cout << "1. similair search took: " << dictionary.findSimilair<StdMap>(dictPath, simPath) << endl;
+    cout << "2. similair search took: " << dictionary.findSimilair<StdMap2>(dictPath, simPath) << endl;
 
     //SpellChecker spellChecker;
     //spellChecker.load_words(dictPath);

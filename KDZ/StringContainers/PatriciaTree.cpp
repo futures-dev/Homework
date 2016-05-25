@@ -6,50 +6,77 @@
 
 #include "PatriciaTree.h"
 
-bool PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const {
+int PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const {
     if (start1 + len > word1.length() || start2 + len > word2.length()) {
-        return false;
+        return 0;
     }
-    for (int i = 0; i < len; i++) {
+    int i = 0;
+    for (; i < len; i++) {
         if (word1[i + start1] != word2[i + start2]) {
-            return false;
+            return 0;
         }
     }
-    return true;
+    return i;
 }
 
 void PatriciaTree::insert(const std::string &word) {
     auto current = root;
     int idx = 0;
-    while (idx < word.length()) {
+    int len = word.length();
+    while (idx < len) {
         int linkN = current->links.size();
-        for (int i = 0; i < linkN; i++) {
+        int i = 0;
+        for (; i < linkN; i++) {
             int linkLen = current->links[i]->value.length();
-            if (check(word, idx, current->links[i]->value, 0, linkLen)) {
+            int prefixLen = check(word, idx, current->links[i]->value, 0, linkLen);
+            if (prefixLen == idx + len) {
+                // word already inserted
+                return;
+            }
+            if (prefixLen == linkLen) {
+                // node is prefix of word
+                // make it current
+                // continue while
                 current = current->links[i];
                 idx += linkLen;
-                continue;
+                break;
+            }
+            if (prefixLen > 0) {
+                // node has common prefix with word
+                // make node prefix
+                PatriciaTreeNode *prefixNode = new PatriciaTreeNode(word.substr(idx, prefixLen));
+                current->links[i]->value = current->links[i]->value.substr(prefixLen);
+                prefixNode->links.push_back(current->links[i]);
+                current->links[i] = prefixNode;
+                prefixNode->links.push_back(new PatriciaTreeNode(word.substr(idx + prefixLen)));
+                return;
             }
         }
-        current->links.push_back(new PatriciaTreeNode(word.substr(idx)));
-        break;
+        if (i == linkN) {
+            current->links.push_back(new PatriciaTreeNode(word.substr(idx)));
+            return;
+        }
     }
 }
 
 bool PatriciaTree::search(const std::string &word) const {
     auto current = root;
     int idx = 0;
-    while (idx < word.length()) {
+    int len = word.length();
+    while (current && idx < len) {
         int linkN = current->links.size();
-        for (int i = 0; i < linkN; i++) {
+        int i = 0;
+        for (; i < linkN; i++) {
             int linkLen = current->links[i]->value.length();
             if (check(word, idx, current->links[i]->value, 0, linkLen)) {
                 current = current->links[i];
                 idx += linkLen;
-                continue;
+                break;
             }
         }
-        return false;
+        if (i == linkN) {
+            return false;
+        }
     }
-    return true;
+    return idx == len;
 }

@@ -39,12 +39,12 @@ class Dictionary {
             return val == other.val;
         }
 
-        bool operator<(const dictTuple &other) {
+        bool operator<(const dictTuple &other) const {
             return val < other.val;
         }
     };
 
-    void loadWords(const string &input, const set<dictTuple> &textWords) {
+    void loadWords(const string &input, set<dictTuple> &textWords) {
 
         ifstream fin(input);
         if (!fin.is_open()) {
@@ -169,7 +169,7 @@ public:
         for (auto word:textWords) {
             if (word.index > 0) {
                 fout << word.val << endl;
-                cout << word.val << endl;
+                //cout << word.val << endl;
             }
         }
         return time;

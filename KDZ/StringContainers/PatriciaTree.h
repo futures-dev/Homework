@@ -20,7 +20,7 @@ class PatriciaTree : public StringContainer {
 
     PatriciaTreeNode *root;
 
-    bool check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const;
+    int check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const;
 
 public:
     PatriciaTree() {

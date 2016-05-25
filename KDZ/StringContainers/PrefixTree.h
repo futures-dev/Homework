@@ -11,8 +11,8 @@
 
 
 class PrefixTree : public StringContainer {
-    static const int alphabet_length = 26;
-    static const char offset = 'a';
+    static const char offset = 0x27; //'
+    static const int alphabet_length = 'z' - offset + 1;
 
     struct PrefixTreeNode {
         char letter;

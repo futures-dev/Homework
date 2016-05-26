@@ -6,17 +6,16 @@
 
 #include "PatriciaTree.h"
 
-int PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2, int len) const {
-    if (start1 + len > word1.length() || start2 + len > word2.length()) {
-        return 0;
-    }
-    int i = 0;
-    for (; i < len; i++) {
-        if (word1[i + start1] != word2[i + start2]) {
-            return 0;
+int PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2) const {
+    int len1 = word1.length();
+    int len2 = word2.length();
+    int i = start1;
+    while (start1 < len1 && start2 < len2) {
+        if (word1[start1++] != word2[start2++]) {
+            return start1 - i;
         }
     }
-    return i;
+    return start1 - i;
 }
 
 void PatriciaTree::insert(const std::string &word) {
@@ -27,12 +26,12 @@ void PatriciaTree::insert(const std::string &word) {
         int linkN = current->links.size();
         int i = 0;
         for (; i < linkN; i++) {
-            int linkLen = current->links[i]->value.length();
-            int prefixLen = check(word, idx, current->links[i]->value, 0, linkLen);
+            int prefixLen = check(word, idx, current->links[i]->value, 0);
             if (prefixLen == idx + len) {
                 // word already inserted
                 return;
             }
+            int linkLen = current->links[i]->value.length();
             if (prefixLen == linkLen) {
                 // node is prefix of word
                 // make it current
@@ -67,10 +66,9 @@ bool PatriciaTree::search(const std::string &word) const {
         int linkN = current->links.size();
         int i = 0;
         for (; i < linkN; i++) {
-            int linkLen = current->links[i]->value.length();
-            if (check(word, idx, current->links[i]->value, 0, linkLen)) {
+            if (check(word, idx, current->links[i]->value, 0)) {
                 current = current->links[i];
-                idx += linkLen;
+                idx += current->value.length();
                 break;
             }
         }

@@ -9,6 +9,7 @@
 #include "StringContainers/PatriciaTree.h"
 #include "StringContainers/PrefixTree.h"
 #include "StringContainers/StdSet.h"
+#include "StringContainers/PatriciaSetTree.h"
 
 #ifdef _MSC_VER
 #include <direct.h>
@@ -31,7 +32,7 @@ int main() {
         int a = 0, b = 0, c = 0, d = 0;
         for (int j = 0; j < 3; j++) {
             cout << dictPath[i] << endl;
-            Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
+            Dictionary<PatriciaSetTree> dictionaryHashTable(dictPath[i]);
             a += dictionaryHashTable.compareText(textPath, outPath);
             //cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
             Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);

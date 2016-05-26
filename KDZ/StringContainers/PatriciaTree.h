@@ -14,8 +14,9 @@ class PatriciaTree : public StringContainer {
     struct PatriciaTreeNode {
         std::string value;
         std::vector<PatriciaTreeNode *> links;
+        bool full;
 
-        PatriciaTreeNode(const std::string &&value) : value(value) { };
+        PatriciaTreeNode(const std::string &&value) : value(value), full(true) { };
 
         ~PatriciaTreeNode();
     };

@@ -55,8 +55,9 @@ class Dictionary {
             smatch match;
             regex_search(buf, match, e);
             for (auto word:match) {
-                //transform(word.str().begin(),word.str().end(),word.str().begin(),::tolower);
-                textWords.emplace(word.str(), false);
+                string tmp(word.str());
+                transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+                textWords.emplace(tmp, false);
             }
         }
     }
@@ -142,6 +143,7 @@ public:
             throw invalid_argument("File" + input + " Not Found");
         }
         while (getline(fin, buf)) {
+            transform(buf.begin(), buf.end(), buf.begin(), ::tolower);
             words.insert(buf);
         }
     }

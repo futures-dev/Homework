@@ -4,6 +4,8 @@
 // 21.05.2016 
 //
 
+#include <iostream>
+#include <csignal>
 #include "PatriciaTree.h"
 
 int PatriciaTree::check(const std::string &word1, int start1, const std::string &word2, int start2) const {
@@ -12,7 +14,7 @@ int PatriciaTree::check(const std::string &word1, int start1, const std::string 
     int i = start1;
     while (start1 < len1 && start2 < len2) {
         if (word1[start1++] != word2[start2++]) {
-            return start1 - i;
+            return start1 - i - 1;
         }
     }
     return start1 - i;
@@ -27,12 +29,13 @@ void PatriciaTree::insert(const std::string &word) {
         int i = 0;
         for (; i < linkN; i++) {
             int prefixLen = check(word, idx, current->links[i]->value, 0);
-            if (prefixLen == idx + len) {
-                // word already inserted
-                return;
-            }
             int linkLen = current->links[i]->value.length();
             if (prefixLen == linkLen) {
+                if (prefixLen == len - idx) {
+                    // word already inserted
+                    current->links[i]->full = true;
+                    return;
+                }
                 // node is prefix of word
                 // make it current
                 // continue while
@@ -47,12 +50,18 @@ void PatriciaTree::insert(const std::string &word) {
                 current->links[i]->value = current->links[i]->value.substr(prefixLen);
                 prefixNode->links.push_back(current->links[i]);
                 current->links[i] = prefixNode;
-                prefixNode->links.push_back(new PatriciaTreeNode(word.substr(idx + prefixLen)));
+                if (idx + prefixLen < len) {
+                    // word has some postfix
+                    prefixNode->links.push_back(new PatriciaTreeNode(word.substr(idx + prefixLen)));
+                    prefixNode->full = false;
+                }
                 return;
             }
         }
         if (i == linkN) {
-            current->links.push_back(new PatriciaTreeNode(word.substr(idx)));
+            if (idx < len) {
+                current->links.push_back(new PatriciaTreeNode(word.substr(idx)));
+            }
             return;
         }
     }
@@ -76,7 +85,7 @@ bool PatriciaTree::search(const std::string &word) const {
             return false;
         }
     }
-    return idx == len;
+    return idx == len && current && current->full;
 }
 
 PatriciaTree::~PatriciaTree() {
@@ -84,6 +93,7 @@ PatriciaTree::~PatriciaTree() {
 }
 
 PatriciaTree::PatriciaTreeNode::~PatriciaTreeNode() {
+
     for (auto it = links.begin(); it != links.end(); it++) {
         delete (*it);
     }

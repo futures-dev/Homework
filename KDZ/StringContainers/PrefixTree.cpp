@@ -16,19 +16,21 @@ bool PrefixTree::search(const std::string &s) const {
         }
         current = nextNode;
     }
-    return true;
+    return current->full;
 }
 
 void PrefixTree::insert(const std::string &s) {
     int len = s.length();
     PrefixTreeNode *current = root;
     for (int i = 0; i < len; i++) {
-        PrefixTreeNode *&nextNode = current->links[charToIdx(s[i])];
-        if (nextNode == nullptr) {
-            nextNode = new PrefixTreeNode(s[i], i + 1 == len);
+        int idx = charToIdx(s[i]);
+
+        if (current->links[idx] == nullptr) {
+            current->links[idx] = new PrefixTreeNode(s[i], false);
         }
-        current = nextNode;
+        current = current->links[idx];
     }
+    current->full = true;
 }
 
 int inline PrefixTree::charToIdx(char c) const {

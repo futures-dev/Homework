@@ -57,18 +57,29 @@ void task1() {
         int n_attempts = 1;
         for (int j = 0; j < n_attempts; j++) {
             cout << dictPath[i] << endl;
-            Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
-            a += dictionaryHashTable.compareText(textPath, outPath);
-            //cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
-            Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);
-            b += dictionaryPatriciaTree.compareText(textPath, outPath);
-            //cout << "PatriciaTree. Comparison took: " << dictionaryPatriciaTree.compareText(textPath, outPath) << endl;
+            {
+                Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
+                a += dictionaryHashTable.compareText(textPath, outPath + "hash.txt");
+                a += 1;
+                //cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
+            }
+            {
+                Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);
+                b += dictionaryPatriciaTree.compareText(textPath, outPath + "patricia.txt");
+                //cout << "PatriciaTree. Comparison took: " << dictionaryPatriciaTree.compareText(textPath, outPath) << endl;
+                b += 1;
+            }
             Dictionary<PrefixTree> dictionaryPrefixTree(dictPath[i]);
-            c += dictionaryPrefixTree.compareText(textPath, outPath);
+            c += dictionaryPrefixTree.compareText(textPath, outPath + "prefix.txt");
             //cout << "PrefixTree. Comparison took: " << dictionaryPrefixTree.compareText(textPath, outPath) << endl;
+            c += 1;
+
+
             Dictionary<StdSet> dictionaryStdSet(dictPath[i]);
-            d += dictionaryStdSet.compareText(textPath, outPath);
+            d += dictionaryStdSet.compareText(textPath, outPath + "stdset.txt");
             //cout << "StdSet. Comparison took: " << dictionaryStdSet.compareText(textPath, outPath) << endl;
+            d += 1;
+
         }
         fout << a / n_attempts << endl << b / n_attempts << endl << c / n_attempts << endl << d / n_attempts << endl;
         //dictionary.compareDict(outPath, "secondOutput.txt");
@@ -86,5 +97,5 @@ int main() {
     // make_dict();
     using namespace std;
     chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
-
+    task1();
 }

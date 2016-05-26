@@ -16,18 +16,45 @@
 #include <unistd.h>
 #endif
 
-int main() {
-    using namespace std;
-    chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
-    const string dictPath[4]{"dictionary.txt", "dictionary1.txt", "dictionary2.txt", "dictionary3.txt"};
+const int dictN = 6;
+
+int make_dict() {
+    ifstream fin("dictionary.txt");
+    string buf;
+    ofstream *fout[dictN - 1];
+    for (int j = 1; j < dictN; j++) {
+        fout[j - 1] = new ofstream("dictionary" + to_string(j) + ".txt");
+    }
+    int i = 0;
+    while (getline(fin, buf)) {
+        for (int j = 0; j < dictN - 1; j++) {
+            if (i % (2 << j) == 0) {
+                *fout[j] << buf << endl;
+            }
+        }
+        i++;
+    }
+    for (int j = 0; j < dictN - 1; j++) {
+        delete fout[j];
+    }
+    return 0;
+}
+
+void task1() {
+    make_dict();
+    string dictPath[dictN];
+    dictPath[0] = "dictionary.txt";
+    for (int i = 1; i < dictN; i++) {
+        dictPath[i] = "dictionary" + to_string(i) + ".txt";
+    }
     const string textPath = "1984.txt";
     const string outPath = "output.txt";
     const string simPath = "simOutput.txt";
     const string numberPath = "numberOutput.txt";
     ofstream fout(numberPath);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < dictN; i++) {
         int64_t a = 0, b = 0, c = 0, d = 0;
-        int n_attempts = 10;
+        int n_attempts = 1;
         for (int j = 0; j < n_attempts; j++) {
             cout << dictPath[i] << endl;
             Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
@@ -55,33 +82,9 @@ int main() {
     }
 }
 
-int make_dict() {
-
-    if (true) {
-        ifstream fin("dictionary.txt");
-        string buf;
-        ofstream *fout[3];
-        string numbers[3]{"1", "2", "3"};
-        for (int j = 0; j < 3; j++) {
-            fout[j] = new ofstream("dictionary" + numbers[j] + ".txt");
-        }
-        int i = 0;
-        while (getline(fin, buf)) {
-            if (i % 2 == 0) {
-                *fout[0] << buf << endl;
-            }
-            if (i % 3 == 0) {
-                *fout[1] << buf << endl;
-            }
-            if (i % 5 == 0) {
-                *fout[2] << buf << endl;
-            }
-            i++;
-        }
-        for (int j = 0; j < 3; j++) {
-            delete fout[j];
-        }
-        return 0;
-    }
+int main() {
+    // make_dict();
+    using namespace std;
+    chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
 
 }

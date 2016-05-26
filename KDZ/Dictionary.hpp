@@ -154,7 +154,6 @@ public:
         loadWords(input, textWords);
         cout << "Process words..." << endl;
         uint64_t time = __rdtsc();
-        int len = textWords.size();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             if (!words.search(it->val)) {
                 it->index = 1;
@@ -176,9 +175,9 @@ public:
     uint64_t compareDict(const string &input, const string &output) {
 
         set<dictTuple> textWords;
+        uint64_t time = __rdtsc();
         loadWords(input, textWords);
         cout << "Process words..." << endl;
-        uint64_t time = __rdtsc();
         int len = textWords.size();
         vector<set<string>> newWords;
         int lineN = 0;

@@ -320,16 +320,13 @@ void SpellChecker::suggest_adjacent(const string &a_word, set<string> &suggestio
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+unsigned char SpellChecker::hash(const std::string &str) const {
+    // Rot13
+    unsigned int hash = 0;
+    int len = str.length();
+    for (int i = 0; i < len; i++) {
+        hash += (unsigned char) (str[i]);
+        hash -= (hash << 13) | (hash >> 19);
+    }
+    return (unsigned char) hash;
+}

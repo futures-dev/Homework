@@ -20,11 +20,14 @@ class PrefixTree : public StringContainer {
         bool full;
 
         PrefixTreeNode(char letter, bool full) : letter(letter), full(full) { }
+
+        ~PrefixTreeNode();
     };
 
     PrefixTreeNode *root;
 
     inline int charToIdx(char c) const;
+
 
 public:
     PrefixTree();
@@ -33,7 +36,7 @@ public:
 
     bool search(const std::string &s) const;
 
-    virtual ~PrefixTree() { }
+    virtual ~PrefixTree();
 };
 
 

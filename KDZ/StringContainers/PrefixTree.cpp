@@ -38,3 +38,13 @@ int inline PrefixTree::charToIdx(char c) const {
 PrefixTree::PrefixTree() {
     root = new PrefixTreeNode('\0', false);
 }
+
+PrefixTree::~PrefixTree() {
+    delete root;
+}
+
+PrefixTree::PrefixTreeNode::~PrefixTreeNode() {
+    for (int i = 0; i < alphabet_length; i++) {
+        delete links[i];
+    }
+}

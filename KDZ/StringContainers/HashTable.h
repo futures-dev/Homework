@@ -16,26 +16,19 @@ class HashTable : public StringContainer {
     public:
         hash_function() { }
 
-        unsigned int operator()(const std::string &str) const {
-            // Rot13
-            unsigned int hash = 0;
-            int len = str.length();
-            for (int i = 0; i < len; i++) {
-                hash += (unsigned char) (str[i]);
-                hash -= (hash << 13) | (hash >> 19);
-            }
-            return hash;
-        }
+        unsigned int operator()(const std::string &str) const;
     };
 
     class equality {
     public:
         equality() { }
 
-        bool  operator()(const std::string &A, const std::string &B) const {
-            return (A == B);
-        }
+        bool operator()(const std::string &A, const std::string &B) const;
     };
+
+    bool equality::operator()(const std::string &A, const std::string &B) const {
+        return (A == B);
+    }
 
     std::unordered_set<std::string, hash_function, equality> words;
 public:

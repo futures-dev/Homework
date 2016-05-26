@@ -21,16 +21,7 @@ class SpellChecker {
     const char *REPLACE_ALL_STRING = "Заменить все вхождения данного слова? Возможные действия - (A) заменить все | (S) не заменять все";
 
 
-    unsigned char hash(const std::string &str) const {
-        // Rot13
-        unsigned int hash = 0;
-        int len = str.length();
-        for (int i = 0; i < len; i++) {
-            hash += (unsigned char) (str[i]);
-            hash -= (hash << 13) | (hash >> 19);
-        }
-        return (unsigned char) hash;
-    }
+    unsigned char hash(const std::string &str) const;
 
     vector<string> *hashset;
 
@@ -38,9 +29,7 @@ class SpellChecker {
 
     size_t _size;
 public:
-    SpellChecker() {
-        hashset = new vector<string>[UINT8_MAX + 1];
-    };
+    SpellChecker() : hashset(new vector<string>[UINT8_MAX + 1]) { };
 
     bool d_search(const string &word) const;
 

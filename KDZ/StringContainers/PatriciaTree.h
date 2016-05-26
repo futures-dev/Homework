@@ -16,6 +16,8 @@ class PatriciaTree : public StringContainer {
         std::vector<PatriciaTreeNode *> links;
 
         PatriciaTreeNode(const std::string &&value) : value(value) { };
+
+        ~PatriciaTreeNode();
     };
 
     PatriciaTreeNode *root;
@@ -23,15 +25,13 @@ class PatriciaTree : public StringContainer {
     inline int check(const std::string &word1, int start1, const std::string &word2, int start2) const;
 
 public:
-    PatriciaTree() {
-        root = new PatriciaTreeNode("\0");
-    }
+    PatriciaTree() : root(new PatriciaTreeNode("\0")) { }
 
     void insert(const std::string &word);
 
     bool search(const std::string &word) const;
 
-    virtual ~PatriciaTree() { }
+    virtual ~PatriciaTree();
 
 };
 

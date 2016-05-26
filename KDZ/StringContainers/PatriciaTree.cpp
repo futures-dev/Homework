@@ -78,3 +78,14 @@ bool PatriciaTree::search(const std::string &word) const {
     }
     return idx == len;
 }
+
+PatriciaTree::~PatriciaTree() {
+    delete root;
+}
+
+PatriciaTree::PatriciaTreeNode::~PatriciaTreeNode() {
+    for (auto it = links.begin(); it != links.end(); it++) {
+        delete (*it);
+    }
+}
+

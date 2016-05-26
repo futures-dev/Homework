@@ -24,3 +24,7 @@ unsigned int HashTable::hash_function::operator()(const std::string &str) const 
     }
     return hash;
 }
+
+bool HashTable::equality::operator()(const std::string &A, const std::string &B) const {
+    return (A == B);
+}

@@ -26,10 +26,6 @@ class HashTable : public StringContainer {
         bool operator()(const std::string &A, const std::string &B) const;
     };
 
-    bool equality::operator()(const std::string &A, const std::string &B) const {
-        return (A == B);
-    }
-
     std::unordered_set<std::string, hash_function, equality> words;
 public:
     void insert(const std::string &word);

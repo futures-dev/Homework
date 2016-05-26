@@ -26,8 +26,9 @@ int main() {
     const string numberPath = "numberOutput.txt";
     ofstream fout(numberPath);
     for (int i = 0; i < 4; i++) {
-        int a = 0, b = 0, c = 0, d = 0;
-        for (int j = 0; j < 3; j++) {
+        int64_t a = 0, b = 0, c = 0, d = 0;
+        int n_attempts = 10;
+        for (int j = 0; j < n_attempts; j++) {
             cout << dictPath[i] << endl;
             Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
             a += dictionaryHashTable.compareText(textPath, outPath);
@@ -42,7 +43,7 @@ int main() {
             d += dictionaryStdSet.compareText(textPath, outPath);
             //cout << "StdSet. Comparison took: " << dictionaryStdSet.compareText(textPath, outPath) << endl;
         }
-        fout << a / 3 << endl << b / 3 << endl << c / 3 << endl << d / 3 << endl;
+        fout << a / n_attempts << endl << b / n_attempts << endl << c / n_attempts << endl << d / n_attempts << endl;
         //dictionary.compareDict(outPath, "secondOutput.txt");
 
         //cout << "1. similair search took: " << dictionary.findSimilair<StdMap>(dictPath, simPath) << endl;

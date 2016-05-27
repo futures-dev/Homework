@@ -9,6 +9,10 @@
 #include "StringContainers/PatriciaTree.h"
 #include "StringContainers/PrefixTree.h"
 #include "StringContainers/StdSet.h"
+#include "SimilairProviders/StdMap.h"
+#include "SimilairProviders/StdMap2.h"
+#include "SimilairProviders/StdMap3.h"
+#include <complex>
 
 #ifdef _MSC_VER
 #include <direct.h>
@@ -18,84 +22,184 @@
 
 const int dictN = 6;
 
-int make_dict() {
-    ifstream fin("dictionary.txt");
-    string buf;
-    ofstream *fout[dictN - 1];
-    for (int j = 1; j < dictN; j++) {
-        fout[j - 1] = new ofstream("dictionary" + to_string(j) + ".txt");
-    }
-    int i = 0;
-    while (getline(fin, buf)) {
-        for (int j = 0; j < dictN - 1; j++) {
-            if (i % (2 << j) == 0) {
-                *fout[j] << buf << endl;
-            }
-        }
-        i++;
-    }
-    for (int j = 0; j < dictN - 1; j++) {
-        delete fout[j];
-    }
-    return 0;
+int make_dict(const string &path) {
+	ifstream fin(path + ".txt");
+	string buf;
+	ofstream *fout[dictN - 1];
+	for (int j = 1; j < dictN; j++) {
+		fout[j - 1] = new ofstream(path + to_string(j) + ".txt");
+	}
+	int i = 0;
+	while (getline(fin, buf)) {
+		for (int j = 0; j < dictN - 1; j++) {
+			if (i % (2 << j) == 0) {
+				*fout[j] << buf << endl;
+			}
+		}
+		i++;
+	}
+	for (int j = 0; j < dictN - 1; j++) {
+		delete fout[j];
+	}
+	return 0;
 }
 
 void task1() {
-    make_dict();
-    string dictPath[dictN];
-    dictPath[0] = "dictionary.txt";
-    for (int i = 1; i < dictN; i++) {
-        dictPath[i] = "dictionary" + to_string(i) + ".txt";
-    }
-    const string textPath = "1984.txt";
-    const string outPath = "output.txt";
-    const string simPath = "simOutput.txt";
-    const string numberPath = "numberOutput.txt";
-    ofstream fout(numberPath);
-    for (int i = 0; i < dictN; i++) {
-        int64_t a = 0, b = 0, c = 0, d = 0;
-        int n_attempts = 1;
-        for (int j = 0; j < n_attempts; j++) {
-            cout << dictPath[i] << endl;
-            {
-                Dictionary<HashTable> dictionaryHashTable(dictPath[i]);
-                a += dictionaryHashTable.compareText(textPath, outPath + "hash.txt");
-                a += 1;
-                //cout << "HashTable. Comparison took: " << dictionaryHashTable.compareText(textPath, outPath) << endl;
-            }
-            {
-                Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i]);
-                b += dictionaryPatriciaTree.compareText(textPath, outPath + "patricia.txt");
-                //cout << "PatriciaTree. Comparison took: " << dictionaryPatriciaTree.compareText(textPath, outPath) << endl;
-                b += 1;
-            }
-            Dictionary<PrefixTree> dictionaryPrefixTree(dictPath[i]);
-            c += dictionaryPrefixTree.compareText(textPath, outPath + "prefix.txt");
-            //cout << "PrefixTree. Comparison took: " << dictionaryPrefixTree.compareText(textPath, outPath) << endl;
-            c += 1;
+	make_dict("dictSjsu/dictionary");
+	string dictPath[dictN];
+	dictPath[0] = "dictSjsu/dictionary.txt";
+	for (int i = 1; i < dictN; i++) {
+		dictPath[i] = "dictSjsu/dictionary" + to_string(i) + ".txt";
+	}
+	const string textPath = "1984.txt";
+	const string outPath = "output/task1/output";
+	ofstream fout(outPath + ".txt");
 
+	for (int i = 0; i < dictN; i++) {
+		int64_t hashTableInsert = 0, hashTableSearch = 0, patriciaTreeInsert = 0, patriciaTreeSearch = 0, prefixTreeInsert = 0, prefixTreeSearch = 0, stdSetInsert = 0, stdSetSearch = 0;
+		int n_attempts = 3;
+		for (int j = 0; j < n_attempts; j++) {
+			{
+				int64_t insert_time = 0;
+				Dictionary<HashTable> dictionaryHashTable(dictPath[i], insert_time);
+				hashTableInsert += insert_time;
+				hashTableSearch += dictionaryHashTable.compareText(textPath,
+																   outPath + "_hashTable_" + to_string(i) + ".txt");
+			}
+			{
+				int64_t insert_time = 0;
+				Dictionary<PatriciaTree> dictionaryPatriciaTree(dictPath[i], insert_time);
+				patriciaTreeInsert += insert_time;
+				patriciaTreeSearch += dictionaryPatriciaTree.compareText(textPath,
+																		 outPath + "_patriciaTree_" + to_string(i) +
+																		 ".txt");
+			}
+			{
+				int64_t insert_time = 0;
+				Dictionary<PrefixTree> dictionaryPrefixTree(dictPath[i], insert_time);
+				prefixTreeInsert += insert_time;
+				prefixTreeSearch += dictionaryPrefixTree.compareText(textPath,
+																	 outPath + "_prefixTree_" + to_string(i) + ".txt");
+			}
+			{
+				int64_t insert_time = 0;
+				Dictionary<StdSet> dictionaryStdSet(dictPath[i], insert_time);
+				stdSetInsert += insert_time;
+				stdSetSearch += dictionaryStdSet.compareText(textPath, outPath + "_stdSet_" + to_string(i) + ".txt");
+			}
 
-            Dictionary<StdSet> dictionaryStdSet(dictPath[i]);
-            d += dictionaryStdSet.compareText(textPath, outPath + "stdset.txt");
-            //cout << "StdSet. Comparison took: " << dictionaryStdSet.compareText(textPath, outPath) << endl;
-            d += 1;
+		}
+		hashTableInsert /= n_attempts, hashTableSearch /= n_attempts, patriciaTreeInsert /= n_attempts, patriciaTreeSearch /= n_attempts, prefixTreeInsert /= n_attempts, prefixTreeSearch /= n_attempts, stdSetInsert /= n_attempts, stdSetSearch /= n_attempts;
+		cout << i << endl;
+		cout << "HashTable Insert: " << hashTableInsert << endl;
+		cout << "HashTable Search: " << hashTableSearch << endl;
+		cout << "Patricia Insert: " << patriciaTreeInsert << endl;
+		cout << "Patricia Search: " << patriciaTreeSearch << endl;
+		cout << "Prefix Insert: " << prefixTreeInsert << endl;
+		cout << "Prefix Search: " << prefixTreeSearch << endl;
+		cout << "StdSet Insert: " << stdSetInsert << endl;
+		cout << "StdSet Search: " << stdSetSearch << endl;
+		fout << "HashTable Insert: " << hashTableInsert << endl;
+		fout << "HashTable Search: " << hashTableSearch << endl;
+		fout << "Patricia Insert: " << patriciaTreeInsert << endl;
+		fout << "Patricia Search: " << patriciaTreeSearch << endl;
+		fout << "Prefix Insert: " << prefixTreeInsert << endl;
+		fout << "Prefix Search: " << prefixTreeSearch << endl;
+		fout << "StdSet Insert: " << stdSetInsert << endl;
+		fout << "StdSet Search: " << stdSetSearch << endl;
+	}
+}
 
-        }
-        fout << a / n_attempts << endl << b / n_attempts << endl << c / n_attempts << endl << d / n_attempts << endl;
-        //dictionary.compareDict(outPath, "secondOutput.txt");
+void task2() {
+	make_dict("dictSil/dictionary");
+	string dictPath[dictN];
+	dictPath[0] = "dictSil/dictionary.txt";
+	for (int i = 1; i < dictN; i++) {
+		dictPath[i] = "dictSil/dictionary" + to_string(i) + ".txt";
+	}
+	const string outPath = "output/task2/output";
+	ofstream fout(outPath + ".txt");
 
-        //cout << "1. similair search took: " << dictionary.findSimilair<StdMap>(dictPath, simPath) << endl;
-        //cout << "2. similair search took: " << dictionary.findSimilair<StdMap2>(dictPath, simPath) << endl;
+	for (int i = 0; i < dictN; i++) {
+		int64_t map1Similair = 0, map2Similair = 0, map3Similair = 0;
+		int n_attempts = 1;
+		// using HashTable
+		{
+			Dictionary<PatriciaTree> dictionary(dictPath[i]);
+			{
+				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
+				cout << endl;
+			}
+			{
+				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i],
+																 outPath + "_map2_" + to_string(i) + ".txt");
+				cout << endl;
+			}
+			{
+				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i],
+																 outPath + "_map3_" + to_string(i) + ".txt");
+				cout << endl;
+			}
+		}
+		/*
+		// using PatriciaTree
+		{
+			Dictionary<PatriciaTree> dictionary(dictPath[i]);
+			{
+				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
+			}
+			{
+				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
+			}
+			{
+				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
+			}
+		}
+		// using PrefixTree
+		{
+			Dictionary<PrefixTree> dictionary(dictPath[i]);
+			{
+				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
+			}
+			{
+				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
+			}
+			{
+				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
+			}
+		}
+		// using StdSet
+		{
+			Dictionary<StdSet> dictionary(dictPath[i]);
+			{
+				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
+			}
+			{
+				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
+			}
+			{
+				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
+			}
+		}
+		*/
 
-        //SpellChecker spellChecker;
-        //spellChecker.load_words(dictPath);
-        //spellChecker.spell_check(textPath, "thirdOutput.txt");
-    }
+		map1Similair /= n_attempts, map2Similair /= n_attempts, map3Similair /= n_attempts;
+		cout << i << endl;
+		cout << "map<string,set<string>>: " << map1Similair << endl;
+		cout << "map<int,map>: " << map2Similair << endl;
+		cout << "map<char,map<int,map>>: " << map3Similair << endl;
+		fout << i << endl;
+		fout << "map<string,set<string>>: " << map1Similair << endl;
+		fout << "map<int,map>: " << map2Similair << endl;
+		fout << "map<char,map<int,map>>: " << map3Similair << endl;
+	}
 }
 
 int main() {
-    // make_dict();
-    using namespace std;
-    chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
-    task1();
+	// make_dict();
+	using namespace std;
+	chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
+	//task1();
+	task2();
+	cin.get();
 }

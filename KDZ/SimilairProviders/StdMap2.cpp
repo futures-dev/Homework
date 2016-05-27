@@ -49,5 +49,5 @@ void StdMap2::output(const string &output) const {
             }
         }
     }
-    cout << "StdMap output done." << endl;
+    cout << "StdMap2 output done." << endl;
 }

@@ -4,13 +4,12 @@
 // 22.05.2016
 //
 
+#include "SpellChecker.h"
 #include <algorithm>
 #include <fstream>
 #include <stdexcept>
 #include <regex>
 #include <iostream>
-#include <set>
-#include "SpellChecker.h"
 
 bool SpellChecker::d_search(const string &word) const {
     unsigned char h = hash(word);
@@ -123,7 +122,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
 
             // check dictionary
             if (!d_search(word)) {
-                cout << "Ž¡­ àã¦¥­® á«®¢® " << word << " - ®­® ®âáãâáâ¢ã¥â ¢ á«®¢ à¥" << endl;
+                cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ã¦¥ï¿½ï¿½ á«®ï¿½ï¿½ " << word << " - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ á«®ï¿½ï¿½ï¿½" << endl;
                 bool bad_action1 = true;
                 while (bad_action1) {
                     cout << POSSIBLE_ACTIONS_STRING << endl;
@@ -133,7 +132,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                     switch ('I') {
                         case 'R':
                         case 'r': {
-                            cout << "‚®§¬®¦­®, ¨¬¥«®áì ¢ ¢¨¤ã:" << endl;
+                            cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½:" << endl;
                             set<string> suggestions;
                             suggest_adjacent(word, suggestions);
                             suggest_insertion(word, suggestions);

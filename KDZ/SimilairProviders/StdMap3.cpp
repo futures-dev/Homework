@@ -53,5 +53,5 @@ void StdMap3::output(const string &output) const {
             }
         }
     }
-    cout << "StdMap output done." << endl;
+    cout << "StdMap3 output done." << endl;
 }

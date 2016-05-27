@@ -1,11 +1,14 @@
+#include <cstring>
+#include <iostream>
 #include "SimilairProvider.h"
 
 using namespace std;
 
 void SimilairProvider::suggest_replacement(const string &a_word, const StringContainer &dict,
                                            set<string> &suggestions) const {
-    string word(a_word);
-    int len = word.length();
+    int len = a_word.length();
+    char *word = new char[len + 1];
+    strcpy(word, a_word.c_str());
     char temp;
     for (int i = 0; i < len; i++) {
 // replace i-th letter
@@ -17,8 +20,9 @@ void SimilairProvider::suggest_replacement(const string &a_word, const StringCon
                 continue;
             }
             word[i] = c;
-            if (dict.search(word)) {
-                suggestions.insert(word);
+            string tmp(word);
+            if (dict.search(tmp)) {
+                suggestions.insert(tmp);
             }
         }
         word[i] = temp;

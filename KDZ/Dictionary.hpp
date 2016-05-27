@@ -49,7 +49,7 @@ class Dictionary {
         }
         cout << "Loading file: " + input << endl;
         string buf;
-        regex e(wordRegex, regex_constants::basic);
+        regex e(wordRegex, regex_constants::extended);
         while (getline(fin, buf)) {
             smatch match;
             regex_search(buf, match, e);
@@ -135,23 +135,30 @@ class Dictionary {
     }
 
 public:
-    Dictionary(const string &input) {
-
+    Dictionary(const string &input, int64_t &time) {
+        cout << input << endl;
         ifstream fin(input);
         string buf;
         if (!fin.is_open()) {
             throw invalid_argument("File" + input + " Not Found");
         }
+        time = 0;
         while (getline(fin, buf)) {
             transform(buf.begin(), buf.end(), buf.begin(), ::tolower);
+            int64_t start = __rdtsc();
             words.insert(buf);
+            time += __rdtsc() - start;
         }
+    }
+
+    Dictionary(const string &input) {
+        int64_t tmp;
+        Dictionary(input, tmp);
     }
 
     Dictionary() { }
 
     uint64_t compareText(const string &input, const string &output) {
-        cout << words.search("apprehensive") << endl;
         set<dictTuple> textWords;
         loadWords(input, textWords);
         cout << "Process words..." << endl;
@@ -222,7 +229,6 @@ public:
         set<dictTuple> textWords;
         loadWords(input, textWords);
 
-        cout << "Searching similair words..." << endl;
         uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider.insert(it->val, words);

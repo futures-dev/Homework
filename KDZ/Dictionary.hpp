@@ -134,8 +134,7 @@ class Dictionary {
         }
     }
 
-public:
-    Dictionary(const string &input, int64_t &time) {
+    void init(const string &input, int64_t &time) {
         cout << input << endl;
         ifstream fin(input);
         string buf;
@@ -151,9 +150,14 @@ public:
         }
     }
 
+public:
+    Dictionary(const string &input, int64_t &time) {
+        init(input, time);
+    }
+
     Dictionary(const string &input) {
         int64_t tmp;
-        Dictionary(input, tmp);
+        init(input, tmp);
     }
 
     Dictionary() { }
@@ -233,14 +237,36 @@ public:
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider.insert(it->val, words);
         }
+        time = __rdtsc() - time;
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider[it->val];
         }
-        time = __rdtsc() - time;
         provider.output(output);
         return time;
     }
 
+    void loadFromText(const std::string &input) {
+        using namespace std;
+
+        ifstream fin(input);
+        if (!fin.is_open()) {
+            throw invalid_argument("File" + input + " Not Found");
+        }
+        cout << "Loading file: " + input << endl;
+        string buf;
+        regex e(wordRegex, regex_constants::extended);
+        while (getline(fin, buf)) {
+            smatch match;
+            regex_search(buf, match, e);
+            for (auto word:match) {
+                string tmp(word.str());
+                transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+                if (!tmp.empty()) {
+                    words.insert(tmp);
+                }
+            }
+        }
+    }
 
 };
 

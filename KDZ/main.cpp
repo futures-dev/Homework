@@ -122,10 +122,10 @@ void task2() {
 
 	for (int i = 0; i < dictN; i++) {
 		int64_t map1Similair = 0, map2Similair = 0, map3Similair = 0;
-		int n_attempts = 1;
+		int n_attempts = 4;
 		// using HashTable
 		{
-			Dictionary<PatriciaTree> dictionary(dictPath[i]);
+			Dictionary<HashTable> dictionary(dictPath[i]);
 			{
 				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
 				cout << endl;
@@ -141,7 +141,7 @@ void task2() {
 				cout << endl;
 			}
 		}
-		/*
+
 		// using PatriciaTree
 		{
 			Dictionary<PatriciaTree> dictionary(dictPath[i]);
@@ -181,7 +181,7 @@ void task2() {
 				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
 			}
 		}
-		*/
+
 
 		map1Similair /= n_attempts, map2Similair /= n_attempts, map3Similair /= n_attempts;
 		cout << i << endl;
@@ -195,11 +195,72 @@ void task2() {
 	}
 }
 
+void task3() {
+	make_dict("dictSil/dictionary5");
+	string dictPath[dictN];
+	dictPath[0] = "dictSil/dictionary5.txt";
+	for (int i = 1; i < dictN; i++) {
+		dictPath[i] = "dictSil/dictionary5" + to_string(i) + ".txt";
+	}
+	const string outPath = "output/task3/output";
+	const string bigDict = "dictSjsu/dictionary.txt";
+	ofstream fout(outPath + ".txt");
+
+	for (int i = 0; i < dictN; i++) {
+		int64_t hashTableCompare = 0, patriciaTreeCompare = 0, prefixTreeCompare = 0, stdSetCompare = 0;
+		int n_attempts = 4;
+		for (int j = 0; j < n_attempts; j++) {
+			// using HashTable
+			{
+				Dictionary<HashTable> dictionary(bigDict);
+				hashTableCompare += dictionary.compareDict(dictPath[i],
+														   outPath + "_hashTable_" + to_string(i) + ".txt");
+			}
+
+			// using PatriciaTree
+			{
+				Dictionary<PatriciaTree> dictionary(bigDict);
+				patriciaTreeCompare += dictionary.compareDict(dictPath[i],
+															  outPath + "_patriciaTree_" + to_string(i) + ".txt");
+			}
+			// using PrefixTree
+			{
+				Dictionary<PrefixTree> dictionary(bigDict);
+				prefixTreeCompare += dictionary.compareDict(dictPath[i],
+															outPath + "_prefixTree_" + to_string(i) + ".txt");
+			}
+			// using StdSet
+			{
+				Dictionary<StdSet> dictionary(bigDict);
+				stdSetCompare += dictionary.compareDict(dictPath[i], outPath + "_stdSet_" + to_string(i) + ".txt");
+			}
+		}
+
+		hashTableCompare /= n_attempts, patriciaTreeCompare /= n_attempts, prefixTreeCompare /= n_attempts, stdSetCompare /= n_attempts;
+		cout << i << endl;
+		cout << "HashTable Compare: " << hashTableCompare << endl;
+		cout << "Patricia Compare: " << patriciaTreeCompare << endl;
+		cout << "Prefix Compare: " << prefixTreeCompare << endl;
+		cout << "StdSet Compare: " << stdSetCompare << endl;
+		fout << "HashTable Compare: " << hashTableCompare << endl;
+		fout << "Patricia Compare: " << patriciaTreeCompare << endl;
+		fout << "Prefix Compare: " << prefixTreeCompare << endl;
+		fout << "StdSet Search: " << stdSetCompare << endl;
+	}
+}
+
+void task4() {
+	const string text1 = "text/Alice.txt";
+	const string text2 = "text/Island.txt";
+}
+
 int main() {
 	// make_dict();
 	using namespace std;
 	chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
 	//task1();
-	task2();
+	//task2();
+	task3();
+	task4();
 	cin.get();
 }

@@ -12,6 +12,7 @@
 #include "SimilairProviders/StdMap.h"
 #include "SimilairProviders/StdMap2.h"
 #include "SimilairProviders/StdMap3.h"
+#include "SpellChecker.h"
 #include <complex>
 
 #ifdef _MSC_VER
@@ -252,6 +253,12 @@ void task3() {
 void task4() {
 	const string text1 = "text/Alice.txt";
 	const string text2 = "text/Island.txt";
+	const string textBroken = "text/broken.txt";
+	const string output = "output/task4/output.txt";
+	SpellChecker spellChecker;
+	spellChecker.load_words(text1);
+	spellChecker.load_words(text2);
+	spellChecker.spell_check(textBroken, output);
 }
 
 int main() {

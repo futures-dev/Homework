@@ -72,13 +72,16 @@ void SpellChecker::load_words(const string &input) {
         throw invalid_argument("File" + input + " Not Found");
     }
     string buf;
-    regex e(wordRegex, regex_constants::basic);
+    regex e(wordRegex, regex_constants::extended);
     while (getline(fin, buf)) {
         smatch match;
         regex_search(buf, match, e);
         for (auto word:match) {
-            //transform(word.str().begin(),word.str().end(),word.str().begin(),::tolower);
-            dwd_insert(word.str());
+            string tmp(word.str());
+            transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+            if (!tmp.empty()) {
+                dwd_insert(tmp);
+            }
         }
     }
 }
@@ -98,9 +101,9 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
         string prev_suffix;
         while (regex_search(buf, match, e)) {
             prev_suffix = match.suffix();
-            //transform(word.str().begin(),word.str().end(),word.str().begin(),::tolower);
             fout << match.prefix();
             string word(match.str());
+            transform(word.begin(), word.end(), word.begin(), ::tolower);
             buf = match.suffix();
 
             // check ignore all
@@ -122,7 +125,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
 
             // check dictionary
             if (!d_search(word)) {
-                cout << "пїЅпїЅпїЅпїЅпїЅг¦ҐпїЅпїЅ б«®пїЅпїЅ " << word << " - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ б«®пїЅпїЅпїЅ" << endl;
+                cout << "Обнаружено слово " << word << " - оно отсутствует в словаре" << endl;
                 bool bad_action1 = true;
                 while (bad_action1) {
                     cout << POSSIBLE_ACTIONS_STRING << endl;
@@ -132,7 +135,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                     switch ('I') {
                         case 'R':
                         case 'r': {
-                            cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ:" << endl;
+                            cout << "Возможно, имелось в виду:" << endl;
                             set<string> suggestions;
                             suggest_adjacent(word, suggestions);
                             suggest_insertion(word, suggestions);

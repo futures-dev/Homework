@@ -125,17 +125,16 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
 
             // check dictionary
             if (!d_search(word)) {
-                cout << "Обнаружено слово " << word << " - оно отсутствует в словаре" << endl;
+                cout << WORD_FOUND_STRING << word << WORD_MISSING_STRING << endl;
                 bool bad_action1 = true;
                 while (bad_action1) {
                     cout << POSSIBLE_ACTIONS_STRING << endl;
                     string action_buf;
-                    //getline(cin, action_buf);
-                    //switch (action_buf.back()) {
-                    switch ('I') {
+                    getline(cin, action_buf);
+                    switch (action_buf.back()) {
                         case 'R':
                         case 'r': {
-                            cout << "Возможно, имелось в виду:" << endl;
+                            cout << MAYBE_STRING << endl;
                             set<string> suggestions;
                             suggest_adjacent(word, suggestions);
                             suggest_insertion(word, suggestions);
@@ -200,9 +199,8 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                             bool bad_action3 = true;
                             string action_buf3;
                             while (bad_action3) {
-                                //getline(cin, action_buf3);
-                                //switch (action_buf3.back()) {
-                                switch ('A') {
+                                getline(cin, action_buf3);
+                                switch (action_buf3.back()) {
                                     case 'A':
                                     case 'a':
                                         ignored.insert(word);

@@ -34,6 +34,7 @@ set<string> StdMap::operator[](const string &word) const {
 }
 
 void StdMap::output(const string &output) const {
+    cout << "Output similair words in dictionary into: " << output << endl;
     ofstream fout(output);
     for (auto it = words.begin(); it != words.end(); it++) {
         auto it2 = it->second.begin();

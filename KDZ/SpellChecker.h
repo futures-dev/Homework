@@ -19,7 +19,9 @@ class SpellChecker {
     const char *POSSIBLE_REPLACEMENTS_STRING = "Возможные действия - (N) сделать замену на слово под номером N, где N - число из списка | (I) игнорировать";
     const char *IGNORE_ALL_STRING = "Игнорировать все вхождения данного слова? Возможные действия - (A) игнорировать все | (S) не игнорировать все";
     const char *REPLACE_ALL_STRING = "Заменить все вхождения данного слова? Возможные действия - (A) заменить все | (S) не заменять все";
-
+    const char *MAYBE_STRING = "Возможно, имелось в виду:";
+    const char *WORD_FOUND_STRING = "Обнаружено слово ";
+    const char *WORD_MISSING_STRING = " - оно отсутствует в словаре";
 
     unsigned char hash(const std::string &str) const;
 

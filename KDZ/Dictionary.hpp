@@ -165,7 +165,7 @@ public:
     uint64_t compareText(const string &input, const string &output) {
         set<dictTuple> textWords;
         loadWords(input, textWords);
-        cout << "Process words..." << endl;
+        cout << "Searching for unknown words in " << input << "..." << endl;
         uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             if (!words.search(it->val)) {
@@ -175,13 +175,13 @@ public:
         time = __rdtsc() - time;
 
         ofstream fout(output);
-        cout << "List of words not found in dictionary:" << endl;
         for (auto word:textWords) {
             if (word.index > 0) {
                 fout << word.val << endl;
                 //cout << word.val << endl;
             }
         }
+        cout << "List of words not found in dictionary output into: " << output << endl;
         return time;
     }
 
@@ -190,7 +190,7 @@ public:
         set<dictTuple> textWords;
         uint64_t time = __rdtsc();
         loadWords(input, textWords);
-        cout << "Process words..." << endl;
+        cout << "Comparing dictionary to " << input << "..." << endl;
         int len = textWords.size();
         vector<set<string>> newWords;
         int lineN = 0;
@@ -206,22 +206,23 @@ public:
         time = __rdtsc() - time;
 
         ofstream fout(output);
-        cout << "List of words not found in dictionary:" << endl;
+        //cout << "List of words not found in dictionary:" << endl;
         auto it = newWords.begin();
         for (auto word:textWords) {
             if (word.index > 0) {
-                cout << "\tLine " << word.index << ": " << word.val << endl;
+                fout << "Line " << word.index << ": " << word.val << endl;
                 if (!it->empty()) {
-                    cout << "\tSuggestions:" << endl;
+                    fout << "\tSuggestions:" << endl;
                 }
                 fout << word.index << " " << word.val << endl;
                 for (auto suggestion : *it) {
-                    fout << suggestion << endl;
-                    cout << "\t\t" << suggestion << endl;
+                    fout << "\t\t" << suggestion << endl;
+                    //cout << "\t\t" << suggestion << endl;
                 }
                 it++;
             }
         }
+        cout << "List of words not found in dictionary output into: " << output << endl;
         return time;
     }
 

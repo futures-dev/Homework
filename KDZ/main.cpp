@@ -267,7 +267,7 @@ int main() {
 	chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
 	//task1();
 	//task2();
-	task3();
+	//task3();
 	task4();
 	cin.get();
 }

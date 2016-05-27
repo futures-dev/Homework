@@ -9,7 +9,6 @@
 
 #include "../StringContainers/StringContainer.h"
 #include <set>
-#include <string>
 
 class SimilairProvider {
 protected:

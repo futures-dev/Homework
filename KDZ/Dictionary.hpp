@@ -43,7 +43,6 @@ class Dictionary {
     };
 
     void loadWords(const string &input, set<dictTuple> &textWords) {
-
         ifstream fin(input);
         if (!fin.is_open()) {
             throw invalid_argument("File" + input + " Not Found");
@@ -60,6 +59,7 @@ class Dictionary {
                 textWords.emplace(tmp, false);
             }
         }
+        textWords.erase(dictTuple("", 0));
     }
 
 
@@ -151,7 +151,7 @@ public:
     Dictionary() { }
 
     uint64_t compareText(const string &input, const string &output) {
-
+        cout << words.search("apprehensive") << endl;
         set<dictTuple> textWords;
         loadWords(input, textWords);
         cout << "Process words..." << endl;

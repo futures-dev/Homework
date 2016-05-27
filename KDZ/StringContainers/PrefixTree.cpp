@@ -20,6 +20,10 @@ bool PrefixTree::search(const std::string &s) const {
 }
 
 void PrefixTree::insert(const std::string &s) {
+    if (s.empty()) {
+        // s equals root
+        return;
+    }
     int len = s.length();
     PrefixTreeNode *current = root;
     for (int i = 0; i < len; i++) {

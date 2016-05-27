@@ -75,10 +75,16 @@ bool PatriciaTree::search(const std::string &word) const {
         int linkN = current->links.size();
         int i = 0;
         for (; i < linkN; i++) {
-            if (check(word, idx, current->links[i]->value, 0)) {
-                current = current->links[i];
-                idx += current->value.length();
-                break;
+            int prefLen = check(word, idx, current->links[i]->value, 0);
+            if (prefLen) {
+                if (prefLen == current->links[i]->value.length()) {
+                    current = current->links[i];
+                    idx += current->value.length();
+                    break;
+                }
+                else {
+                    return false;
+                }
             }
         }
         if (i == linkN) {

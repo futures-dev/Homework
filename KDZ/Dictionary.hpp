@@ -190,7 +190,6 @@ public:
         set<dictTuple> textWords;
         loadWords(input, textWords);
         cout << "Comparing dictionary to " << input << "..." << endl;
-        int len = textWords.size();
         vector<set<string>> newWords;
         int lineN = 0;
         uint64_t time = __rdtsc();
@@ -239,9 +238,13 @@ public:
             provider.insert(it->val, words);
         }
         time = __rdtsc() - time;
+
+        //uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider[it->val];
         }
+        //time = __rdtsc() - time;
+
         provider.output(output);
         return time;
     }

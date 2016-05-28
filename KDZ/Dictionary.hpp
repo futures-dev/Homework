@@ -188,12 +188,12 @@ public:
     uint64_t compareDict(const string &input, const string &output) {
 
         set<dictTuple> textWords;
-        uint64_t time = __rdtsc();
         loadWords(input, textWords);
         cout << "Comparing dictionary to " << input << "..." << endl;
         int len = textWords.size();
         vector<set<string>> newWords;
         int lineN = 0;
+        uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++, lineN++) {
             if (!words.search(it->val)) {
                 it->index = lineN;

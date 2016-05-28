@@ -43,7 +43,7 @@ public:
 
     void d_print(const string &output, bool sorted = false) const;
 
-    void load_words(const string &input);
+    void load_words(const string &input, const string &output);
 
     void spell_check(const string &input, const string &output) const;
 

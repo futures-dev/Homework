@@ -5,7 +5,7 @@
 using namespace std;
 
 void SimilairProvider::suggest_replacement(const string &a_word, const StringContainer &dict,
-                                           set<string> &suggestions) const {
+                                           vector<string> &suggestions) const {
     int len = a_word.length();
     char *word = new char[len + 1];
     strcpy(word, a_word.c_str());
@@ -22,7 +22,7 @@ void SimilairProvider::suggest_replacement(const string &a_word, const StringCon
             word[i] = c;
             string tmp(word);
             if (dict.search(tmp)) {
-                suggestions.insert(tmp);
+                suggestions.push_back(tmp);
             }
         }
         word[i] = temp;

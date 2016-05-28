@@ -11,12 +11,12 @@
 #include <map>
 
 class StdMap2 : public SimilairProvider {
-    std::map<int, std::map<std::string, std::set<std::string>>> words;
+    std::map<int, std::map<std::string, std::vector<std::string>>> words;
 
 public:
     virtual void insert(const std::string &word, const StringContainer &dict);
 
-    virtual std::set<std::string> operator[](const std::string &word) const;
+    virtual std::vector<std::string> operator[](const std::string &word) const;
 
     virtual void output(const std::string &output) const;
 

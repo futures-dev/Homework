@@ -11,22 +11,22 @@
 using namespace std;
 
 void StdMap3::insert(const string &word, const StringContainer &dict) {
-    set<string> suggestions;
+    vector<string> suggestions;
     this->suggest_replacement(word, dict, suggestions);
     int len = word.length();
-    auto map = words[word[0]][len];
+    auto &map = words[word[0]][len];
     auto it2 = map.find(word);
     if (it2 == map.end()) {
         map[word] = suggestions;
     }
     else {
-        it2->second.insert(suggestions.begin(), suggestions.end());
+        it2->second.insert(it2->second.begin(), suggestions.begin(), suggestions.end());
     }
 }
 
-set<string> StdMap3::operator[](const string &word) const {
+vector<string> StdMap3::operator[](const string &word) const {
     // find because operator[] is not const
-    auto bin = words.find(word[0])->second;
+    auto &bin = words.find(word[0])->second;
     auto it = bin.find(word.length());
     if (it != bin.end()) {
         auto it2 = it->second.find(word);
@@ -34,7 +34,7 @@ set<string> StdMap3::operator[](const string &word) const {
             return it2->second;
         }
     }
-    return set<string>();
+    return vector<string>();
 }
 
 void StdMap3::output(const string &output) const {

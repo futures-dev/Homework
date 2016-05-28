@@ -233,17 +233,17 @@ public:
         set<dictTuple> textWords;
         loadWords(input, textWords);
 
-        uint64_t time = __rdtsc();
+        //uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider.insert(it->val, words);
         }
-        time = __rdtsc() - time;
+        //time = __rdtsc() - time;
 
-        //uint64_t time = __rdtsc();
+        uint64_t time = __rdtsc();
         for (auto it = textWords.begin(); it != textWords.end(); it++) {
             provider[it->val];
         }
-        //time = __rdtsc() - time;
+        time = __rdtsc() - time;
 
         provider.output(output);
         return time;

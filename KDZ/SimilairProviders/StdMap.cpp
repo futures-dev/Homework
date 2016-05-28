@@ -11,24 +11,24 @@
 using namespace std;
 
 void StdMap::insert(const string &word, const StringContainer &dict) {
-    set<string> suggestions;
+    vector<string> suggestions;
     this->suggest_replacement(word, dict, suggestions);
     auto it = words.find(word);
     if (it == words.end()) {
         words[word] = suggestions;
     }
     else {
-        it->second.insert(suggestions.begin(), suggestions.end());
+        it->second.insert(it->second.begin(), suggestions.begin(), suggestions.end());
     }
 }
 
-set<string> StdMap::operator[](const string &word) const {
+vector<string> StdMap::operator[](const string &word) const {
     auto it = words.find(word);
     if (it != words.end()) {
         return it->second;
     }
     else {
-        return set<string>();
+        return vector<string>();
     }
 
 }

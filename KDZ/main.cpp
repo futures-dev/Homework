@@ -11,6 +11,7 @@
 #include "StringContainers/StdSet.h"
 #include "SimilairProviders/StdMap.h"
 #include "SimilairProviders/StdMap2.h"
+#include "SimilairProviders/StdMap2b.h"
 #include "SimilairProviders/StdMap3.h"
 #include "SpellChecker.h"
 #include <complex>
@@ -122,27 +123,28 @@ void task2() {
 	ofstream fout(outPath + ".txt");
 
 	for (int i = 0; i < dictN; i++) {
-		int64_t map1Similair = 0, map2Similair = 0, map3Similair = 0;
-		int n_attempts = 4;
+		int64_t map1Similair = 0, map2Similair = 0, map2BSimilair = 0, map3Similair = 0;
+		int n_attempts = 1;
 		// using HashTable
 		{
 			Dictionary<HashTable> dictionary(dictPath[i]);
 			{
 				map1Similair += dictionary.findSimilair<StdMap>(dictPath[i], outPath + "_map_" + to_string(i) + ".txt");
-				cout << endl;
 			}
 			{
 				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i],
 																 outPath + "_map2_" + to_string(i) + ".txt");
-				cout << endl;
+			}
+			{
+				map2BSimilair += dictionary.findSimilair<StdMap2b>(dictPath[i],
+																   outPath + "_map2b_" + to_string(i) + ".txt");
 			}
 			{
 				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i],
 																 outPath + "_map3_" + to_string(i) + ".txt");
-				cout << endl;
 			}
 		}
-
+		/*
 		// using PatriciaTree
 		{
 			Dictionary<PatriciaTree> dictionary(dictPath[i]);
@@ -152,6 +154,9 @@ void task2() {
 			{
 				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
 			}
+            {
+                map2BSimilair += dictionary.findSimilair<StdMap2b>(dictPath[i], outPath + "_map2b_" + to_string(i) + ".txt");
+            }
 			{
 				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
 			}
@@ -165,6 +170,9 @@ void task2() {
 			{
 				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
 			}
+            {
+                map2BSimilair += dictionary.findSimilair<StdMap2b>(dictPath[i], outPath + "_map2b_" + to_string(i) + ".txt");
+            }
 			{
 				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
 			}
@@ -178,20 +186,27 @@ void task2() {
 			{
 				map2Similair += dictionary.findSimilair<StdMap2>(dictPath[i], outPath + "_map2_" + to_string(i) + ".txt");
 			}
+            {
+                map2BSimilair += dictionary.findSimilair<StdMap2b>(dictPath[i], outPath + "_map2b_" + to_string(i) + ".txt");
+            }
 			{
 				map3Similair += dictionary.findSimilair<StdMap3>(dictPath[i], outPath + "_map3_" + to_string(i) + ".txt");
 			}
+			
 		}
+		*/
 
 
-		map1Similair /= n_attempts, map2Similair /= n_attempts, map3Similair /= n_attempts;
+		map1Similair /= n_attempts, map2Similair /= n_attempts, map3Similair /= n_attempts, map2BSimilair /= n_attempts;
 		cout << i << endl;
 		cout << "map<string,set<string>>: " << map1Similair << endl;
 		cout << "map<int,map>: " << map2Similair << endl;
+		cout << "mapB<int,map>: " << map2BSimilair << endl;
 		cout << "map<char,map<int,map>>: " << map3Similair << endl;
 		fout << i << endl;
 		fout << "map<string,set<string>>: " << map1Similair << endl;
 		fout << "map<int,map>: " << map2Similair << endl;
+		fout << "map<char,map>: " << map2BSimilair << endl;
 		fout << "map<char,map<int,map>>: " << map3Similair << endl;
 	}
 }
@@ -255,9 +270,10 @@ void task4() {
 	const string text2 = "text/Island.txt";
 	const string textBroken = "text/broken.txt";
 	const string output = "output/task4/output.txt";
+	const string dictOutput = "output/task4/MyAlTrDictionary.txt";
 	SpellChecker spellChecker;
-	spellChecker.load_words(text1);
-	spellChecker.load_words(text2);
+	spellChecker.load_words(text1, dictOutput);
+	spellChecker.load_words(text2, dictOutput);
 	spellChecker.spell_check(textBroken, output);
 }
 
@@ -266,8 +282,8 @@ int main() {
 	using namespace std;
 	chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
 	//task1();
-	//task2();
-	task3();
+	task2();
+	//task3();
 	//task4();
 	cin.get();
 }

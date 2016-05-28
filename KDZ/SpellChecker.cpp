@@ -66,13 +66,14 @@ void SpellChecker::d_print(const string &output, bool sorted) const {
     }
 }
 
-void SpellChecker::load_words(const string &input) {
+void SpellChecker::load_words(const string &input, const string &output) {
     ifstream fin(input);
     if (!fin.is_open()) {
         throw invalid_argument("File" + input + " Not Found");
     }
     string buf;
     regex e(wordRegex, regex_constants::extended);
+    ofstream fout(output, ios_base::app);
     while (getline(fin, buf)) {
         smatch match;
         regex_search(buf, match, e);
@@ -81,6 +82,7 @@ void SpellChecker::load_words(const string &input) {
             transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
             if (!tmp.empty()) {
                 dwd_insert(tmp);
+                fout << tmp << endl;
             }
         }
     }

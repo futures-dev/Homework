@@ -1,6 +1,6 @@
 //
 // Andrei Kolomiets 143-1
-// CLion 1.2 MinGW 3.4.1
+// CLion 2016.1.2 MinGW 3.21 GCC 4.9.1
 // 22.05.2016
 //
 
@@ -98,21 +98,17 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
     ofstream fout(output);
     set<string> ignored;
     set<pair<string, string>> replacements;
+    bool skip = false;
     while (getline(fin, buf)) {
         smatch match;
         string prev_suffix;
         while (regex_search(buf, match, e)) {
             prev_suffix = match.suffix();
             fout << match.prefix();
-            string word(match.str());
+            auto match_word = match.str();
+            string word(match_word);
             transform(word.begin(), word.end(), word.begin(), ::tolower);
             buf = match.suffix();
-
-            // check ignore all
-            if (ignored.find(word) != ignored.end()) {
-                fout << word;
-                continue;
-            }
 
             // check replace all
             {
@@ -123,6 +119,12 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                     fout << rep->second;
                     continue;
                 }
+            }
+
+            // check ignore all and X exit
+            if (ignored.find(word) != ignored.end() || skip) {
+                fout << match_word;
+                continue;
             }
 
             // check dictionary
@@ -151,8 +153,12 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                                 cout << POSSIBLE_REPLACEMENTS_STRING << endl;
                                 string action_buf2;
                                 getline(cin, action_buf2);
-                                if (action_buf2 == "I") {
-                                    goto case_ignore;
+                                switch (action_buf2.back()) {
+                                    case 'I':
+                                    case 'i':
+                                        goto case_ignore;
+                                    default:
+                                        break;
                                 }
                                 stringstream myStream(action_buf2);
                                 int number;
@@ -164,6 +170,9 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                                             it++;
                                         }
                                         suggested = *it;
+                                        if (match_word[0] < 'a') {
+                                            suggested[0] = suggested[0] - 'a' + 'A';
+                                        }
                                         fout << suggested;
                                         break;
                                     }
@@ -196,7 +205,7 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                         case_ignore:
                         case 'I':
                         case 'i': {
-                            fout << word;
+                            fout << match_word;
                             cout << IGNORE_ALL_STRING << endl;
                             bool bad_action3 = true;
                             string action_buf3;
@@ -221,14 +230,17 @@ void SpellChecker::spell_check(const string &input, const string &output) const 
                         }
                         case 'X':
                         case 'x':
-                            return;
+                            fout << match_word;
+                            skip = true;
+                            bad_action1 = false;
+                            break;
                         default:
                             break;
                     }
                 }
             }
             else {
-                fout << word;
+                fout << match_word;
             }
         }
         fout << prev_suffix << endl;

@@ -1,11 +1,11 @@
 //
 // Andrei Kolomiets 143-1
-// CLion 1.2 MinGW 3.4.1
+// CLion 2016.1.2 MinGW 3.21 GCC 4.9.1
 // 22.05.2016
 //
 
-#include "StringContainers/HashTable.h"
 #include "Dictionary.hpp"
+#include "StringContainers/HashTable.h"
 #include "StringContainers/PatriciaTree.h"
 #include "StringContainers/PrefixTree.h"
 #include "StringContainers/StdSet.h"
@@ -14,13 +14,9 @@
 #include "SimilairProviders/StdMap2b.h"
 #include "SimilairProviders/StdMap3.h"
 #include "SpellChecker.h"
-#include <complex>
+#include <io.h>
 
-#ifdef _MSC_VER
-#include <direct.h>
-#else
-#include <unistd.h>
-#endif
+using namespace std;
 
 const int dictN = 6;
 
@@ -53,7 +49,7 @@ void task1() {
 	for (int i = 1; i < dictN; i++) {
 		dictPath[i] = "dictSjsu/dictionary" + to_string(i) + ".txt";
 	}
-	const string textPath = "1984.txt";
+	const string textPath = "text/1984.txt";
 	const string outPath = "output/task1/output";
 	ofstream fout(outPath + ".txt");
 
@@ -144,7 +140,7 @@ void task2() {
 																 outPath + "_map3_" + to_string(i) + ".txt");
 			}
 		}
-		/*
+
 		// using PatriciaTree
 		{
 			Dictionary<PatriciaTree> dictionary(dictPath[i]);
@@ -194,7 +190,7 @@ void task2() {
 			}
 			
 		}
-		*/
+
 
 
 		map1Similair /= n_attempts, map2Similair /= n_attempts, map3Similair /= n_attempts, map2BSimilair /= n_attempts;
@@ -278,12 +274,11 @@ void task4() {
 }
 
 int main() {
-	// make_dict();
-	using namespace std;
 	chdir("C:\\Users\\Computer\\ClionProjects\\Homework\\KDZ");
-	//task1();
+	task1();
 	task2();
-	//task3();
-	//task4();
+	task3();
+	task4();
+	cout << "Press Enter to exit..." << endl;
 	cin.get();
 }

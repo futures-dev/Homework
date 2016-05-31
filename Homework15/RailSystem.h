@@ -5,7 +5,6 @@
 #include <fstream>
 #include <map>
 #include <list>
-#include <queue>
 #include <vector>
 #include <assert.h>
 #include <climits>
@@ -22,7 +21,7 @@ public:
     Cheapest() { }
 
     bool operator()(City *city1, City *city2) {
-        return city1->total_fee > city2->total_fee;
+        return city1->total_fee < city2->total_fee;
     }
 
     bool operator()(const City city1, const City city2) {
@@ -41,12 +40,10 @@ struct Route {
     Route(string f, string t, int fe, int d) : from(f), to(t), fee(fe), distance(d) { };
 
     bool operator==(Route const &rhs) const {
-        if (rhs.from == this->from &&
-            rhs.to == this->to &&
-            rhs.fee == this->fee &&
-            rhs.distance == this->distance)
-            return true;
-        return false;
+        return rhs.from == this->from &&
+               rhs.to == this->to &&
+               rhs.fee == this->fee &&
+               rhs.distance == this->distance;
     };
 };
 

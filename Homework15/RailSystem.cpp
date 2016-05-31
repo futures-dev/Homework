@@ -2,11 +2,15 @@
 #pragma warning (disable:4503)
 
 #include "RailSystem.h"
+#include <set>
 
 void RailSystem::reset(void) {
 
-    // TODO: reset the data objects of the 
-    // City objects' contained in cities
+    for (auto it = cities.begin(); it != cities.end(); it++) {
+        auto newCity = new City(it->second->name);
+        delete it->second;
+        it->second = newCity;
+    }
 
 }
 
@@ -27,11 +31,16 @@ void RailSystem::load_services(string const &filename) {
         inf >> from >> to >> fee >> distance;
 
         if (inf.good()) {
-
-            // TODO: Add entries in the cities container and
-            // and services in the rail system for the new
-            // cities we read in.	
-
+            cin >> from >> to >> fee >> distance;
+            auto c = cities.find(from);
+            if (c == cities.end()) {
+                cities.insert(make_pair(from, new City(from)));
+            }
+            c = cities.find(to);
+            if (c == cities.end()) {
+                cities.insert(make_pair(to, new City(to)));
+            }
+            outgoing_services[from].push_back(new Service(to, fee, distance));
         }
     }
 
@@ -40,8 +49,15 @@ void RailSystem::load_services(string const &filename) {
 
 RailSystem::~RailSystem(void) {
 
-    // TODO: release all the City* and Service*
-    // from cities and outgoing_services
+    for (auto it = cities.begin(); it != cities.end(); it++) {
+        delete it->second;
+    }
+
+    for (auto it = outgoing_services.begin(); it != outgoing_services.end(); it++) {
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++) {
+            delete *it2;
+        }
+    }
 
 }
 
@@ -68,28 +84,48 @@ bool RailSystem::is_valid_city(const string &name) {
 
 pair<int, int> RailSystem::calc_route(string from, string to) {
     // You can use another container
-    priority_queue<City *, vector<City *>, Cheapest> candidates;
+    set<City *, Cheapest> candidates;
 
     // TODO: Implement Dijkstra's shortest path algorithm to
     // find the cheapest route between the cities
 
+    candidates.insert(cities[from]);
+    while (!candidates.empty()) {
+        auto currentCity = *candidates.begin();
+        candidates.erase(candidates.begin());
+        auto &currentServices = outgoing_services[currentCity->name];
+        currentCity->visited = true;
+        for (auto it = currentServices.begin(); it != currentServices.end(); it++) {
+            auto &service = *it;
+            auto city = cities[service->destination];
+            if (city->total_distance > currentCity->total_distance + service->distance) {
+                candidates.erase(city);
+                city->total_distance = currentCity->total_distance + service->distance;
+                city->total_fee = currentCity->total_fee + service->fee;
+                city->from_city = currentCity->name;
+            }
+            candidates.insert(city);
+        }
+    }
 
     // Return the total fee and total distance.
     // Return (INT_MAX, INT_MAX) if not path is found.
     if (cities[to]->visited) {
         return pair<int, int>(cities[to]->total_fee, cities[to]->total_distance);
-    } else {
+    }
+    else {
         return pair<int, int>(INT_MAX, INT_MAX);
     }
-
 }
 
 string RailSystem::recover_route(const string &city) {
 
-    // TODO: walk backwards through the cities
-    // container to recover the route we found
+    auto currentCity = cities[city];
+    while (currentCity->from_city != "") {
+        currentCity = cities[currentCity->from_city];
+    }
 
-    return "";
+    return currentCity->name;
 }
 
 

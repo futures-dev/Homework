@@ -31,7 +31,6 @@ void RailSystem::load_services(string const &filename) {
         inf >> from >> to >> fee >> distance;
 
         if (inf.good()) {
-            cin >> from >> to >> fee >> distance;
             auto c = cities.find(from);
             if (c == cities.end()) {
                 cities.insert(make_pair(from, new City(from)));
@@ -91,20 +90,26 @@ pair<int, int> RailSystem::calc_route(string from, string to) {
 
     candidates.insert(cities[from]);
     while (!candidates.empty()) {
-        auto currentCity = *candidates.begin();
+        set<City *, Cheapest>::iterator temp = candidates.begin();
+        auto currentCity = *temp;
         candidates.erase(candidates.begin());
         auto &currentServices = outgoing_services[currentCity->name];
         currentCity->visited = true;
         for (auto it = currentServices.begin(); it != currentServices.end(); it++) {
             auto &service = *it;
             auto city = cities[service->destination];
-            if (city->total_distance > currentCity->total_distance + service->distance) {
+            if (city->visited) {
+                continue;
+            }
+            if (city->total_fee == 0 || (city->total_fee > currentCity->total_fee + service->fee)) {
                 candidates.erase(city);
                 city->total_distance = currentCity->total_distance + service->distance;
                 city->total_fee = currentCity->total_fee + service->fee;
                 city->from_city = currentCity->name;
             }
-            candidates.insert(city);
+            if (!city->visited) {
+                candidates.insert(city);
+            }
         }
     }
 

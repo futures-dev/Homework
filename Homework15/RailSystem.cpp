@@ -1,3 +1,9 @@
+//
+// Andrei Kolomiets 143-1
+// CLion 2016.1.2 MinGW 3.21 GCC 4.9.1
+// 01.06.2016
+//
+
 #pragma warning (disable:4786)
 #pragma warning (disable:4503)
 
@@ -5,8 +11,9 @@
 #include <set>
 
 void RailSystem::reset(void) {
-
+    // iterate through cities
     for (auto it = cities.begin(); it != cities.end(); it++) {
+        // and delete objects
         auto newCity = new City(it->second->name);
         delete it->second;
         it->second = newCity;
@@ -31,6 +38,8 @@ void RailSystem::load_services(string const &filename) {
         inf >> from >> to >> fee >> distance;
 
         if (inf.good()) {
+
+            // make sure cities have been created
             auto c = cities.find(from);
             if (c == cities.end()) {
                 cities.insert(make_pair(from, new City(from)));
@@ -39,6 +48,8 @@ void RailSystem::load_services(string const &filename) {
             if (c == cities.end()) {
                 cities.insert(make_pair(to, new City(to)));
             }
+
+            // create services
             outgoing_services[from].push_back(new Service(to, fee, distance));
         }
     }
@@ -48,10 +59,12 @@ void RailSystem::load_services(string const &filename) {
 
 RailSystem::~RailSystem(void) {
 
+    // delete cities
     for (auto it = cities.begin(); it != cities.end(); it++) {
         delete it->second;
     }
 
+    // delete services
     for (auto it = outgoing_services.begin(); it != outgoing_services.end(); it++) {
         for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++) {
             delete *it2;
@@ -82,10 +95,9 @@ bool RailSystem::is_valid_city(const string &name) {
 }
 
 pair<int, int> RailSystem::calc_route(string from, string to) {
-    // You can use another container
+    // Nodes to be observed
     set<City *, Cheapest> candidates;
 
-    // TODO: Implement Dijkstra's shortest path algorithm to
     // find the cheapest route between the cities
 
     candidates.insert(cities[from]);
@@ -95,18 +107,21 @@ pair<int, int> RailSystem::calc_route(string from, string to) {
         candidates.erase(candidates.begin());
         auto &currentServices = outgoing_services[currentCity->name];
         currentCity->visited = true;
+
+        // Iterate through adjacent cities
         for (auto it = currentServices.begin(); it != currentServices.end(); it++) {
             auto &service = *it;
             auto city = cities[service->destination];
-            if (city->visited) {
-                continue;
-            }
-            if (city->total_fee == 0 || (city->total_fee > currentCity->total_fee + service->fee)) {
+
+            if (city->total_fee == 0 || (city->total_fee > (currentCity->total_fee + service->fee))) {
+                // Through currentCity is cheaper
                 candidates.erase(city);
                 city->total_distance = currentCity->total_distance + service->distance;
                 city->total_fee = currentCity->total_fee + service->fee;
                 city->from_city = currentCity->name;
             }
+
+            // Do not insert visited city as candidate
             if (!city->visited) {
                 candidates.insert(city);
             }
@@ -125,6 +140,7 @@ pair<int, int> RailSystem::calc_route(string from, string to) {
 
 string RailSystem::recover_route(const string &city) {
 
+    // defaults each city
     auto currentCity = cities[city];
     while (currentCity->from_city != "") {
         currentCity = cities[currentCity->from_city];

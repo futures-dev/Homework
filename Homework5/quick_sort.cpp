@@ -1,5 +1,5 @@
 /**
- * Андрей Коломиец БПИ143
+ * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ143
  * Andrei Kolomiets BPI143
  * CLion 1.1.1 MinGW 3.21
  */
@@ -10,7 +10,7 @@
 /*
  * Swaps arr[a] and arr[b]
  */
-void swap(int *arr, int a, int b) {
+void swap(int* arr, int a, int b) {
     int t = arr[a];
     arr[a] = arr[b];
     arr[b] = t;
@@ -62,10 +62,10 @@ int q_sort::get_rand_pivot(int from, int to) {
  * Iterative without rearrange function
  */
 
-/*
+
     void q_sort::quick_sort(int* arr, int from, int to, pivot_chooser a_pivot_chooser){
         int l = from;
-        int r = to-1;
+        int r = to - 1;
         int t = 0;
         int pivot_index = a_pivot_chooser(from,to);
         int pivot = arr[pivot_index];
@@ -92,7 +92,7 @@ int q_sort::get_rand_pivot(int from, int to) {
     // Don't need this
     int q_sort::rearrange_array_with_pivot(int* arr, int from, int to, int pivot_index){
     }
-*/
+
 
 /*
  * Implements quick sort using the correspondent pivot_chooser
